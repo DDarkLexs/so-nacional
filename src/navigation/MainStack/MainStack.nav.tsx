@@ -1,0 +1,103 @@
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import {useTheme} from 'react-native-paper';
+import {createNativeStackNavigator as createStackNavigator} from '@react-navigation/native-stack';
+import {MainStackStackParamList} from './Model/index.route';
+import PrincipalScreen from '../../screens/Principal/Principal.screen';
+import Header, {HeaderProps} from '../../components/Principal/Header.component';
+import DadosDeEntrega from '../../screens/DadosEntrega/DadosDeEntrega.screen';
+import ResumoCompraScreen from '../../screens/ResumoCompra/ResumoCompra.screen';
+import MeuBalaioScreen from '../../screens/Usuario/MeuBalaio/MeuBalaio.screen';
+import PagamentoScreen from '../../screens/MetodoPagamento/MP.screen';
+import TransferenciaBancariaScreen from '../../screens/TransferenciaBancaria/TransBancaria.screen';
+import NEncomendaScreen from '../../screens/NEncomenda/NEncomenda.screen';
+
+const Stack = createStackNavigator<MainStackStackParamList>();
+
+const MainStack: React.FC = (): React.JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        contentStyle: {backgroundColor: theme.colors.background},
+        header: props => (
+          <HeaderProps
+            back={props.back}
+            options={props.options}
+            navigation={props.navigation}
+          />
+        ),
+      }}
+      initialRouteName="Principal">
+      <Stack.Screen
+        options={{
+          header: ({navigation, back, options}) => (
+            <Header back={back} options={options} navigation={navigation} />
+          ),
+        }}
+        name="Principal"
+        component={PrincipalScreen}
+      />
+      <Stack.Screen
+        name="DadosDeEntrega"
+        options={{
+          title: 'Dados da entrega',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={DadosDeEntrega}
+      />
+      <Stack.Screen
+        name="ResumoCompra"
+        options={{
+          title: 'Resumo de compra',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={ResumoCompraScreen}
+      />
+      <Stack.Screen
+        name="MeuBalaio"
+        options={{
+          title: 'Meu Balaio',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={MeuBalaioScreen}
+      />
+      <Stack.Screen
+        name="MPagamento"
+        options={{
+          title: 'Métodos de pagamentos',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={PagamentoScreen}
+      />
+      <Stack.Screen
+        name="TransferenciaBancaria"
+        options={{
+          title: 'Transferência bancária',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={TransferenciaBancariaScreen}
+      />
+      <Stack.Screen
+        name="NEncomenda"
+        options={{
+          title: 'Encomenda #79044',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={NEncomendaScreen}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const styles = StyleSheet.create({
+  appStyle: {
+    flex: 1,
+    margin: 'auto',
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignContent: 'center',
+  },
+});
+
+export default MainStack;

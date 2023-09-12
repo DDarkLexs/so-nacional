@@ -1,0 +1,56 @@
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import {useTheme} from 'react-native-paper';
+import RegistroScreen from '../../screens/Authentication/registro/Registro.screen';
+import EntradaScreen from '../../screens/Authentication/entrada/Entrada.screen';
+import {createNativeStackNavigator as createStackNavigator} from '@react-navigation/native-stack';
+import {AuthStackStackParamList} from './model/authType';
+import TermsAndConditionsPage from '../../screens/termos/termos.screen';
+import ReceavingCode from '../../screens/Authentication/ForgotPassword/code.screen';
+import {HeaderProps} from '../../components/Principal/Header.component';
+
+const Stack = createStackNavigator<AuthStackStackParamList>();
+
+const AuthStack: React.FC = (): React.JSX.Element => {
+  const theme = useTheme();
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        contentStyle: {backgroundColor: theme.colors.background},
+      }}>
+      <Stack.Screen name="Entrada" component={EntradaScreen} />
+      <Stack.Screen name="Registro" component={RegistroScreen} />
+      <Stack.Screen name="ConfirmarTelemovel" component={ReceavingCode} />
+      <Stack.Screen name="ForgotPassword" component={ReceavingCode} />
+      <Stack.Screen
+        name="termos&condicoes"
+        options={{
+          headerShown: true,
+          title: 'Termos e Condições',
+          header: props => (
+            <HeaderProps
+              back={props.back}
+              options={props.options}
+              navigation={props.navigation}
+            />
+          ),
+        }}
+        component={TermsAndConditionsPage}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const styles = StyleSheet.create({
+  appStyle: {
+    flex: 1,
+    margin: 'auto',
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignContent: 'center',
+  },
+});
+
+export default AuthStack;
