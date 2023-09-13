@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Image} from 'react-native';
-import {Card, IconButton, TextInput, Text, useTheme} from 'react-native-paper';
+import {Image, StyleSheet, View} from 'react-native';
+import {Card, IconButton, Text, TextInput, useTheme} from 'react-native-paper';
 import {convertToCurrency} from '../../utils/moeda/moeda.utils';
 
 interface ArtigoContainer1 {
@@ -31,7 +31,11 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
     <>
       <Card mode="elevated" style={styles.card}>
         <View style={styles.imageContainer}>
-          <Image source={image} style={styles.image} />
+          <Image
+            source={{uri: image}}
+            defaultSource={require('../../assets/image/fruits/banana.png')}
+            style={styles.image}
+          />
         </View>
         <View>
           <Text style={styles.itemName}> {nome} </Text>
@@ -86,8 +90,10 @@ const styles = StyleSheet.create({
     left: 0,
   },
   image: {
-    width: 'auto',
+    width: 200,
     height: 150,
+    borderRadius: 30,
+    alignSelf: 'center',
     resizeMode: 'cover',
   },
   imageContainer: {

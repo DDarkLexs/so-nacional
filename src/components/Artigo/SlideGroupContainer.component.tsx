@@ -1,31 +1,64 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
-import {TouchableRipple, Text, useTheme} from 'react-native-paper';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
+import {Text, TouchableRipple, useTheme} from 'react-native-paper';
+import {CategoriaController} from '../../controller/Categoria/categoria.controller';
+import {CategoriaPrincipal} from '../../model/categoria.model';
+import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
+import {
+  setCategoriaPrincipal,
+  setSelectedCategoria,
+} from '../../store/reducer/categoria.store';
 
 const SlideGroupContainer = () => {
   const [activeButtonIndex, setActiveButtonIndex] = useState(0);
   const theme = useTheme();
-  // Array of button labels
-  const buttons = ['Frutas', 'Hortaliças', 'Cereais', 'teste', 'teste'];
+  const controller = new CategoriaController();
+  const [categorias, setCategorias] = useState<CategoriaPrincipal[]>([]);
+  const dispatch = useAppDispatch();
+  const categoriaPrincipal = useAppSelector(
+    state => state.categoria.categoriaPrincipal,
+  );
+  const selected = useAppSelector(
+    state => state.categoria.categoria_selecionado,
+  );
+  const getData = async (): Promise<void> => {
+    try {
+      const response1 = await controller.fetchCategoriaApi();
 
-  const handleButtonPress = (index: number) => {
-    setActiveButtonIndex(index);
+      dispatch(setCategoriaPrincipal(response1.data[0].categorias));
+    } catch (error) {
+      console.error(error);
+      ToastAndroid.show('Houve um erro!', ToastAndroid.LONG);
+    }
+  };
+  // Array of button labels
+  useEffect(() => {
+    getData();
+  }, []);
+  useEffect(() => {
+    setActiveButtonIndex(
+      categoriaPrincipal.findIndex(item => item.id_categoria === selected),
+    );
+  }, [selected]);
+
+  const handleButtonPress = (index: number, id_categoria: number) => {
+    dispatch(setSelectedCategoria(id_categoria));
     // You can add additional logic here when a button is pressed
   };
 
   return (
     <View style={styles.container}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {buttons.map((label, index) => (
+        {categoriaPrincipal.map(({nome_categoria, id_categoria}, index) => (
           <TouchableRipple
             key={index}
-            onPress={() => handleButtonPress(index)}
+            onPress={() => handleButtonPress(index, id_categoria)}
             style={[
               styles.button,
               index === activeButtonIndex ? {backgroundColor: '#f2eee8'} : null,
             ]}>
             <View>
-              <Text style={styles.buttonContentText}>{label}</Text>
+              <Text style={styles.buttonContentText}>{nome_categoria}</Text>
             </View>
           </TouchableRipple>
         ))}

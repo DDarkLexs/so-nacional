@@ -6,12 +6,12 @@
  */
 
 import React, {useEffect} from 'react';
-import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
-import AppNavigator from './src/navigation/AppNavigator.nav';
+import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {setIsAuthenticated} from './src/store/reducer/usuario.reducer';
 import {UsuarioController} from './src/controller/Usuario/usuario.controller';
+import AppNavigator from './src/navigation/AppNavigator.nav';
 import {useAppDispatch} from './src/store/hook/index.hook';
+import {setUtilizador} from './src/store/reducer/usuario.reducer';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ function App(): JSX.Element {
   const verifyAuth = async (): Promise<void> => {
     try {
       const response = await controller.verifyIsAuthenticated();
-      dispatch(setIsAuthenticated(!!response));
+      dispatch(setUtilizador(response));
     } catch (error) {}
   };
   useEffect(() => {

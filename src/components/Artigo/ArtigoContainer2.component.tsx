@@ -49,10 +49,7 @@ const ArtigoContainer2: React.FC<Artigo> = (artigo): React.JSX.Element => {
       <Card style={styles.card}>
         <Card.Content style={styles.cardContent}>
           <View style={styles.textContainer}>
-            <Image
-              source={artigo.img}
-              style={styles.image}
-            />
+            <Image source={artigo.img} style={styles.image} />
             <Text style={styles.productName}>{artigo.nome}</Text>
             <Text style={styles.productPrice}>
               {convertToCurrency(artigo.preco * itemQuantity)}
@@ -69,7 +66,6 @@ const ArtigoContainer2: React.FC<Artigo> = (artigo): React.JSX.Element => {
               mode="outlined"
               value={itemQuantity.toString()}
               onChangeText={text => setItemQuantity(parseInt(text) || 0)}
-              
               left={
                 <TextInput.Icon icon={'minus'} onPress={handleRemoveQuantity} />
               }

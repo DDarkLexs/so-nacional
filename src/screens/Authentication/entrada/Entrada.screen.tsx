@@ -1,17 +1,15 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
   Image,
+  StyleSheet,
   ToastAndroid,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import {Text, TextInput, Button, Checkbox} from 'react-native-paper';
-import {EntradaScreenRouteProp} from '../../../navigation/AuthStack/model/authType';
+import {Button, Checkbox, Text, TextInput} from 'react-native-paper';
+import {UsuarioController} from '../../../controller/Usuario/usuario.controller';
 import {useAppDispatch} from '../../../store/hook/index.hook';
 import {actions} from '../../../store/reducer/usuario.reducer';
-import {UsuarioController} from '../../../controller/Usuario/usuario.controller';
 
 const EntradaScreen: React.FC<any> = ({navigation}) => {
   const [telemovel, setTelemovel] = useState('');
@@ -25,11 +23,11 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
       // Lógica de autenticação
       setLoading(true);
       const response = await controller.autenticar({password, telemovel});
-      ToastAndroid.show(`Autenticação autorizado!`, ToastAndroid.LONG);
+      ToastAndroid.show('Autenticação autorizado!', ToastAndroid.LONG);
       dispatch(actions.setIsAuthenticated(!!response));
       console.log(response);
     } catch (error) {
-      ToastAndroid.show(JSON.stringify(error), ToastAndroid.LONG);
+      ToastAndroid.show('Houve um erro!', ToastAndroid.LONG);
     } finally {
       setLoading(false);
     }
@@ -42,7 +40,7 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
 
   const handleForgotPassword = () => {
     // Lógica para recuperar a senha
-    navigation.navigate('ForgotPassword');
+    // navigation.navigate('ForgotPassword');
   };
 
   return (
@@ -75,7 +73,7 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
         secureTextEntry
         style={styles.input}
       />
-      <TouchableOpacity disabled={loading} onPress={handleForgotPassword}>
+      <TouchableOpacity disabled={loading}>
         <Text style={styles.forgotPasswordText}>Esqueci minha senha</Text>
       </TouchableOpacity>
 

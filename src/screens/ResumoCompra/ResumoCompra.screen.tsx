@@ -1,14 +1,13 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
-import { Button, Card, Text, useTheme, Paragraph } from 'react-native-paper';
-import { convertToCurrency } from '../../utils/moeda/moeda.utils';
+import {View, ScrollView, StyleSheet} from 'react-native';
+import {Button, Card, Text, useTheme, Paragraph} from 'react-native-paper';
+import {convertToCurrency} from '../../utils/moeda/moeda.utils';
 
-const ResumoCompraScreen:React.FC<any> = ({ navigation }) => {
+const ResumoCompraScreen: React.FC<any> = ({navigation}) => {
   const theme = useTheme();
 
   return (
     <ScrollView style={styles.container}>
-
       {/* Card de Resumo de Compra */}
       <Card style={styles.card}>
         <Card.Title title="Resumo de Compra" />
@@ -41,7 +40,7 @@ const ResumoCompraScreen:React.FC<any> = ({ navigation }) => {
           mode="contained"
           color={theme.colors.primary}
           style={styles.confirmButton}
-          onPress={() => navigation.navigate('MPagamento') }>
+          onPress={() => navigation.navigate('MPagamento')}>
           Pagar
         </Button>
       </View>

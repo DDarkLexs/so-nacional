@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, StyleSheet, ToastAndroid} from 'react-native';
-import {List, Avatar, Button} from 'react-native-paper';
-import {useAppDispatch} from '../../store/hook/index.hook';
-import {actions, setIsAuthenticated, setUtilizador} from '../../store/reducer/usuario.reducer';
+import {StyleSheet, ToastAndroid, View} from 'react-native';
+import {Avatar, Button, List} from 'react-native-paper';
 import {UsuarioController} from '../../controller/Usuario/usuario.controller';
+import {useAppDispatch} from '../../store/hook/index.hook';
+import {setUtilizador} from '../../store/reducer/usuario.reducer';
 
 const MenuList: React.FC<any> = ({navigation}): React.JSX.Element => {
   const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ const MenuList: React.FC<any> = ({navigation}): React.JSX.Element => {
     try {
       await controller.terminarSessao();
       dispatch(setUtilizador(null));
-      dispatch(setIsAuthenticated(false));
+      // dispatch(setIsAuthenticated(false));
     } catch (error) {
       ToastAndroid.show(JSON.stringify(error), ToastAndroid.LONG);
     }

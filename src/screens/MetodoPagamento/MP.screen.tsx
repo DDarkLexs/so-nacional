@@ -48,7 +48,7 @@ const PagamentoScreen = () => {
             styles.card,
             selectedMethod === index
               ? {backgroundColor: theme.colors.primary}
-              :   {backgroundColor: theme.colors.background},
+              : {backgroundColor: theme.colors.background},
           ]}>
           <Card.Content>
             <View style={styles.cardContent}>

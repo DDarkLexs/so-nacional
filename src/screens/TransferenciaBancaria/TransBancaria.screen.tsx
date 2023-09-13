@@ -1,30 +1,29 @@
 import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Card, Button, Title, Text, TouchableRipple } from 'react-native-paper';
-import { convertToCurrency } from '../../utils/moeda/moeda.utils';
+import {View, StyleSheet} from 'react-native';
+import {Card, Button, Title, Text, TouchableRipple} from 'react-native-paper';
+import {convertToCurrency} from '../../utils/moeda/moeda.utils';
 
 const TransferenciaBancariaScreen = () => {
   return (
     <View style={styles.container}>
-      <Card mode='outlined' style={styles.card}>
+      <Card mode="outlined" style={styles.card}>
         <Card.Content>
           <Text style={styles.label}>IBAN:</Text>
           <Text style={styles.value}>XXXX XXXX XXXX XXXX</Text>
-          
+
           <Text style={styles.label}>Titular:</Text>
           <Text style={styles.value}>Nome do Titular</Text>
-          
+
           <Text style={styles.label}>Total:</Text>
           <Text style={styles.value}>{convertToCurrency(1000)}</Text>
         </Card.Content>
       </Card>
-      
-      
+
       <Text style={styles.instructions}>
         Transfira os valores para o IBAN acima e anexe o comprovativo abaixo
       </Text>
 
-      <TouchableRipple onPress={()=>{}} style={styles.uploadButton}>
+      <TouchableRipple onPress={() => {}} style={styles.uploadButton}>
         <View>
           <Text style={styles.uploadText}>Clique para fazer upload</Text>
         </View>
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
   uploadText: {
     textAlign: 'center',
     fontSize: 16,
-    padding:10
+    padding: 10,
   },
   instructions: {
     fontSize: 18,

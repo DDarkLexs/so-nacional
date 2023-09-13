@@ -13,7 +13,6 @@ interface Product {
   quantity: number;
 }
 
-
 const MeuBalaioScreen: React.FC<any> = ({navigation}) => {
   const theme = useTheme();
   //   console.log(navigation);

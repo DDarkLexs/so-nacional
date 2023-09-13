@@ -14,7 +14,6 @@ export class CreateUsuarioDto implements UsuarioDto {
   password: string = '';
 }
 
-
 export class AuthUsuarioDto implements Omit<UsuarioDto, 'nome'> {
   @IsNotEmpty({message: 'Informe o número de telefone'})
   @IsPhoneNumber('AO', {message: 'O número de telefone é inválido!'})

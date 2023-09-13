@@ -27,7 +27,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     <TouchableRipple
       rippleColor={theme.colors.inversePrimary}
       onPress={onPress}
-      style={[styles.button,{ backgroundColor: theme.colors.primary}]}>
+      style={[styles.button, {backgroundColor: theme.colors.primary}]}>
       <Text style={[styles.label, labelStyle]}>{label}</Text>
     </TouchableRipple>
   );

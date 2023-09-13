@@ -75,7 +75,7 @@ export class UsuarioController extends UsuarioControllerABC {
         // alert('hey')
         const usuario = await getUser();
         if (!usuario) {
-          throw `Não está autenticado!`;
+          throw 'Não está autenticado!';
         }
         resolve(usuario);
       } catch (error) {

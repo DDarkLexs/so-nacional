@@ -1,80 +1,70 @@
-import React from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  ToastAndroid,
-} from 'react-native';
-import {Avatar, Card, Text, useTheme} from 'react-native-paper';
-import {useState} from 'react';
-import {useEffect} from 'react';
-import axiosIns from '../../api/axiosIns.api';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
+import {Card, Text, useTheme} from 'react-native-paper';
+import CategoriaContainer1 from '../../components/categoria/categoriaContainer1.component';
+import {CategoriaController} from '../../controller/Categoria/categoria.controller';
+import {CategoriaPrincipal} from '../../model/categoria.model';
+import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
+import {setCategoriaPrincipal} from '../../store/reducer/categoria.store';
 
-const categories = [
-  {
-    name: 'Frutas',
-    total: 10,
-    imageSource: require('../../assets/image/fruits/banana.png'),
-  },
-  {
-    name: 'Hortaliças',
-    total: 15,
-    imageSource: require('../../assets/image/fruits/banana.png'),
-  },
-  {
-    name: 'Cereais',
-    total: 8,
-    imageSource: require('../../assets/image/fruits/banana.png'),
-  },
-];
-
-const HomeScreen = () => {
+const HomeScreen = (navigation: any) => {
   const theme = useTheme();
   const [data, setData] = useState<any>();
+  const [categorias, setCategorias] = useState<CategoriaPrincipal[]>([]);
+  const controller = new CategoriaController();
+  const dispatch = useAppDispatch();
+  const categoriaPrincipal = useAppSelector(
+    state => state.categoria.categoriaPrincipal,
+  );
 
+  const selectedCategoria = useAppSelector(
+    state => state.categoria.categoria_selecionado,
+  );
   const getData = async (): Promise<void> => {
     try {
-      const response1 = (await axiosIns.get('/principal')).data.data[0];
-      setData(response1);
+      const response1 = await controller.fetchCategoriaApi();
+      dispatch(setCategoriaPrincipal(response1.data[0].categorias));
+      setData(response1.data[0]);
     } catch (error) {
       ToastAndroid.show(JSON.stringify(error), ToastAndroid.LONG);
     }
   };
   useEffect(() => {
     getData();
-  });
+  }, []);
+
+  useEffect(() => {
+    if (selectedCategoria) {
+      navigation.jumpTo('produtos');
+    }
+  }, [selectedCategoria]);
+
+  useEffect(() => {
+    setCategorias(categoriaPrincipal);
+  }, [categoriaPrincipal]);
 
   return (
     <ScrollView style={styles.container}>
       <Card style={styles.card} mode={'contained'}>
         <Card.Cover
-          source={{uri: !data ? 'http://' : data.banners[0].imagem}}
+          source={data ? {uri: data.banners[0].imagem} : {uri: 'http://'}}
         />
       </Card>
       <View style={styles.headLine}>
-        <Text variant="headlineMedium">Categorias</Text>
+        <Text variant="headlineSmall" style={styles.headTitle}>
+          Categorias
+          {/* {JSON.stringify(categorias)} */}
+        </Text>
       </View>
       <View style={styles.categoryContainer}>
-        {categories.map((category, index) => (
-          <TouchableOpacity
+        {categorias.map((item, index) => (
+          <CategoriaContainer1
             key={index}
-            style={[
-              styles.categoryCard,
-              {backgroundColor: theme.colors.background},
-            ]}
-            onPress={() => {}}>
-            <View style={styles.categoryCardImage}>
-              <Avatar.Image source={category.imageSource} />
-            </View>
-            <View style={styles.categoryCardContent}>
-              <Text style={styles.categoryName}>{category.name}</Text>
-              <Text style={styles.categoryTotal}>
-                {' '}
-                {category.total} Produtos
-              </Text>
-            </View>
-          </TouchableOpacity>
+            id_categoria={item.id_categoria}
+            imagem_categoria={item.imagem_categoria}
+            nome_categoria={item.nome_categoria}
+            num_produtos={item.num_produtos}
+          />
         ))}
       </View>
     </ScrollView>
@@ -89,6 +79,10 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     // bottom: 30,
+  },
+  headTitle: {
+    // flexDirection: 'column',
+    fontWeight: 'bold',
   },
   headLine: {
     // flexDirection: 'column',

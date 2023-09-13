@@ -24,13 +24,13 @@ const ReceavingCode: React.FC<any> = ({navigation, route}) => {
         telemovel,
       );
       if (response.message === 'Código não verificado') {
-        throw `código inserido é inválido!`;
+        throw 'código inserido é inválido!';
       }
 
       ToastAndroid.show(response.message, ToastAndroid.LONG);
       handleEntrada();
     } catch (error) {
-      ToastAndroid.show(JSON.stringify(error), ToastAndroid.LONG);
+      ToastAndroid.show('Houve um erro!', ToastAndroid.LONG);
     } finally {
       setLoading(false);
     }

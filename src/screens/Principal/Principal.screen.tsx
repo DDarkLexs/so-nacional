@@ -3,7 +3,7 @@ import {BottomNavigation, Text} from 'react-native-paper';
 import CarrinhaScreen from '../Carrinha/index.screen';
 import HomeScreen from '../Home/Home.screen';
 import MenuList from '../MenuList/MenuList.screen';
-import CategoriaScreen from '../Categoria/Categoria.screen';
+import ProdutosScreen from '../Produtos/Produtos.screen';
 
 const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
   const [index, setIndex] = React.useState(0);
@@ -16,8 +16,8 @@ const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
       unfocusedIcon: 'home-outline',
     },
     {
-      key: 'categoria',
-      title: 'Categoria',
+      key: 'produtos',
+      title: 'produtos',
       focusedIcon: 'text-box',
       unfocusedIcon: 'text-box-outline',
     },
@@ -38,10 +38,10 @@ const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
 
   const renderScene = BottomNavigation.SceneMap({
     Home: HomeScreen,
-    categoria: CategoriaScreen,
+    produtos: ProdutosScreen,
     carrinha: CarrinhaScreen,
     // registro: () => <Text>4</Text>,
-    menu: ()=><MenuList  navigation={navigation} />,
+    menu: () => <MenuList navigation={navigation} />,
   });
 
   return (
@@ -52,6 +52,7 @@ const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
       navigationState={{index, routes}}
       onIndexChange={setIndex}
       renderScene={renderScene}
+      // style={{bott:100 }}
     />
   );
 };

@@ -6,7 +6,7 @@ import EntradaScreen from '../../screens/Authentication/entrada/Entrada.screen';
 import {createNativeStackNavigator as createStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackStackParamList} from './model/authType';
 import TermsAndConditionsPage from '../../screens/termos/termos.screen';
-import ReceavingCode from '../../screens/Authentication/ForgotPassword/code.screen';
+import ReceavingCode from '../../screens/Authentication/verificationCode/code.screen';
 import {HeaderProps} from '../../components/Principal/Header.component';
 
 const Stack = createStackNavigator<AuthStackStackParamList>();

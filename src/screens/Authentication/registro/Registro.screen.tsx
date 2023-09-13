@@ -21,7 +21,9 @@ const RegistroScreen: React.FC<any> = ({navigation}) => {
     try {
       setLoading(true);
 
-      if (!agreedToTerms) throw 'Deve concordar com os termos e condições';
+      if (!agreedToTerms) {
+        throw 'Deve concordar com os termos e condições';
+      }
       const response = await controller.registar({nome, telemovel, password});
       navigation.navigate('ConfirmarTelemovel', {telemovel});
       // console.log(response);

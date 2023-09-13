@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet,ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {Card, List, Divider, useTheme} from 'react-native-paper';
 import ArtigoContainer2 from '../../components/Artigo/ArtigoContainer2.component';
 

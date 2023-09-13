@@ -17,7 +17,7 @@ const DadosDeEntrega: FC<any> = ({navigation}): JSX.Element => {
           <TextInput
             label="Telefone"
             mode="outlined"
-            keyboardType='number-pad'
+            keyboardType="number-pad"
             inputMode="numeric"
             style={styles.input}
           />
