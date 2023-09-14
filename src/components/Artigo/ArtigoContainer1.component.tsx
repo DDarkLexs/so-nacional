@@ -1,10 +1,15 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {Card, IconButton, Text, TextInput, useTheme} from 'react-native-paper';
 import {convertToCurrency} from '../../utils/moeda/moeda.utils';
+import {showToast} from '../../service/toast.service';
+import {useAppDispatch} from '../../store/hook/index.hook';
+import {setItem} from '../../store/reducer/usuario.reducer';
+import {fazerSubtotal} from '../../utils/index.utils';
 
 interface ArtigoContainer1 {
   nome: string;
+  id_produto: number;
   preco: number;
   image: any;
 }
@@ -13,18 +18,46 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
   image,
   nome,
   preco,
+  id_produto,
 }): React.JSX.Element => {
-  const [itemQuantity, setItemQuantity] = useState(1);
+  const [quantidade, setQuatidade] = useState<number>(1);
+  const dispatch = useAppDispatch();
+  const [subtotal, setSubtotal] = useState<number>(
+    fazerSubtotal(preco, quantidade),
+  );
 
+  useEffect(() => {
+    setSubtotal(fazerSubtotal(preco, quantidade));
+  }, [quantidade]);
   const theme = useTheme();
   const handleRemoveQuantity = () => {
-    if (itemQuantity > 1) {
-      setItemQuantity(itemQuantity - 1);
+    if (quantidade > 1) {
+      setQuatidade(quantidade - 1);
     }
   };
 
   const handleAddQuantity = () => {
-    setItemQuantity(itemQuantity + 1);
+    setQuatidade(quantidade + 1);
+  };
+  const addToMeuBaio = (): void => {
+    try {
+      dispatch(
+        setItem({
+          id_produto,
+          nome_produto: nome,
+          preco,
+          quantidade,
+          subtotal,
+          image,
+        }),
+      );
+      showToast({
+        text1: 'Adicionado',
+        text2: `${nome} foi adicionado para o Baiao!`,
+        position: 'top',
+        type: 'success',
+      });
+    } catch (error) {}
   };
 
   return (
@@ -33,6 +66,7 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
         <View style={styles.imageContainer}>
           <Image
             source={{uri: image}}
+            resizeMode="contain"
             defaultSource={require('../../assets/image/fruits/banana.png')}
             style={styles.image}
           />
@@ -40,14 +74,14 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
         <View>
           <Text style={styles.itemName}> {nome} </Text>
           <Text style={styles.itemPrice}>
-            Preço: {convertToCurrency(preco * itemQuantity)}
+            Preço: {convertToCurrency(subtotal)}
           </Text>
         </View>
 
         <View style={styles.quantityControl}>
           <TextInput
-            value={itemQuantity.toString()}
-            onChangeText={text => setItemQuantity(parseInt(text) || 0)}
+            value={quantidade.toString()}
+            onChangeText={text => setQuatidade(parseInt(text) || 0)}
             keyboardType="numeric"
             style={styles.quantityInput}
             editable={false}
@@ -58,11 +92,11 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
             right={<TextInput.Icon icon={'plus'} onPress={handleAddQuantity} />}
           />
           <IconButton
-            onPress={() => {}}
+            onPress={addToMeuBaio}
             containerColor={theme.colors.primary}
             iconColor="white"
             icon="plus"
-            style={{marginLeft: 'auto'}}
+            style={styles.addButton}
             size={30}
           />
         </View>
@@ -78,7 +112,7 @@ const styles = StyleSheet.create({
     height: 'auto',
   },
   card: {
-    marginBottom: 16,
+    marginBottom: 26,
     padding: 10,
     // flexDirection: 'row',
     // alignItems: 'center',
@@ -90,9 +124,9 @@ const styles = StyleSheet.create({
     left: 0,
   },
   image: {
-    width: 200,
-    height: 150,
-    borderRadius: 30,
+    width: '100%',
+    height: 200,
+    borderRadius: 15,
     alignSelf: 'center',
     resizeMode: 'cover',
   },
@@ -120,6 +154,7 @@ const styles = StyleSheet.create({
     width: 140,
     textAlign: 'center',
   },
+  addButton: {marginLeft: 'auto'},
   checkoutButtonContainer: {
     marginTop: 16, // Espaçamento superior para separar o botão do carrinho
   },

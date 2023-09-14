@@ -12,13 +12,16 @@ import {CategoriaPrincipal} from '../../model/categoria.model';
 import {useAppDispatch} from '../../store/hook/index.hook';
 import {setSelectedCategoria} from '../../store/reducer/categoria.store';
 
-interface CategoriaProps extends CategoriaPrincipal {}
+interface CategoriaProps extends CategoriaPrincipal {
+  navigateTo: () => void;
+}
 
 const CategoriaContainer1: React.FC<CategoriaProps> = item => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const pressedCategoria = () => {
     dispatch(setSelectedCategoria(item.id_categoria));
+    item.navigateTo();
   };
 
   return (
@@ -46,9 +49,10 @@ const styles = StyleSheet.create({
   touchableRippleContainer: {
     borderWidth: 1, // Add a border to the container
     borderColor: 'rgba(0, 0, 0, 0)', // Border color
+    marginBottom: 26,
     borderRadius: 12,
     overflow: 'hidden', // Ensure the border doesn't overflow
-    marginVertical: 10,
+    // marginVertical: 10,
   },
   touchableRipple: {
     borderRadius: 8,

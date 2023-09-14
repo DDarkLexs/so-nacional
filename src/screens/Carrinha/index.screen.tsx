@@ -34,6 +34,7 @@ const ShoppingCartScreen = () => {
           image={item.image}
           nome={item.name}
           preco={item.price}
+          id_produto={item.id}
           key={item.id}
         />
       ))}

@@ -1,9 +1,11 @@
 import * as React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Button, Surface, Text, useTheme} from 'react-native-paper';
-import ArtigoContainer2 from '../../../components/Artigo/ArtigoContainer2.component';
-import {convertToCurrency} from '../../../utils/moeda/moeda.utils';
-import CustomButton from '../../../components/Button/Button1.component';
+import ArtigoContainer2 from '../../components/Artigo/ArtigoContainer2.component';
+import {convertToCurrency} from '../../utils/moeda/moeda.utils';
+import CustomButton from '../../components/Button/Button1.component';
+import {useAppSelector} from '../../store/hook/index.hook';
+import {fazerSubtotal} from '../../utils/index.utils';
 
 interface Product {
   id: number;
@@ -19,54 +21,34 @@ const MeuBalaioScreen: React.FC<any> = ({navigation}) => {
   const encomendar = (): void => {
     navigation.navigate('DadosDeEntrega');
   };
-  const [products, setProducts] = React.useState<Product[]>([
-    {
-      id: 1,
-      name: 'Produto 1',
-      price: 19.99,
-      imageUrl: require('../../../assets/image/fruits/banana.png'),
-      quantity: 99,
-    },
-    {
-      id: 2,
-      name: 'Produto 2',
-      price: 29.99,
-      imageUrl: require('../../../assets/image/fruits/banana.png'),
-      quantity: 2,
-    },
-    {
-      id: 3,
-      name: 'Produto 3',
-      price: 23.99,
-      imageUrl: require('../../../assets/image/fruits/banana.png'),
-      quantity: 5,
-    },
-    {
-      id: 4,
-      name: 'Produto 4',
-      price: 29.99,
-      imageUrl: require('../../../assets/image/fruits/banana.png'),
-      quantity: 1,
-    },
-    // Adicione mais produtos conforme necessário
-  ]);
+  const meuBaiao = useAppSelector(state => state.usuario.itens);
+  const contas = useAppSelector(state => state.usuario.itens).map(
+    ({quantidade, preco}) => fazerSubtotal(preco, quantidade),
+  );
+  const total: number = contas.reduce(
+    (acumulador, current) => acumulador + current,
+    0,
+  );
   return (
     <View style={styles.container}>
       <ScrollView style={{marginBottom: 150}}>
-        {products.map(product => (
+        {meuBaiao.map((producto, i) => (
           <ArtigoContainer2
-            id={product.id}
-            key={product.id}
-            preco={product.price}
-            nome={product.name}
-            img={product.imageUrl}
+            id_produto={producto.id_produto}
+            key={i}
+            index={i}
+            preco={producto.preco}
+            nome_produto={producto.nome_produto}
+            quantidade={producto.quantidade}
+            subtotal={producto.subtotal}
+            image={producto.image}
           />
         ))}
       </ScrollView>
       <Surface style={styles.card}>
         <View style={styles.cardRow}>
           <Text style={styles.label}>TOTAL:</Text>
-          <Text style={styles.value}>{convertToCurrency(1000)}</Text>
+          <Text style={styles.value}>{convertToCurrency(total)}</Text>
         </View>
         <View style={{marginHorizontal: 20}}>
           <CustomButton label="Encomendar" onPress={() => encomendar()} />

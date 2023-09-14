@@ -14,8 +14,8 @@ export class ProdutoController extends ProdutoControllerABC {
         // response
         // this.produtos = 1
         resolve();
-      } catch (error) {
-        reject(error);
+      } catch (error: any) {
+        reject(error.message || error);
       }
     });
   }

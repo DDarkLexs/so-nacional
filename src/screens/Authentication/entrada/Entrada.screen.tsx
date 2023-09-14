@@ -1,13 +1,8 @@
 import React, {useState} from 'react';
-import {
-  Image,
-  StyleSheet,
-  ToastAndroid,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Button, Checkbox, Text, TextInput} from 'react-native-paper';
 import {UsuarioController} from '../../../controller/Usuario/usuario.controller';
+import {showToast} from '../../../service/toast.service';
 import {useAppDispatch} from '../../../store/hook/index.hook';
 import {actions} from '../../../store/reducer/usuario.reducer';
 
@@ -23,11 +18,21 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
       // Lógica de autenticação
       setLoading(true);
       const response = await controller.autenticar({password, telemovel});
-      ToastAndroid.show('Autenticação autorizado!', ToastAndroid.LONG);
-      dispatch(actions.setIsAuthenticated(!!response));
+      showToast({
+        text1: 'Sucesso',
+        text2: 'Autenticação autorizado!',
+        position: 'bottom',
+        type: 'success',
+      });
+      dispatch(actions.setUtilizador(response));
       console.log(response);
     } catch (error) {
-      ToastAndroid.show('Houve um erro!', ToastAndroid.LONG);
+      showToast({
+        text1: 'Houve erro!',
+        text2: JSON.stringify(error),
+        position: 'bottom',
+        type: 'error',
+      });
     } finally {
       setLoading(false);
     }

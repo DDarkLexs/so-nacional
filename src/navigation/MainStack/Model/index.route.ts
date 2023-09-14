@@ -5,10 +5,10 @@ export type MainStackStackParamList = {
   Principal: undefined;
   DadosDeEntrega: undefined;
   ResumoCompra: undefined;
-  MeuBalaio: undefined;
   MPagamento: undefined;
   TransferenciaBancaria: undefined;
   NEncomenda: undefined;
+  FAQ: undefined;
   //   'termos&condicoes': undefined;
   //   ForgotPassword: undefined;
 };

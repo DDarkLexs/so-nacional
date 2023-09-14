@@ -7,10 +7,10 @@ import PrincipalScreen from '../../screens/Principal/Principal.screen';
 import Header, {HeaderProps} from '../../components/Principal/Header.component';
 import DadosDeEntrega from '../../screens/DadosEntrega/DadosDeEntrega.screen';
 import ResumoCompraScreen from '../../screens/ResumoCompra/ResumoCompra.screen';
-import MeuBalaioScreen from '../../screens/Usuario/MeuBalaio/MeuBalaio.screen';
 import PagamentoScreen from '../../screens/MetodoPagamento/MP.screen';
 import TransferenciaBancariaScreen from '../../screens/TransferenciaBancaria/TransBancaria.screen';
 import NEncomendaScreen from '../../screens/NEncomenda/NEncomenda.screen';
+import FAQPage from '../../screens/FAQ/FAQ.screen';
 
 const Stack = createStackNavigator<MainStackStackParamList>();
 
@@ -55,14 +55,6 @@ const MainStack: React.FC = (): React.JSX.Element => {
         component={ResumoCompraScreen}
       />
       <Stack.Screen
-        name="MeuBalaio"
-        options={{
-          title: 'Meu Balaio',
-          contentStyle: {backgroundColor: theme.colors.background},
-        }}
-        component={MeuBalaioScreen}
-      />
-      <Stack.Screen
         name="MPagamento"
         options={{
           title: 'Métodos de pagamentos',
@@ -85,6 +77,14 @@ const MainStack: React.FC = (): React.JSX.Element => {
           contentStyle: {backgroundColor: theme.colors.background},
         }}
         component={NEncomendaScreen}
+      />
+      <Stack.Screen
+        name="FAQ"
+        options={{
+          title: 'Perguntas Frequentes',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={FAQPage}
       />
     </Stack.Navigator>
   );

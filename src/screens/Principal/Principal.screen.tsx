@@ -1,14 +1,19 @@
-import React from 'react';
-import {BottomNavigation, Text} from 'react-native-paper';
-import CarrinhaScreen from '../Carrinha/index.screen';
+import React, {useEffect} from 'react';
+import {BottomNavigation} from 'react-native-paper';
+import {useAppSelector} from '../../store/hook/index.hook';
 import HomeScreen from '../Home/Home.screen';
 import MenuList from '../MenuList/MenuList.screen';
 import ProdutosScreen from '../Produtos/Produtos.screen';
+import MeuBalaioScreen from '../Carrinha/MeuBalaio.screen';
 
 const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
   const [index, setIndex] = React.useState(0);
+  const meuBaiao = useAppSelector(state => state.usuario.itens);
 
-  const [routes] = React.useState([
+  useEffect(() => {
+    routes[2].badge = meuBaiao.length;
+  }, [meuBaiao]);
+  const routes = [
     {
       key: 'Home',
       title: 'Principal',
@@ -26,7 +31,7 @@ const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
       title: 'Carrinha',
       focusedIcon: 'cart',
       unfocusedIcon: 'cart-outline',
-      badge: 3,
+      badge: meuBaiao.length,
     },
     {
       key: 'menu',
@@ -34,12 +39,12 @@ const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
       focusedIcon: 'menu',
       unfocusedIcon: 'menu',
     },
-  ]);
+  ];
 
   const renderScene = BottomNavigation.SceneMap({
     Home: HomeScreen,
     produtos: ProdutosScreen,
-    carrinha: CarrinhaScreen,
+    carrinha: () => <MeuBalaioScreen navigation={navigation} />,
     // registro: () => <Text>4</Text>,
     menu: () => <MenuList navigation={navigation} />,
   });

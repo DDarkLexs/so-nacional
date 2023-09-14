@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {Card, Text, useTheme} from 'react-native-paper';
 import CategoriaContainer1 from '../../components/categoria/categoriaContainer1.component';
 import {CategoriaController} from '../../controller/Categoria/categoria.controller';
 import {CategoriaPrincipal} from '../../model/categoria.model';
+import {showToast} from '../../service/toast.service';
 import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
 import {setCategoriaPrincipal} from '../../store/reducer/categoria.store';
 
@@ -26,16 +27,29 @@ const HomeScreen = (navigation: any) => {
       dispatch(setCategoriaPrincipal(response1.data[0].categorias));
       setData(response1.data[0]);
     } catch (error) {
-      ToastAndroid.show(JSON.stringify(error), ToastAndroid.LONG);
+      showToast({
+        text1: 'Houve um erro!',
+        text2: JSON.stringify(error),
+        position: 'bottom',
+        type: 'error',
+      });
     }
   };
   useEffect(() => {
     getData();
   }, []);
 
+  const nextScreen = () => {
+    navigation.jumpTo('produtos');
+  };
   useEffect(() => {
     if (selectedCategoria) {
-      navigation.jumpTo('produtos');
+      // showToast({
+      //   text1: 'foi selecionado categoria!',
+      //   text2: `${selectedCategoria}`,
+      //   position: 'bottom',
+      //   type: 'success',
+      // });
     }
   }, [selectedCategoria]);
 
@@ -47,7 +61,11 @@ const HomeScreen = (navigation: any) => {
     <ScrollView style={styles.container}>
       <Card style={styles.card} mode={'contained'}>
         <Card.Cover
-          source={data ? {uri: data.banners[0].imagem} : {uri: 'http://'}}
+          source={
+            data
+              ? {uri: data.banners[0].imagem}
+              : require('../../assets/image/fruits/istockphoto-1409236261-1024x1024.jpg')
+          }
         />
       </Card>
       <View style={styles.headLine}>
@@ -64,6 +82,7 @@ const HomeScreen = (navigation: any) => {
             imagem_categoria={item.imagem_categoria}
             nome_categoria={item.nome_categoria}
             num_produtos={item.num_produtos}
+            navigateTo={nextScreen}
           />
         ))}
       </View>

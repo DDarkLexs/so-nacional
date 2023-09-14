@@ -2,6 +2,7 @@ import {Appbar, useTheme} from 'react-native-paper';
 import {Image} from 'react-native';
 import React from 'react';
 import {NativeStackHeaderProps} from '@react-navigation/native-stack/lib/typescript/src/types';
+import { styles } from '../../assets/styles/index.styles';
 
 const Header: React.FC<
   Pick<NativeStackHeaderProps, 'navigation' | 'options' | 'back'>
@@ -9,7 +10,7 @@ const Header: React.FC<
   const theme = useTheme();
 
   return (
-    <Appbar.Header theme={{colors: {primary: theme.colors.surface}}}>
+    <Appbar.Header style={styles.appBar} theme={{colors: {primary: theme.colors.surface}}}>
       <Appbar.Content title={''} mode="medium" color={theme.colors.surface} />
       <Appbar.Content
         title={

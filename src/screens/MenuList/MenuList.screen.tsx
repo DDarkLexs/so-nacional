@@ -2,19 +2,26 @@ import React from 'react';
 import {StyleSheet, ToastAndroid, View} from 'react-native';
 import {Avatar, Button, List} from 'react-native-paper';
 import {UsuarioController} from '../../controller/Usuario/usuario.controller';
-import {useAppDispatch} from '../../store/hook/index.hook';
+import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
 import {setUtilizador} from '../../store/reducer/usuario.reducer';
+import {showToast} from '../../service/toast.service';
 
 const MenuList: React.FC<any> = ({navigation}): React.JSX.Element => {
   const dispatch = useAppDispatch();
   const controller = new UsuarioController();
+  const utilizador = useAppSelector(state => state.usuario.utilizador);
   const terminarSessao = async () => {
     try {
       await controller.terminarSessao();
       dispatch(setUtilizador(null));
       // dispatch(setIsAuthenticated(false));
     } catch (error) {
-      ToastAndroid.show(JSON.stringify(error), ToastAndroid.LONG);
+      showToast({
+        text1: 'Houve um erro!',
+        text2: JSON.stringify(error),
+        position: 'bottom',
+        type: 'error',
+      });
     }
   };
   return (
@@ -22,13 +29,13 @@ const MenuList: React.FC<any> = ({navigation}): React.JSX.Element => {
       {/* User Info */}
       <View style={styles.userInfo}>
         <List.Item
-          title="John Doe"
-          description="johndoe@example.com"
+          title={utilizador?.nome}
+          description={utilizador?.telefone}
           left={() => (
             <Avatar.Image
               size={64}
               style={styles.img}
-              source={require('../../assets/image/usuario/user.png')}
+              source={{uri: utilizador?.foto}}
             />
           )}
         />
@@ -40,7 +47,10 @@ const MenuList: React.FC<any> = ({navigation}): React.JSX.Element => {
           title="Meu Balaio"
           onPress={() => navigation.navigate('MeuBalaio')}
         />
-        <List.Item title="Perguntas frequentes" onPress={() => {}} />
+        <List.Item
+          title="Perguntas frequentes"
+          onPress={() => navigation.navigate('FAQ')}
+        />
         <List.Item title="Definição" onPress={() => {}} />
       </List.Section>
 
@@ -50,7 +60,7 @@ const MenuList: React.FC<any> = ({navigation}): React.JSX.Element => {
         mode="contained"
         onPress={terminarSessao}
         style={styles.logoutButton}>
-        Logout
+        Terminar sessão
       </Button>
     </View>
   );

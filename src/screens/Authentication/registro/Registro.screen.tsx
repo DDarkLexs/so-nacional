@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {Text, TextInput, Button, Checkbox} from 'react-native-paper';
-import {ToastAndroid} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Button, Checkbox, Text, TextInput} from 'react-native-paper';
 
-import {Usuario} from '../../../model/usuario.model';
 import {UsuarioController} from '../../../controller/Usuario/usuario.controller';
+import {Usuario} from '../../../model/usuario.model';
+import {showToast} from '../../../service/toast.service';
 const RegistroScreen: React.FC<any> = ({navigation}) => {
   const [agreedToTerms, setAgreedToTerms] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,7 +28,12 @@ const RegistroScreen: React.FC<any> = ({navigation}) => {
       navigation.navigate('ConfirmarTelemovel', {telemovel});
       // console.log(response);
     } catch (error) {
-      ToastAndroid.show(JSON.stringify(error), ToastAndroid.LONG);
+      showToast({
+        text1: 'Houve um erro!',
+        text2: JSON.stringify(error),
+        position: 'bottom',
+        type: 'error',
+      });
     } finally {
       setLoading(false);
     }

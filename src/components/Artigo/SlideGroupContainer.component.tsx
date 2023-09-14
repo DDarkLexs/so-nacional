@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
-import {Text, TouchableRipple, useTheme} from 'react-native-paper';
+import {Alert, ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
+import {Text, TouchableRipple} from 'react-native-paper';
 import {CategoriaController} from '../../controller/Categoria/categoria.controller';
 import {CategoriaPrincipal} from '../../model/categoria.model';
 import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
@@ -8,10 +8,10 @@ import {
   setCategoriaPrincipal,
   setSelectedCategoria,
 } from '../../store/reducer/categoria.store';
+import {showToast} from '../../service/toast.service';
 
 const SlideGroupContainer = () => {
   const [activeButtonIndex, setActiveButtonIndex] = useState(0);
-  const theme = useTheme();
   const controller = new CategoriaController();
   const [categorias, setCategorias] = useState<CategoriaPrincipal[]>([]);
   const dispatch = useAppDispatch();
@@ -27,13 +27,20 @@ const SlideGroupContainer = () => {
 
       dispatch(setCategoriaPrincipal(response1.data[0].categorias));
     } catch (error) {
-      console.error(error);
-      ToastAndroid.show('Houve um erro!', ToastAndroid.LONG);
+      showToast({
+        text1: 'Houve um erro!',
+        text2: JSON.stringify(error),
+        position: 'bottom',
+        type: 'error',
+      });
     }
   };
   // Array of button labels
   useEffect(() => {
     getData();
+    return () => {
+      // showToast({position: 'bottom', text1: 'saiu'});
+    };
   }, []);
   useEffect(() => {
     setActiveButtonIndex(

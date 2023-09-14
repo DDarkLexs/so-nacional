@@ -1,15 +1,8 @@
-import React, {useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ToastAndroid,
-  Alert,
-} from 'react-native';
-import {TextInput, Button, Text} from 'react-native-paper';
+import React, {useEffect, useState} from 'react';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Button, Text, TextInput} from 'react-native-paper';
 import {UsuarioController} from '../../../controller/Usuario/usuario.controller';
-import {useEffect} from 'react';
+import {showToast} from '../../../service/toast.service';
 
 const ReceavingCode: React.FC<any> = ({navigation, route}) => {
   const {telemovel} = route.params;
@@ -26,11 +19,20 @@ const ReceavingCode: React.FC<any> = ({navigation, route}) => {
       if (response.message === 'Código não verificado') {
         throw 'código inserido é inválido!';
       }
-
-      ToastAndroid.show(response.message, ToastAndroid.LONG);
+      showToast({
+        text1: 'Mensagem',
+        text2: response.message,
+        position: 'bottom',
+        type: 'success',
+      });
       handleEntrada();
     } catch (error) {
-      ToastAndroid.show('Houve um erro!', ToastAndroid.LONG);
+      showToast({
+        text1: 'Houve um erro!',
+        text2: JSON.stringify(error),
+        position: 'bottom',
+        type: 'error',
+      });
     } finally {
       setLoading(false);
     }

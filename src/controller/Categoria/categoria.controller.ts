@@ -8,8 +8,8 @@ export class CategoriaController extends CategoriaControllerABC {
       try {
         const response = (await axiosIns.get('/principal')).data;
         resolve(response);
-      } catch (error) {
-        reject(error);
+      } catch (error: any) {
+        reject(error.message || error);
       }
     });
   }

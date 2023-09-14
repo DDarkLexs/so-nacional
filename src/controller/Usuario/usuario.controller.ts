@@ -26,8 +26,8 @@ export class UsuarioController extends UsuarioControllerABC {
         await setUser(response.data[0]);
         await this.verifyIsAuthenticated();
         resolve(response.data[0]);
-      } catch (error) {
-        reject(error);
+      } catch (error: any) {
+        reject(error.message || error);
       }
     });
   }
@@ -44,8 +44,8 @@ export class UsuarioController extends UsuarioControllerABC {
           await axiosIns.post('/auth/registro', {}, {params: {...usuario}})
         ).data;
         resolve(response);
-      } catch (error) {
-        reject(error);
+      } catch (error: any) {
+        reject(error.message || error);
       }
     });
   }
@@ -64,8 +64,8 @@ export class UsuarioController extends UsuarioControllerABC {
           )
         ).data;
         resolve(response);
-      } catch (error) {
-        reject(error);
+      } catch (error: any) {
+        reject(error.message || error);
       }
     });
   }
@@ -78,8 +78,8 @@ export class UsuarioController extends UsuarioControllerABC {
           throw 'Não está autenticado!';
         }
         resolve(usuario);
-      } catch (error) {
-        reject(error);
+      } catch (error: any) {
+        reject(error.message || error);
       }
     });
   }
@@ -88,7 +88,7 @@ export class UsuarioController extends UsuarioControllerABC {
       try {
         await removeUser();
         resolve();
-      } catch (error) {
+      } catch (error: any) {
         reject(error);
       }
     });

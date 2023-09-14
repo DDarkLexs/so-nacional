@@ -1,14 +1,17 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {RootState} from '../index.store';
-import {Utilizador} from '../../model/usuario.model';
+import type {MeuBaiao, Utilizador} from '../../model/usuario.model';
+import type {Produto} from '../../model/produto.model';
+import {fazerSubtotal} from '../../utils/index.utils';
 
 interface initialStateType {
   utilizador: Utilizador | null;
+  itens: MeuBaiao[];
   isAuthenticated: boolean;
 }
 
 const initialState: initialStateType = {
   isAuthenticated: false,
+  itens: [],
   utilizador: null,
 };
 
@@ -22,9 +25,30 @@ const userSlice = createSlice({
     setIsAuthenticated: (state, action: PayloadAction<boolean>) => {
       state.isAuthenticated = action.payload;
     },
+    setItem: (state, action: PayloadAction<MeuBaiao>) => {
+      state.itens.push(action.payload);
+    },
+    updateItem: (
+      state,
+      action: PayloadAction<
+        Pick<MeuBaiao, 'id_produto' | 'preco' | 'quantidade'> & {index: number}
+      >,
+    ) => {
+    
+    },
+    removeItem: (state, action: PayloadAction<number>) => {
+      state.itens.splice(action.payload, 1);
+      // state.itens.push(action.payload);
+    },
   },
 });
 
 export const {actions} = userSlice;
-export const {setIsAuthenticated, setUtilizador} = userSlice.actions;
+export const {
+  setIsAuthenticated,
+  setUtilizador,
+  setItem,
+  removeItem,
+  updateItem,
+} = userSlice.actions;
 export default userSlice.reducer;

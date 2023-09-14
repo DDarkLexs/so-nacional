@@ -1,40 +1,45 @@
-import React from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
-import {Appbar, Card, Divider, Paragraph} from 'react-native-paper';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, StyleSheet, ToastAndroid} from 'react-native';
+import {Appbar, Card, Divider, Paragraph, Text} from 'react-native-paper';
+import axiosIns from '../../api/axiosIns.api';
+import {showToast} from '../../service/toast.service';
 
-const FAQPage = () => {
-  const faqData = [
-    {
-      question: 'Como faço para criar uma conta?',
-      answer:
-        'Para criar uma conta, vá para a página de registro e preencha os campos necessários.',
-    },
-    {
-      question: 'Posso alterar minha senha?',
-      answer:
-        'Sim, você pode alterar sua senha nas configurações da sua conta.',
-    },
-    {
-      question: 'Como faço para redefinir minha senha esquecida?',
-      answer:
-        'Na tela de login, clique em "Esqueceu a senha?" e siga as instruções para redefinir sua senha.',
-    },
-    // Adicione mais perguntas e respostas aqui...
-  ];
+interface faqProp {
+  pergunta: string;
+  resposta: string;
+}
 
+const FAQPage = (): React.JSX.Element => {
+  const [faqs, setFaqs] = useState<faqProp[]>([]);
+
+  const getFAQ = async (): Promise<void> => {
+    try {
+      const response = (await axiosIns.get('/perguntasfrequentes')).data.data;
+      setFaqs(response);
+      console.log(response);
+    } catch (error) {
+      showToast({
+        text1: 'Houve um erro!',
+        text2: JSON.stringify(error),
+        position: 'bottom',
+        type: 'error',
+      });
+    }
+  };
+  useEffect(() => {
+    getFAQ();
+  }, []);
   return (
     <>
-      <Appbar.Header>
-        <Appbar.BackAction />
-        <Appbar.Content title="Perguntas Frequentes" />
-      </Appbar.Header>
       <ScrollView style={styles.scrollView}>
-        {faqData.map((item, index) => (
+        {faqs.map((faq, index) => (
           <Card mode="outlined" key={index} style={styles.card}>
             <Card.Content>
-              <Card.Title title={item.question} titleStyle={styles.question} />
+              <Text style={styles.question}>
+                {faq.pergunta}
+              </Text>
               <Divider style={styles.divider} />
-              <Paragraph style={styles.answer}>{item.answer}</Paragraph>
+              <Paragraph style={styles.answer}>{faq.resposta}</Paragraph>
             </Card.Content>
           </Card>
         ))}

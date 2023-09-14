@@ -6,6 +6,7 @@ import {ProdutoController} from '../../controller/Produto/produto.controller';
 import {Produto} from '../../model/produto.model';
 import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
 import {setProdutos} from '../../store/reducer/produto.store';
+import { showToast } from '../../service/toast.service';
 
 const ProdutosScreen: React.FC = (): React.JSX.Element => {
   const categoria = useAppSelector(
@@ -21,8 +22,12 @@ const ProdutosScreen: React.FC = (): React.JSX.Element => {
       dispatch(setProdutos(controller.produtos));
       // dispatch(setProdutos())
     } catch (error) {
-      ToastAndroid.show('Houve um erro!', ToastAndroid.LONG);
-      console.error(error);
+      showToast({
+        text1: 'Houve um erro!',
+        text2: JSON.stringify(error),
+        position: 'bottom',
+        type: 'error',
+      });
     }
   };
 
@@ -43,6 +48,8 @@ const ProdutosScreen: React.FC = (): React.JSX.Element => {
           nome={item.nome_produto}
           preco={item.preco}
           key={item.id_produto}
+          id_produto={item.id_produto}
+
         />
       ))}
     </ScrollView>

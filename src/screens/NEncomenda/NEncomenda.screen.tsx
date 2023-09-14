@@ -81,13 +81,16 @@ const NEncomendaScreen = () => {
         </Card>
       </View>
       <View>
-        {products.map(product => (
+        {products.map((product ,i) => (
           <ArtigoContainer2
-            id={product.id}
-            key={product.id}
-            preco={product.price}
-            nome={product.name}
-            img={product.imageUrl}
+            key={i}
+            id_produto={1}
+            nome_produto='teste'
+            preco={0}
+            index={i}
+            image={product.imageUrl}
+            quantidade={0}
+            subtotal={0}
           />
         ))}
       </View>
