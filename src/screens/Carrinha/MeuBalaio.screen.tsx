@@ -1,22 +1,14 @@
 import * as React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {Button, Surface, Text, useTheme} from 'react-native-paper';
-import ArtigoContainer2 from '../../components/Artigo/ArtigoContainer2.component';
-import {convertToCurrency} from '../../utils/moeda/moeda.utils';
+import {Surface, Text, useTheme} from 'react-native-paper';
+import ArtigoContainer2 from '../../Layout/Produto/ArtigoContainer2.component';
 import CustomButton from '../../components/Button/Button1.component';
 import {useAppSelector} from '../../store/hook/index.hook';
 import {fazerSubtotal} from '../../utils/index.utils';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-  quantity: number;
-}
+import {convertToCurrency} from '../../utils/moeda/moeda.utils';
 
 const MeuBalaioScreen: React.FC<any> = ({navigation}) => {
-  const theme = useTheme();
+  // const theme = useTheme();
   //   console.log(navigation);
   const encomendar = (): void => {
     navigation.navigate('DadosDeEntrega');

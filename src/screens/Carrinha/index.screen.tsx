@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
-import ArtigoContainer1Screen from '../../components/Artigo/ArtigoContainer1.component';
-import SlideGroupContainer from '../../components/Artigo/SlideGroupContainer.component';
+import ArtigoContainer1Screen from '../../Layout/Produto/ArtigoContainer1.component';
+import SlideGroupContainer from '../../Layout/Produto/SlideGroupContainer.component';
 
 const ShoppingCartScreen = () => {
   const [itemsInCart] = useState([

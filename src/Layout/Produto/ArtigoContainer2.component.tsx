@@ -1,32 +1,32 @@
-import * as React from 'react';
-import {View, Image, TouchableOpacity, StyleSheet} from 'react-native';
-import {Text, Card, IconButton, TextInput, useTheme} from 'react-native-paper';
-import {convertToCurrency} from '../../utils/moeda/moeda.utils';
-import {useState} from 'react';
+import React, {useCallback, useState} from 'react';
+import {Image, StyleSheet, View} from 'react-native';
+import {Card, IconButton, Text, TextInput} from 'react-native-paper';
 import {MeuBaiao} from '../../model/usuario.model';
-import {useEffect} from 'react';
 import {showToast} from '../../service/toast.service';
-import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
-import {
-  setItem,
-  removeItem,
-  updateItem,
-} from '../../store/reducer/usuario.reducer';
+import {useAppDispatch} from '../../store/hook/index.hook';
+import {removeItem, updateItem} from '../../store/reducer/usuario.reducer';
+import {convertToCurrency} from '../../utils/moeda/moeda.utils';
 
-interface ArtigoContainer2 extends MeuBaiao {
+interface ArtigoContainer2Props extends MeuBaiao {
   index: number;
 }
 
-const ArtigoContainer2: React.FC<ArtigoContainer2> = (
+const ArtigoContainer2: React.FC<ArtigoContainer2Props> = (
   artigo,
-): React.JSX.Element => {
-  const {index} = artigo;
+): React.ReactElement => {
+  const {index, preco} = artigo;
   const [itemQuantity, setItemQuantity] = useState<number>(artigo.quantidade);
   const dispatch = useAppDispatch();
- 
-  const handleRemoveQuantity = () => {};
 
-  const handleAddQuantity = () => {};
+  const handleRemoveQuantity = useCallback(() => {
+    if(itemQuantity > 1){
+      dispatch(updateItem({index, preco, quantidade: itemQuantity - 1}));
+    }
+  }, [dispatch, index, preco, itemQuantity]);
+
+  const handleAddQuantity = useCallback(() => {
+    dispatch(updateItem({index, preco, quantidade: itemQuantity + 1}));
+  }, [dispatch, index, preco, itemQuantity]);
 
   const remove = (): void => {
     try {
@@ -41,11 +41,8 @@ const ArtigoContainer2: React.FC<ArtigoContainer2> = (
     } catch (error) {}
   };
 
-  useEffect(()=>{
-    // console.log(artigo);
-  })
   const imageError = function <T>(error: T) {
-    // console.error(error)
+    // console.warn(error)
   };
 
   return (
@@ -75,10 +72,10 @@ const ArtigoContainer2: React.FC<ArtigoContainer2> = (
               value={itemQuantity.toString()}
               onChangeText={text => setItemQuantity(parseInt(text) || 0)}
               left={
-                <TextInput.Icon icon={'minus'} onPress={handleRemoveQuantity} />
+                <TextInput.Icon icon={'plus'} onPress={handleAddQuantity} />
               }
               right={
-                <TextInput.Icon icon={'plus'} onPress={handleAddQuantity} />
+                <TextInput.Icon icon={'minus'} onPress={handleRemoveQuantity} />
               }
             />
           </View>
@@ -114,8 +111,8 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   iconAndInputContainer: {
-    alignItems: 'center',
+    alignItems: 'flex-end',
   },
 });
 
-export default ArtigoContainer2;
+export default React.memo(ArtigoContainer2);

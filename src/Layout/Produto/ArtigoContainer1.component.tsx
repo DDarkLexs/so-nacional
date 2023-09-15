@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
-import {Card, IconButton, Text, TextInput, useTheme} from 'react-native-paper';
+import {
+  Card,
+  Text,
+  TextInput,
+  useTheme,
+  TouchableRipple,
+} from 'react-native-paper';
 import {convertToCurrency} from '../../utils/moeda/moeda.utils';
 import {showToast} from '../../service/toast.service';
 import {useAppDispatch} from '../../store/hook/index.hook';
@@ -74,7 +80,7 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
         <View>
           <Text style={styles.itemName}> {nome} </Text>
           <Text style={styles.itemPrice}>
-            Preço: {convertToCurrency(subtotal)}
+            {convertToCurrency(subtotal)}
           </Text>
         </View>
 
@@ -85,20 +91,22 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
             keyboardType="numeric"
             style={styles.quantityInput}
             editable={false}
+            dense={true}
             mode="outlined"
             left={
               <TextInput.Icon icon={'minus'} onPress={handleRemoveQuantity} />
             }
             right={<TextInput.Icon icon={'plus'} onPress={handleAddQuantity} />}
           />
-          <IconButton
+        </View>
+        <View style={styles.addButtonContainer}>
+          <TouchableRipple
             onPress={addToMeuBaio}
-            containerColor={theme.colors.primary}
-            iconColor="white"
-            icon="plus"
-            style={styles.addButton}
-            size={30}
-          />
+            rippleColor={'white'}
+            style={[styles.addButton, {backgroundColor: theme.colors.primary}]}
+            underlayColor={theme.colors.primary}>
+            <Text style={styles.addButtonLabel}>Adicionar</Text>
+          </TouchableRipple>
         </View>
       </Card>
     </>
@@ -113,50 +121,61 @@ const styles = StyleSheet.create({
   },
   card: {
     marginBottom: 26,
-    padding: 10,
-    // flexDirection: 'row',
-    // alignItems: 'center',
-    alignContent: 'center',
-  },
-  removeIcon: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
+    padding: 7,
   },
   image: {
     width: '100%',
-    height: 200,
+    height: 125,
     borderRadius: 15,
     alignSelf: 'center',
     resizeMode: 'cover',
   },
   imageContainer: {
     justifyContent: 'center',
-    // alignItems:'center'
   },
   itemInfo: {
     flex: 1,
-    marginLeft: 16,
+    marginLeft: 15,
   },
   itemName: {
-    fontSize: 17,
+    fontSize: 15,
   },
   itemPrice: {
-    fontSize: 17,
+    fontSize: 13,
     fontWeight: 'bold',
   },
   quantityControl: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignContent: 'space-between',
+    justifyContent: 'space-between',
+    marginTop: 8,
   },
   quantityInput: {
-    width: 140,
+    width: 'auto',
     textAlign: 'center',
   },
-  addButton: {marginLeft: 'auto'},
+  addButtonContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  addButton: {
+    justifyContent:'center',
+    textAlign: 'center',
+    alignItems:'center',
+    padding: 8,
+    marginBottom:10,
+    width: '100%',
+    // backgroundColor: '#1976D2', // Change to your desired button color
+    borderRadius: 10,
+  },
+  addButtonLabel: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   checkoutButtonContainer: {
-    marginTop: 16, // Espaçamento superior para separar o botão do carrinho
+    marginTop: 16,
   },
 });
 

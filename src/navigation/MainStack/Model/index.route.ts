@@ -9,6 +9,9 @@ export type MainStackStackParamList = {
   TransferenciaBancaria: undefined;
   NEncomenda: undefined;
   FAQ: undefined;
+  Perfil: undefined;
+  EditarPerfil: undefined;
+  Endereco: undefined;
   //   'termos&condicoes': undefined;
   //   ForgotPassword: undefined;
 };

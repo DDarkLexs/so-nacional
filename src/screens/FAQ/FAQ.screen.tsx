@@ -35,9 +35,7 @@ const FAQPage = (): React.JSX.Element => {
         {faqs.map((faq, index) => (
           <Card mode="outlined" key={index} style={styles.card}>
             <Card.Content>
-              <Text style={styles.question}>
-                {faq.pergunta}
-              </Text>
+              <Text style={styles.question}>{faq.pergunta}</Text>
               <Divider style={styles.divider} />
               <Paragraph style={styles.answer}>{faq.resposta}</Paragraph>
             </Card.Content>

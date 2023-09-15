@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {Card, List, Divider, useTheme} from 'react-native-paper';
-import ArtigoContainer2 from '../../components/Artigo/ArtigoContainer2.component';
+import ArtigoContainer2 from '../../Layout/Produto/ArtigoContainer2.component';
 
 interface Product {
   id: number;
@@ -81,11 +81,11 @@ const NEncomendaScreen = () => {
         </Card>
       </View>
       <View>
-        {products.map((product ,i) => (
+        {products.map((product, i) => (
           <ArtigoContainer2
             key={i}
             id_produto={1}
-            nome_produto='teste'
+            nome_produto="teste"
             preco={0}
             index={i}
             image={product.imageUrl}

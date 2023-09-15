@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Card, Text, useTheme} from 'react-native-paper';
-import CategoriaContainer1 from '../../components/categoria/categoriaContainer1.component';
+import CategoriaContainer1 from '../../Layout/Categoria/categoriaContainer1.component';
 import {CategoriaController} from '../../controller/Categoria/categoria.controller';
 import {CategoriaPrincipal} from '../../model/categoria.model';
 import {showToast} from '../../service/toast.service';

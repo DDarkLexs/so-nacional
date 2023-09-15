@@ -31,10 +31,12 @@ const userSlice = createSlice({
     updateItem: (
       state,
       action: PayloadAction<
-        Pick<MeuBaiao, 'id_produto' | 'preco' | 'quantidade'> & {index: number}
+        Pick<MeuBaiao, 'preco' | 'quantidade'> & {index: number}
       >,
     ) => {
-    
+      const {index, preco, quantidade} = action.payload;
+      state.itens[index].quantidade = quantidade;
+      state.itens[index].subtotal = fazerSubtotal(preco, quantidade);
     },
     removeItem: (state, action: PayloadAction<number>) => {
       state.itens.splice(action.payload, 1);

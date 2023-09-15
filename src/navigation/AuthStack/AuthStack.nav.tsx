@@ -7,7 +7,7 @@ import {createNativeStackNavigator as createStackNavigator} from '@react-navigat
 import {AuthStackStackParamList} from './model/authType';
 import TermsAndConditionsPage from '../../screens/termos/termos.screen';
 import ReceavingCode from '../../screens/Authentication/verificationCode/code.screen';
-import {HeaderProps} from '../../components/Principal/Header.component';
+import {HeaderProps} from '../../Layout/Principal/Header.component';
 
 const Stack = createStackNavigator<AuthStackStackParamList>();
 

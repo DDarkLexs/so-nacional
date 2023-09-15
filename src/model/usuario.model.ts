@@ -21,3 +21,32 @@ export interface MeuBaiao
   quantidade: number;
   image?: string;
 }
+
+interface Pedido {
+  id_endereco: number;
+  data_entrega: string;
+  hora_entrega: string;
+  tipo_pagamento: string;
+  subtotal: number;
+  id_user: number;
+  observacao: string;
+  taxa_servico: number;
+  taxa_entrega: number;
+  imposto: number;
+  total: number;
+  itens: ItensBaio[];
+}
+
+export interface ItensBaio extends Omit<MeuBaiao, 'image'> {}
+
+export interface Endereco {
+  id_endereco: number;
+  id_user: number;
+  morada: string;
+  designacao: string;
+  id_zona: number;
+  nome_zona: string;
+  bairro: string;
+  ponto_ref: string;
+  telefone: string;
+}

@@ -24,8 +24,8 @@ const SlideGroupContainer = () => {
   const getData = async (): Promise<void> => {
     try {
       const response1 = await controller.fetchCategoriaApi();
-
       dispatch(setCategoriaPrincipal(response1.data[0].categorias));
+      dispatch(setSelectedCategoria(categoriaPrincipal[0].id_categoria));
     } catch (error) {
       showToast({
         text1: 'Houve um erro!',
@@ -33,9 +33,15 @@ const SlideGroupContainer = () => {
         position: 'bottom',
         type: 'error',
       });
+    } finally {
+      setActiveButtonIndex(0)
+
     }
   };
   // Array of button labels
+  useEffect(() => {
+
+  }, [activeButtonIndex]);
   useEffect(() => {
     getData();
     return () => {
@@ -43,6 +49,7 @@ const SlideGroupContainer = () => {
     };
   }, []);
   useEffect(() => {
+    console.log(selected)
     setActiveButtonIndex(
       categoriaPrincipal.findIndex(item => item.id_categoria === selected),
     );

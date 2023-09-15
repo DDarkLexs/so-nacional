@@ -22,13 +22,13 @@ const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
     },
     {
       key: 'produtos',
-      title: 'produtos',
-      focusedIcon: 'text-box',
-      unfocusedIcon: 'text-box-outline',
+      title: 'Categoria',
+      focusedIcon: 'shape',
+      unfocusedIcon: 'shape-outline',
     },
     {
       key: 'carrinha',
-      title: 'Carrinha',
+      title: 'Carrinho',
       focusedIcon: 'cart',
       unfocusedIcon: 'cart-outline',
       badge: meuBaiao.length,

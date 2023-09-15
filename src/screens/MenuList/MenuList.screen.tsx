@@ -42,15 +42,17 @@ const MenuList: React.FC<any> = ({navigation}): React.JSX.Element => {
       </View>
       {/* List.Section */}
       <List.Section>
-        <List.Item title="Item 1" />
+        {/* <List.Item title="Perfil" /> */}
         <List.Item
-          title="Meu Balaio"
-          onPress={() => navigation.navigate('MeuBalaio')}
+          title="Meu Perfil"
+          onPress={() => navigation.navigate('Perfil')}
         />
         <List.Item
-          title="Perguntas frequentes"
-          onPress={() => navigation.navigate('FAQ')}
+          title="Meus endereços"
+          onPress={() => navigation.navigate('Endereco')}
         />
+        <List.Item title="Minhas Compras" onPress={() => {}} />
+        <List.Item title="Contactos" onPress={() => {}} />
         <List.Item title="Definição" onPress={() => {}} />
       </List.Section>
 

@@ -4,13 +4,16 @@ import {useTheme} from 'react-native-paper';
 import {createNativeStackNavigator as createStackNavigator} from '@react-navigation/native-stack';
 import {MainStackStackParamList} from './Model/index.route';
 import PrincipalScreen from '../../screens/Principal/Principal.screen';
-import Header, {HeaderProps} from '../../components/Principal/Header.component';
+import Header, {HeaderProps} from '../../Layout/Principal/Header.component';
 import DadosDeEntrega from '../../screens/DadosEntrega/DadosDeEntrega.screen';
 import ResumoCompraScreen from '../../screens/ResumoCompra/ResumoCompra.screen';
 import PagamentoScreen from '../../screens/MetodoPagamento/MP.screen';
 import TransferenciaBancariaScreen from '../../screens/TransferenciaBancaria/TransBancaria.screen';
 import NEncomendaScreen from '../../screens/NEncomenda/NEncomenda.screen';
 import FAQPage from '../../screens/FAQ/FAQ.screen';
+import ProfileScreen from '../../screens/Usuario/Perfil.screen';
+import EditProfileScreen from '../../screens/Usuario/EditarPerfil.screen';
+import EnderecoList from '../../screens/Usuario/Endereco/endereco.screen';
 
 const Stack = createStackNavigator<MainStackStackParamList>();
 
@@ -85,6 +88,30 @@ const MainStack: React.FC = (): React.JSX.Element => {
           contentStyle: {backgroundColor: theme.colors.background},
         }}
         component={FAQPage}
+      />
+      <Stack.Screen
+        name="Perfil"
+        options={{
+          title: 'Perfil de Usuário',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={ProfileScreen}
+      />
+      <Stack.Screen
+        name="EditarPerfil"
+        options={{
+          title: 'Editar Perfil',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={EditProfileScreen}
+      />
+      <Stack.Screen
+        name="Endereco"
+        options={{
+          title: 'Meus endereços',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={EnderecoList}
       />
     </Stack.Navigator>
   );

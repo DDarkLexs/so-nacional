@@ -13,17 +13,15 @@ import AppNavigator from './src/navigation/AppNavigator.nav';
 import {useAppDispatch} from './src/store/hook/index.hook';
 import {setUtilizador} from './src/store/reducer/usuario.reducer';
 import Toast from 'react-native-toast-message';
-import { showToast } from './src/service/toast.service';
+import {showToast} from './src/service/toast.service';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
-
 
   const controller = new UsuarioController();
 
   const verifyAuth = async (): Promise<void> => {
     try {
-      
       const response = await controller.verifyIsAuthenticated();
       dispatch(setUtilizador(response));
     } catch (error) {}
