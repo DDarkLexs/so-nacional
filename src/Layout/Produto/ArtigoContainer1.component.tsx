@@ -94,9 +94,9 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
             dense={true}
             mode="outlined"
             left={
-              <TextInput.Icon icon={'minus'} onPress={handleRemoveQuantity} />
+              <TextInput.Icon size={17} icon={'minus'} onPress={handleRemoveQuantity} />
             }
-            right={<TextInput.Icon icon={'plus'} onPress={handleAddQuantity} />}
+            right={<TextInput.Icon size={17} icon={'plus'} onPress={handleAddQuantity} />}
           />
         </View>
         <View style={styles.addButtonContainer}>

@@ -16,7 +16,6 @@ const FAQPage = (): React.JSX.Element => {
     try {
       const response = (await axiosIns.get('/perguntasfrequentes')).data.data;
       setFaqs(response);
-      console.log(response);
     } catch (error) {
       showToast({
         text1: 'Houve um erro!',
