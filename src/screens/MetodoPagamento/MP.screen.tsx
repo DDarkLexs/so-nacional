@@ -1,8 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Image} from 'react-native';
-import {Card, Dialog, IconButton} from 'react-native-paper';
-import {Button, Text, useTheme, TouchableRipple} from 'react-native-paper';
-import { useAppDispatch } from '../../store/hook/index.hook';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {
+  Card,
+  IconButton,
+  Text,
+  TouchableRipple,
+  useTheme,
+} from 'react-native-paper';
+import {useAppDispatch} from '../../store/hook/index.hook';
 
 const PagamentoScreen = () => {
   const theme = useTheme();
@@ -26,6 +31,7 @@ const PagamentoScreen = () => {
     //   image: require('../../assets/image/fruits/banana.png'),
     // },
     {
+      id: 1,
       name: 'Transferência Bancária',
       value: 'Transferência Bancária',
       icon: 'credit-card-wireless',
@@ -34,7 +40,7 @@ const PagamentoScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={{marginBottom: 16}} variant="titleLarge">
+      <Text style={styles.titleLabel} variant="titleMedium">
         Selecione uma forma de pagamento
       </Text>
 
@@ -75,6 +81,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
+  titleLabel: {marginBottom: 16, textAlign: 'center'},
   card: {
     marginVertical: 10,
     borderRadius: 10,

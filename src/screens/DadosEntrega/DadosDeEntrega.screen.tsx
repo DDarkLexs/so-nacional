@@ -1,20 +1,20 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Image, ScrollView} from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {
-  Card,
   Button,
-  Text,
-  useTheme,
-  TouchableRipple,
+  Card,
   IconButton,
   Surface,
+  Text,
+  useTheme,
 } from 'react-native-paper';
-import {showToast} from '../../service/toast.service';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder'; // Import SkeletonPlaceholder
 import {EnderecoController} from '../../controller/endereco/endereco.controller';
-import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
-import {setEndereco} from '../../store/reducer/endereco.store';
 import {Endereco} from '../../model/endereco.model';
+import {showToast} from '../../service/toast.service';
+import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
 import {setEncomendaInfo} from '../../store/reducer/encomenda.store';
+import {setEndereco} from '../../store/reducer/endereco.store';
 
 interface MetodoEntrega {
   id: number;
@@ -42,8 +42,6 @@ const DadosDeEntrega: React.FC<any> = ({navigation}): JSX.Element => {
         dispatch(setEndereco([]));
         break;
     }
-
-    // setIsButtonDisabled(false); // Ativar o botão quando um método é selecionado
   };
 
   const methods = [
@@ -56,6 +54,7 @@ const DadosDeEntrega: React.FC<any> = ({navigation}): JSX.Element => {
 
   const getEnderecos = async () => {
     try {
+      setLoading(true);
       await controller.getEnderecoAllByUser();
       dispatch(setEndereco(controller.enderecos));
     } catch (error) {
@@ -66,12 +65,14 @@ const DadosDeEntrega: React.FC<any> = ({navigation}): JSX.Element => {
         type: 'error',
       });
     } finally {
+      setLoading(false);
     }
   };
+
   const prosseguir = () => {
     if (selectedEndereco) {
       const {id_endereco, id_user} = selectedEndereco;
-      dispatch(setEncomendaInfo({id_endereco, id_user}))
+      dispatch(setEncomendaInfo({id_endereco, id_user}));
       navigation.navigate('ResumoCompra');
     }
   };
@@ -110,39 +111,62 @@ const DadosDeEntrega: React.FC<any> = ({navigation}): JSX.Element => {
       )}
 
       {selectedMethod == 0 &&
-        enderecos.map((method, index) => (
-          <Surface
-            onTouchStart={() => {
-              setSelectedEndereco(method);
-            }}
-            key={index}
-            style={[
-              styles.card1,
-              enderecos.findIndex(
-                state => state.id_endereco === selectedEndereco?.id_endereco,
-              ) === index
-                ? [styles.cardSelected, {borderColor: theme.colors.secondary}]
-                : undefined,
-            ]}>
-            <Card.Content>
-              <View>
-                <Text variant="bodyMedium" style={[styles.cardText1]}>
-                  Bairro: {method.bairro}
-                </Text>
-                <Text variant="bodyMedium" style={[styles.cardText1]}>
-                  designação: {method.designacao}
-                </Text>
-                <Text variant="bodyMedium" style={[styles.cardText1]}>
-                  morada: {method.nome_morada}
-                </Text>
-                <Text variant="bodyMedium" style={[styles.cardText1]}>
-                  Referência: {method.ponto_ref}
-                </Text>
-                {/* <Text variant='bodyMedium' style={[styles.cardText]}></Text> */}
-              </View>
-            </Card.Content>
-          </Surface>
+        (loading ? (
+          <SkeletonPlaceholder>
+            <SkeletonPlaceholder.Item flexDirection="column" marginTop={20}>
+              <SkeletonPlaceholder.Item
+                width={'100%'}
+                height={100}
+                marginTop={0}
+              />
+              <SkeletonPlaceholder.Item
+                width={'100%'}
+                height={100}
+                marginTop={20}
+              />
+              <SkeletonPlaceholder.Item
+                width={'100%'}
+                height={100}
+                marginTop={20}
+              />
+            </SkeletonPlaceholder.Item>
+          </SkeletonPlaceholder>
+        ) : (
+          enderecos.map((method, index) => (
+            <Surface
+              onTouchStart={() => {
+                setSelectedEndereco(method);
+              }}
+              key={index}
+              style={[
+                styles.card1,
+                enderecos.findIndex(
+                  state => state.id_endereco === selectedEndereco?.id_endereco,
+                ) === index
+                  ? [styles.cardSelected, {borderColor: theme.colors.secondary}]
+                  : undefined,
+              ]}>
+              <Card.Content>
+                <View>
+                  <Text variant="bodyMedium" style={[styles.cardText1]}>
+                    Bairro: {method.bairro}
+                  </Text>
+                  <Text variant="bodyMedium" style={[styles.cardText1]}>
+                    designação: {method.designacao}
+                  </Text>
+                  <Text variant="bodyMedium" style={[styles.cardText1]}>
+                    morada: {method.nome_morada}
+                  </Text>
+                  <Text variant="bodyMedium" style={[styles.cardText1]}>
+                    Referência: {method.ponto_ref}
+                  </Text>
+                  {/* <Text variant='bodyMedium' style={[styles.cardText]}></Text> */}
+                </View>
+              </Card.Content>
+            </Surface>
+          ))
         ))}
+
       <View style={styles.confirmButtonContainer}>
         <Button
           style={styles.confirmButton}
@@ -180,7 +204,6 @@ const styles = StyleSheet.create({
     borderColor: '#a2a0a08c',
     borderStyle: 'solid',
   },
-
   cardSelected: {
     borderWidth: 3,
     borderStyle: 'solid',
@@ -190,18 +213,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardText: {
-    // fontSize: 16,
     padding: 10,
   },
   cardText1: {
-    // fontSize: 16,
     padding: 3,
-  },
-  cardImage: {
-    width: 80,
-    height: 80,
-    resizeMode: 'contain',
-    marginRight: 10,
   },
   confirmButtonContainer: {
     marginTop: 20,

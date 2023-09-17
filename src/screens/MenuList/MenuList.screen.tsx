@@ -52,19 +52,27 @@ const MenuList: React.FC<any> = ({navigation}): React.JSX.Element => {
           title="Meus endereços"
           onPress={() => navigation.navigate('Endereco')}
           left={() => <List.Icon icon={'home-city-outline'}></List.Icon>}
-          />
-        <List.Item title="Sobre a loja" 
-        left={() => <List.Icon icon={'storefront-outline'}></List.Icon>}
-        onPress={() => {}} />
-        <List.Item title="Termos e condições" 
-        left={() => <List.Icon icon={'text-box-outline'}></List.Icon>}
-        onPress={() => {}} />
-        <List.Item title="Contactos" 
-        left={() => <List.Icon icon={'phone-outline'}></List.Icon>}
-        onPress={() => {}} />
-        <List.Item title="Assistência" 
-        left={() => <List.Icon icon={'face-agent'}></List.Icon>}
-        onPress={() => navigation.navigate('FAQ')} />
+        />
+        <List.Item
+          title="Sobre a loja"
+          left={() => <List.Icon icon={'storefront-outline'}></List.Icon>}
+          onPress={() => {}}
+        />
+        <List.Item
+          title="Termos e condições"
+          left={() => <List.Icon icon={'text-box-outline'}></List.Icon>}
+          onPress={() => navigation.navigate('Termos')}
+        />
+        <List.Item
+          title="Contactos"
+          left={() => <List.Icon icon={'phone-outline'}></List.Icon>}
+          onPress={() => navigation.navigate('Contacto')}
+        />
+        <List.Item
+          title="Assistência"
+          left={() => <List.Icon icon={'face-agent'}></List.Icon>}
+          onPress={() => navigation.navigate('FAQ')}
+        />
       </List.Section>
 
       {/* Logout Button */}
@@ -72,7 +80,7 @@ const MenuList: React.FC<any> = ({navigation}): React.JSX.Element => {
       <Button
         mode="contained"
         onPress={terminarSessao}
-        textColor='white'
+        textColor="white"
         style={styles.logoutButton}>
         Terminar sessão
       </Button>

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, ToastAndroid} from 'react-native';
 import {Appbar, Card, Divider, Paragraph, Text} from 'react-native-paper';
-import axiosIns from '../../api/axiosIns.api';
-import {showToast} from '../../service/toast.service';
+import axiosIns from '../../../api/axiosIns.api';
+import {showToast} from '../../../service/toast.service';
 
 interface faqProp {
   pergunta: string;

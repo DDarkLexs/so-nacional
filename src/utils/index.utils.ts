@@ -1,3 +1,4 @@
+import ImageResizer from '@bam.tech/react-native-image-resizer';
 export const checkErrorContatrainsArrays = (errors: any[]): any => {
   return errors.flatMap(error => Object.values(error.constraints ?? []))[0]; // Use flatMap and nullish coalescing operator
 };
@@ -5,6 +6,44 @@ export const checkErrorContatrainsArrays = (errors: any[]): any => {
 export const fazerSubtotal = (preco: number, quantidade: number): number => {
   return preco * quantidade;
 };
+
+
+interface ResizedImage {
+  uri: string;
+  width: number;
+  height: number;
+}
+
+export const resizeImage = async (
+  sourceURI: string,
+  targetWidth: number,
+  targetHeight: number,
+  quality = 80,
+  resizeMode = true
+): Promise<ResizedImage> => {
+  try {
+    const resizedImage = await ImageResizer.createResizedImage(
+      sourceURI,
+      targetWidth,
+      targetHeight,
+      'PNG',
+      quality,
+      0, // No rotation
+      undefined, // Output file path (null means it will generate a temp file)
+      resizeMode
+    );
+
+    return {
+      uri: resizedImage.uri,
+      width: resizedImage.width,
+      height: resizedImage.height
+    };
+  } catch (error) {
+    console.error('Error resizing image:', error);
+    throw new Error('Image resize failed');
+  }
+};
+
 
 
 /* export const compressImage = async (uri: string) => {

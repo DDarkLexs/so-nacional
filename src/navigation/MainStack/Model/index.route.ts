@@ -1,5 +1,4 @@
 import {RouteProp} from '@react-navigation/native';
-import EntradaScreen from '../../../screens/Authentication/entrada/Entrada.screen';
 
 export type MainStackStackParamList = {
   Principal: undefined;
@@ -12,6 +11,8 @@ export type MainStackStackParamList = {
   Perfil: undefined;
   EditarPerfil: undefined;
   Endereco: undefined;
+  Contacto: undefined;
+  Termos: undefined;
   //   'termos&condicoes': undefined;
   //   ForgotPassword: undefined;
 };

@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   },
   skeletonProductSquare: {
     width: '47%',
+    height: 125,
     aspectRatio: 1,
     borderRadius: 8,
   },

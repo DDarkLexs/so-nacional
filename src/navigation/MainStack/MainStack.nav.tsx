@@ -10,10 +10,12 @@ import ResumoCompraScreen from '../../screens/ResumoCompra/ResumoCompra.screen';
 import PagamentoScreen from '../../screens/MetodoPagamento/MP.screen';
 import TransferenciaBancariaScreen from '../../screens/TransferenciaBancaria/TransBancaria.screen';
 import NEncomendaScreen from '../../screens/NEncomenda/NEncomenda.screen';
-import FAQPage from '../../screens/FAQ/FAQ.screen';
+import FAQPage from '../../screens/Informacao/FAQ/FAQ.screen';
 import ProfileScreen from '../../screens/Usuario/Perfil.screen';
 import EditProfileScreen from '../../screens/Usuario/EditarPerfil.screen';
 import EnderecoList from '../../screens/Usuario/Endereco/endereco.screen';
+import ContactoScreen from '../../screens/Informacao/Contacto/Contacto.screen';
+import TermsAndConditionsPage from '../../screens/Informacao/Termos/termos.screen';
 
 const Stack = createStackNavigator<MainStackStackParamList>();
 
@@ -112,6 +114,22 @@ const MainStack: React.FC = (): React.JSX.Element => {
           contentStyle: {backgroundColor: theme.colors.background},
         }}
         component={EnderecoList}
+      />
+      <Stack.Screen
+        name="Termos"
+        options={{
+          title: 'Termos & Condições',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={TermsAndConditionsPage}
+      />
+      <Stack.Screen
+        name="Contacto"
+        options={{
+          title: 'Contactos',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={ContactoScreen}
       />
     </Stack.Navigator>
   );

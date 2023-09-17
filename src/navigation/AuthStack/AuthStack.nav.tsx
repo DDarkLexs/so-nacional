@@ -5,7 +5,7 @@ import RegistroScreen from '../../screens/Authentication/registro/Registro.scree
 import EntradaScreen from '../../screens/Authentication/entrada/Entrada.screen';
 import {createNativeStackNavigator as createStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackStackParamList} from './model/authType';
-import TermsAndConditionsPage from '../../screens/termos/termos.screen';
+import TermsAndConditionsPage from '../../screens/Informacao/Termos/termos.screen';
 import ReceavingCode from '../../screens/Authentication/verificationCode/code.screen';
 import {HeaderProps} from '../../Layout/Principal/Header.component';
 
