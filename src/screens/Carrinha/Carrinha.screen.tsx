@@ -3,17 +3,29 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import {Surface, Text, useTheme} from 'react-native-paper';
 import ArtigoContainer2 from '../../Layout/Produto/ArtigoContainer2.component';
 import CustomButton from '../../components/Button/Button1.component';
-import {useAppSelector} from '../../store/hook/index.hook';
+import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
 import {fazerSubtotal} from '../../utils/index.utils';
 import {convertToCurrency} from '../../utils/moeda/moeda.utils';
+import {setEncomendaItens} from '../../store/reducer/encomenda.store';
+import {ItensBaio} from '../../model/encomenda.model';
 
-const MeuBalaioScreen: React.FC<any> = ({navigation}) => {
-  // const theme = useTheme();
-  //   console.log(navigation);
+const CarrinhoScreen: React.FC<any> = ({navigation}) => {
+  const dispatch = useAppDispatch();
+
   const encomendar = (): void => {
+    const encomendas: ItensBaio[] = carrinho.map(
+      ({id_produto, nome_produto, preco, quantidade, subtotal}) => ({
+        id_produto,
+        nome_produto,
+        preco,
+        quantidade,
+        subtotal,
+      }),
+    );
+    dispatch(setEncomendaItens(encomendas));
     navigation.navigate('DadosDeEntrega');
   };
-  const meuBaiao = useAppSelector(state => state.usuario.itens);
+  const carrinho = useAppSelector(state => state.usuario.itens);
   const contas = useAppSelector(state => state.usuario.itens).map(
     ({quantidade, preco}) => fazerSubtotal(preco, quantidade),
   );
@@ -24,7 +36,7 @@ const MeuBalaioScreen: React.FC<any> = ({navigation}) => {
   return (
     <View style={styles.container}>
       <ScrollView style={{marginBottom: 150}}>
-        {meuBaiao.map((producto, i) => (
+        {carrinho.map((producto, i) => (
           <ArtigoContainer2
             id_produto={producto.id_produto}
             key={i}
@@ -39,11 +51,19 @@ const MeuBalaioScreen: React.FC<any> = ({navigation}) => {
       </ScrollView>
       <Surface style={styles.card}>
         <View style={styles.cardRow}>
-          <Text style={styles.label}>TOTAL:</Text>
-          <Text style={styles.value}>{convertToCurrency(total)}</Text>
+          <Text variant="headlineMedium" style={styles.label}>
+            TOTAL:
+          </Text>
+          <Text variant="headlineSmall" style={styles.value}>
+            {convertToCurrency(total)}
+          </Text>
         </View>
         <View style={{marginHorizontal: 20}}>
-          <CustomButton label="Encomendar" onPress={() => encomendar()} />
+          <CustomButton
+            disabled={!carrinho.length}
+            label="Encomendar"
+            onPress={() => encomendar()}
+          />
         </View>
         {/* <Button onPress={() => {}}>  </Button> */}
       </Surface>
@@ -98,12 +118,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // Space evenly within the row
   },
   label: {
-    fontSize: 26,
+    // fontSize: 26,
     fontWeight: 'bold',
   },
   value: {
-    fontSize: 28,
+    // fontSize: 28,
   },
 });
 
-export default MeuBalaioScreen;
+export default CarrinhoScreen;

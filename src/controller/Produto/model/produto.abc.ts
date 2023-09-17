@@ -14,7 +14,7 @@ export abstract class ProdutoControllerABC {
   protected set subCategoria(produtos: SubCategoria[]) {
     this._subCategoria = produtos;
   }
-  get subCategoria(): SubCategoria[] {
+  public get subCategoria(): SubCategoria[] {
     return this._subCategoria;
   }
 }

@@ -6,6 +6,7 @@ export const fazerSubtotal = (preco: number, quantidade: number): number => {
   return preco * quantidade;
 };
 
+
 /* export const compressImage = async (uri: string) => {
   const manipImage = await ImageManipulator.default.manipulate(uri, [], {
     compress: 0.3,

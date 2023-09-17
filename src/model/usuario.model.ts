@@ -22,6 +22,7 @@ export interface MeuBaiao
   image?: string;
 }
 
+export interface ItensBaio extends Required<Omit<MeuBaiao, 'image'>> {}
 interface Pedido {
   id_endereco: number;
   data_entrega: string;
@@ -37,16 +38,4 @@ interface Pedido {
   itens: ItensBaio[];
 }
 
-export interface ItensBaio extends Omit<MeuBaiao, 'image'> {}
 
-export interface Endereco {
-  id_endereco: number;
-  id_user: number;
-  morada: string;
-  designacao: string;
-  id_zona: number;
-  nome_zona: string;
-  bairro: string;
-  ponto_ref: string;
-  telefone: string;
-}

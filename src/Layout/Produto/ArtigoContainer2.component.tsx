@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
-import {Image, StyleSheet, View} from 'react-native';
-import {Card, IconButton, Text, TextInput} from 'react-native-paper';
+import {Image, StyleSheet, View, useColorScheme} from 'react-native';
+import {Card, IconButton, Text, TextInput, useTheme} from 'react-native-paper';
 import {MeuBaiao} from '../../model/usuario.model';
 import {showToast} from '../../service/toast.service';
 import {useAppDispatch} from '../../store/hook/index.hook';
@@ -17,9 +17,10 @@ const ArtigoContainer2: React.FC<ArtigoContainer2Props> = (
   const {index, preco} = artigo;
   const [itemQuantity, setItemQuantity] = useState<number>(artigo.quantidade);
   const dispatch = useAppDispatch();
+  const theme = useTheme();
 
   const handleRemoveQuantity = useCallback(() => {
-    if(itemQuantity > 1){
+    if (itemQuantity > 1) {
       dispatch(updateItem({index, preco, quantidade: itemQuantity - 1}));
     }
   }, [dispatch, index, preco, itemQuantity]);
@@ -47,7 +48,15 @@ const ArtigoContainer2: React.FC<ArtigoContainer2Props> = (
 
   return (
     <View>
-      <Card style={styles.card}>
+      <Card
+        mode="contained"
+        style={[
+          styles.card,
+          {
+            backgroundColor:
+              useColorScheme() === 'dark' ? 'transparent' : undefined,
+          },
+        ]}>
         <Card.Content style={styles.cardContent}>
           <View style={styles.textContainer}>
             <Image
@@ -61,7 +70,14 @@ const ArtigoContainer2: React.FC<ArtigoContainer2Props> = (
             </Text>
           </View>
           <View style={styles.iconAndInputContainer}>
-            <IconButton size={30} icon="delete-outline" onPress={remove} />
+            <IconButton
+              containerColor={'transparent'}
+              borderless={true}
+              size={30}
+              animated={true}
+              icon="delete-outline"
+              onPress={remove}
+            />
             <TextInput
               keyboardType="numeric"
               style={{width: 130}}
@@ -88,6 +104,8 @@ const ArtigoContainer2: React.FC<ArtigoContainer2Props> = (
 const styles = StyleSheet.create({
   card: {
     margin: 10,
+    borderWidth: 0.2,
+    borderRadius: 5,
   },
   cardContent: {
     flexDirection: 'row',

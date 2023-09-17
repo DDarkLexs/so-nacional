@@ -13,20 +13,18 @@ import {showToast} from '../../service/toast.service';
 import {useEffect} from 'react';
 import {EnderecoController} from '../../controller/endereco/endereco.controller';
 
-interface EditarEnderecoProps {
+interface AddEnderecoProps {
   visible: boolean;
   onSave: () => void;
   onCancel: () => void;
   onOpen: () => void;
-  enderecoProp:Endereco
 }
 
-const EditarEnderecoDialog: React.FC<EditarEnderecoProps> = ({
+const AdicionarEnderecoDialog: React.FC<AddEnderecoProps> = ({
   onCancel,
   visible,
   onSave,
   onOpen,
-  enderecoProp
 }) => {
   const controller = new EnderecoController();
 
@@ -40,7 +38,6 @@ const EditarEnderecoDialog: React.FC<EditarEnderecoProps> = ({
     ponto_ref: '',
     telefone: '',
   });
-
   const [menuVisible, setMenuVisible] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -101,16 +98,13 @@ const EditarEnderecoDialog: React.FC<EditarEnderecoProps> = ({
 
   useEffect(() => {
     if (visible) {
-      setEndereco({
-        ...enderecoProp,
-      })
       getZonasAPI();
     }
   }, [visible]);
   return (
     <Portal>
       <Dialog visible={visible} onDismiss={onCancel}>
-        <Dialog.Title>Editar Endereço</Dialog.Title>
+        <Dialog.Title>Adicionar Endereço</Dialog.Title>
         <Dialog.Content>
           <TextInput
             label="Morada"
@@ -207,4 +201,4 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
 });
-export default EditarEnderecoDialog;
+export default AdicionarEnderecoDialog;

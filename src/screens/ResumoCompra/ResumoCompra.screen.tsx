@@ -2,13 +2,24 @@ import React from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {Button, Card, Text, useTheme, Paragraph} from 'react-native-paper';
 import {convertToCurrency} from '../../utils/moeda/moeda.utils';
+import {useEffect} from 'react';
+import { useAppSelector } from '../../store/hook/index.hook';
+import TransferenciaBancariaScreen from '../TransferenciaBancaria/TransBancaria.screen';
+import PagamentoScreen from '../MetodoPagamento/MP.screen';
+
 
 const ResumoCompraScreen: React.FC<any> = ({navigation}) => {
   const theme = useTheme();
-
+  const encomendaData = useAppSelector(state => state.encomenda.encomenda);
+  useEffect(() => {
+        
+  }, []);
   return (
     <ScrollView style={styles.container}>
+      <PagamentoScreen/>
       {/* Card de Resumo de Compra */}
+      <TransferenciaBancariaScreen />
+      
       <Card style={styles.card}>
         <Card.Title title="Resumo de Compra" />
         <Card.Content>
@@ -38,7 +49,8 @@ const ResumoCompraScreen: React.FC<any> = ({navigation}) => {
       <View style={styles.confirmButtonContainer}>
         <Button
           mode="contained"
-          color={theme.colors.primary}
+          textColor="white"
+          buttonColor={theme.colors.secondary}
           style={styles.confirmButton}
           onPress={() => navigation.navigate('MPagamento')}>
           Pagar
@@ -70,7 +82,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   confirmButtonContainer: {
-    marginTop: 20,
+    marginVertical: 30,
     alignSelf: 'center',
     width: '90%',
   },

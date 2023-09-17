@@ -4,7 +4,8 @@ import {useAppSelector} from '../../store/hook/index.hook';
 import HomeScreen from '../Home/Home.screen';
 import MenuList from '../MenuList/MenuList.screen';
 import ProdutosScreen from '../Produtos/Produtos.screen';
-import MeuBalaioScreen from '../Carrinha/MeuBalaio.screen';
+import MeuBalaioScreen from '../Carrinha/Carrinha.screen';
+import MEncomendaScreen from '../Usuario/MEncomendas/MEncomendas.screen';
 
 const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
   const [index, setIndex] = React.useState(0);
@@ -16,13 +17,13 @@ const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
   const routes = [
     {
       key: 'Home',
-      title: 'Principal',
+      title: 'Início',
       focusedIcon: 'home',
       unfocusedIcon: 'home-outline',
     },
     {
       key: 'produtos',
-      title: 'Categoria',
+      title: 'Categorias',
       focusedIcon: 'shape',
       unfocusedIcon: 'shape-outline',
     },
@@ -34,6 +35,12 @@ const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
       badge: meuBaiao.length,
     },
     {
+      key: 'MEncomendas',
+      title: 'Encomenda',
+      focusedIcon: 'note-text',
+      unfocusedIcon: 'note-text-outline',
+    },
+    {
       key: 'menu',
       title: 'Menu',
       focusedIcon: 'menu',
@@ -41,11 +48,13 @@ const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
     },
   ];
 
+  
+
   const renderScene = BottomNavigation.SceneMap({
     Home: HomeScreen,
     produtos: ProdutosScreen,
     carrinha: () => <MeuBalaioScreen navigation={navigation} />,
-    // registro: () => <Text>4</Text>,
+    MEncomendas: () => <MEncomendaScreen navigation={navigation} />,
     menu: () => <MenuList navigation={navigation} />,
   });
 

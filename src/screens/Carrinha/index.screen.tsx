@@ -35,6 +35,7 @@ const ShoppingCartScreen = () => {
           nome={item.name}
           preco={item.price}
           id_produto={item.id}
+          nome_subcategoria={'any'}
           key={item.id}
         />
       ))}

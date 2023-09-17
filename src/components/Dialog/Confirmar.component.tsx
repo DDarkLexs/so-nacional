@@ -1,5 +1,6 @@
 import React from 'react';
-import { Dialog, Button } from 'react-native-paper';
+import { Dialog, Button, Text, Portal } from 'react-native-paper';
+import { Endereco } from '../../model/endereco.model';
 
 interface ConfirmDialogProps {
   visible: boolean;
@@ -12,18 +13,26 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   onDismiss,
   onConfirm,
 }) => {
+
   return (
+    <Portal>
     <Dialog visible={visible} onDismiss={onDismiss}>
-      <Dialog.Title>Confirmar exclusão</Dialog.Title>
       <Dialog.Content>
+      <Dialog.Icon size={50} icon={'alert'}/>
+      <Dialog.Title>Confirmar exclusão</Dialog.Title>
+        <Text>
         Tem certeza de que deseja excluir este endereço?
+        </Text>
       </Dialog.Content>
       <Dialog.Actions>
         <Button onPress={onDismiss}>Cancelar</Button>
         <Button onPress={onConfirm}>Confirmar</Button>
       </Dialog.Actions>
     </Dialog>
+    </Portal>
   );
 };
+
+
 
 export default ConfirmDialog;

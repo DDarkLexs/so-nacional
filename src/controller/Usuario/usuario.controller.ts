@@ -1,7 +1,7 @@
 import {plainToInstance} from 'class-transformer';
 import {validate} from 'class-validator';
-import {AuthUsuarioDto, CreateUsuarioDto} from '../../guards/Dto/usuario.dto';
-import {UsuarioControllerABC} from './model/usuario.model';
+import {AuthUsuarioDto, CreateUsuarioDto, updateUtilizadorDto} from '../../guards/Dto/usuario.dto';
+import {UsuarioControllerABC} from './model/usuario.abc';
 import {checkErrorContatrainsArrays} from '../../utils/index.utils';
 import axiosIns from '../../api/axiosIns.api';
 import {Usuario, Utilizador} from '../../model/usuario.model';
@@ -79,6 +79,31 @@ export class UsuarioController extends UsuarioControllerABC {
         }
         resolve(usuario);
       } catch (error: any) {
+        reject(error.message || error);
+      }
+    });
+  }
+  public atualizarUsuario(usuario: updateUtilizadorDto): Promise<void> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const Dto = plainToInstance(updateUtilizadorDto, usuario);
+        const errors = await validate(Dto);
+        if (errors.length > 0) {
+          const validationError = checkErrorContatrainsArrays(errors);
+          throw `${validationError}`;
+        }
+        const response = (
+          await axiosIns.post('/auth/editar-perfil', {}, {params: {...usuario}})
+        ).data;
+        if (response.message === 'Login falhou!') {
+          throw response.message;
+        }
+        // await setUser(response.data[0]);
+        // await this.verifyIsAuthenticated();
+        console.log(response)
+        resolve();
+      } catch (error: any) {
+        console.log(error)
         reject(error.message || error);
       }
     });

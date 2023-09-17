@@ -46,14 +46,25 @@ const MenuList: React.FC<any> = ({navigation}): React.JSX.Element => {
         <List.Item
           title="Meu Perfil"
           onPress={() => navigation.navigate('Perfil')}
+          left={() => <List.Icon icon={'account-circle-outline'}></List.Icon>}
         />
         <List.Item
           title="Meus endereços"
           onPress={() => navigation.navigate('Endereco')}
-        />
-        <List.Item title="Minhas Compras" onPress={() => {}} />
-        <List.Item title="Contactos" onPress={() => {}} />
-        <List.Item title="Definição" onPress={() => {}} />
+          left={() => <List.Icon icon={'home-city-outline'}></List.Icon>}
+          />
+        <List.Item title="Sobre a loja" 
+        left={() => <List.Icon icon={'storefront-outline'}></List.Icon>}
+        onPress={() => {}} />
+        <List.Item title="Termos e condições" 
+        left={() => <List.Icon icon={'text-box-outline'}></List.Icon>}
+        onPress={() => {}} />
+        <List.Item title="Contactos" 
+        left={() => <List.Icon icon={'phone-outline'}></List.Icon>}
+        onPress={() => {}} />
+        <List.Item title="Assistência" 
+        left={() => <List.Icon icon={'face-agent'}></List.Icon>}
+        onPress={() => navigation.navigate('FAQ')} />
       </List.Section>
 
       {/* Logout Button */}
@@ -61,6 +72,7 @@ const MenuList: React.FC<any> = ({navigation}): React.JSX.Element => {
       <Button
         mode="contained"
         onPress={terminarSessao}
+        textColor='white'
         style={styles.logoutButton}>
         Terminar sessão
       </Button>
@@ -80,6 +92,7 @@ const styles = StyleSheet.create({
   },
   logoutButton: {
     marginTop: 16,
+    // font: 'white'
   },
 });
 

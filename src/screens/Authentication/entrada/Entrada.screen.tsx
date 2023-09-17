@@ -25,7 +25,6 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
         type: 'success',
       });
       dispatch(actions.setUtilizador(response));
-      console.log(response);
     } catch (error) {
       showToast({
         text1: 'Houve erro!',
@@ -65,6 +64,7 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
         value={telemovel}
         disabled={loading}
         mode="outlined"
+        left={<TextInput.Icon icon={'cellphone'} />}
         keyboardType="phone-pad"
         onChangeText={setTelemovel}
         style={styles.input}
@@ -74,6 +74,7 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
         value={password}
         mode="outlined"
         disabled={loading}
+        left={<TextInput.Icon icon={'lock'} />}
         onChangeText={setPassword}
         secureTextEntry
         style={styles.input}
@@ -93,22 +94,6 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
       <TouchableOpacity disabled={loading} onPress={handleRegister}>
         <Text style={styles.register}>Cadastrar-me</Text>
       </TouchableOpacity>
-      <View style={styles.checkboxContainer}>
-        <Checkbox
-          disabled={loading}
-          status={agreedToTerms ? 'checked' : 'unchecked'}
-          onPress={() => setAgreedToTerms(!agreedToTerms)}
-        />
-        <Text disabled={loading} style={styles.checkboxLabel}>
-          Concordo com os{' '}
-          <Text
-            disabled={loading}
-            onPress={() => navigation.navigate('termos&condicoes')}
-            style={styles.termos}>
-            Termos e Condições
-          </Text>
-        </Text>
-      </View>
     </View>
   );
 };

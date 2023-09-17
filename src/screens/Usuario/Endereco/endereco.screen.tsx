@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {
-  DataTable,
   IconButton,
   FAB,
   Dialog,
@@ -11,10 +10,21 @@ import {
   Menu,
   Divider,
   Provider,
+  Text,
+  Card,
+  useTheme,
 } from 'react-native-paper';
 import {NavigationContainerRef} from '@react-navigation/native';
-import {Endereco} from '../../../model/usuario.model';
 import ZonaDeEntregaInputComponent from '../../../components/Menu/ZonaDeEntrega.component';
+import {Endereco} from '../../../model/endereco.model';
+import AdicionarEnderecoDialog from '../../../Layout/Endereco/criar.component';
+import {EnderecoController} from '../../../controller/endereco/endereco.controller';
+import {showToast} from '../../../service/toast.service';
+import {useAppDispatch, useAppSelector} from '../../../store/hook/index.hook';
+import {setEndereco} from '../../../store/reducer/endereco.store';
+import {convertToCurrency} from '../../../utils/moeda/moeda.utils';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import ConfirmDialog from '../../../components/Dialog/Confirmar.component';
 
 interface EnderecoListProps {
   data: Endereco[];
@@ -22,28 +32,47 @@ interface EnderecoListProps {
 }
 
 const EnderecoList: React.FC = ({navigation}: any) => {
-  const data = [] as Endereco[];
-  const [page, setPage] = useState<number>(0);
-  const [itemsPerPageList] = useState<number[]>([5, 10, 15]);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(itemsPerPageList[0]);
+  const controller = new EnderecoController();
+  const theme = useTheme();
+  // await controller.getEnderecoAllByUser();
+
+  const enderecos = useAppSelector<Endereco[]>(
+    state => state.endereco.endereco,
+  );
+
   const [visible, setVisible] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<Endereco | null>(null);
-  const [nomeZona, setNomeZona] = useState('');
-
-  // Edit state
   const [editing, setEditing] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [editedItem, setEditedItem] = useState<Endereco | null>(null);
-
-  const from = page * itemsPerPage;
-  const to = Math.min((page + 1) * itemsPerPage, data.length);
-
-  useEffect(() => {
-    setPage(0);
-  }, [itemsPerPage]);
+  const dispatch = useAppDispatch();
 
   const showDialog = (item: Endereco) => {
     setSelectedItem(item);
     setVisible(true);
+  };
+
+  const confirmDialogDel = async () => {
+    try {
+      setLoading(true);
+
+      if (selectedItem?.id_endereco) {
+        await controller.deleteEndereco(selectedItem?.id_endereco);
+      }
+      setSelectedItem(null);
+      setVisible(false);
+
+      await getEndereco();
+    } catch (error) {
+      showToast({
+        text1: 'Houve um erro!',
+        text2: `${error}`,
+        position: 'bottom',
+        type: 'error',
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const hideDialog = () => {
@@ -56,24 +85,20 @@ const EnderecoList: React.FC = ({navigation}: any) => {
     setEditedItem(item);
   };
 
-  const onSaveEdit = () => {
-    // Implement your save edit logic here.
-    setEditing(false);
-    setEditedItem(null);
-    hideDialog(); // Fechar o Dialog após salvar
-  };
-
-  const onCancelEdit = () => {
-    setEditing(false);
-    setEditedItem(null);
-    hideDialog(); // Fechar o Dialog ao cancelar
-  };
-
   const [zonaEntrega, setZonaEntrega] = useState('');
   const [menuVisible, setMenuVisible] = useState(false);
-
   const showMenu = () => setMenuVisible(true);
   const hideMenu = () => setMenuVisible(false);
+
+  const [criarVisible, setCriarVisible] = useState(false);
+  const showCriar = () => setCriarVisible(true);
+  const hideCriar = () => setCriarVisible(false);
+
+  const confirmCriarDialog = ()=>{
+    getEndereco()
+    hideCriar()
+  }
+
 
   const handleZonaEntregaChange = (text: string) => {
     setZonaEntrega(text);
@@ -83,172 +108,119 @@ const EnderecoList: React.FC = ({navigation}: any) => {
     setZonaEntrega(item);
     hideMenu();
   };
+  const getEndereco = async () => {
+    try {
+      setLoading(true);
+      await controller.getEnderecoAllByUser();
 
-  const zonaEntregaItems = ['Zona 1', 'Zona 2', 'Zona 3', 'Zona 4']; // Substitua isso pelos seus próprios valores
+      dispatch(setEndereco(controller.enderecos));
+    } catch (error) {
+      showToast({
+        text1: 'Houve um erro!',
+        text2: `${error}`,
+        position: 'bottom',
+        type: 'error',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    getEndereco();
+  }, []);
 
   return (
-    <View style={styles.container}>
-      <DataTable>
-        <ZonaDeEntregaInputComponent />
-        <DataTable.Header>
-          <DataTable.Title>ID</DataTable.Title>
-          <DataTable.Title>Morada</DataTable.Title>
-          <DataTable.Title>Editar</DataTable.Title>
-          <DataTable.Title>Eliminar</DataTable.Title>
-        </DataTable.Header>
-
-        {data.slice(from, to).map((item: Endereco) => (
-          <DataTable.Row key={item.id_endereco}>
-            <DataTable.Cell>{item.id_endereco}</DataTable.Cell>
-            <DataTable.Cell>{item.morada}</DataTable.Cell>
-            <DataTable.Cell>
-              <IconButton icon="pencil" onPress={() => navigateToEdit(item)} />
-            </DataTable.Cell>
-            <DataTable.Cell>
-              <IconButton icon="delete" onPress={() => showDialog(item)} />
-            </DataTable.Cell>
-          </DataTable.Row>
-        ))}
-
-        <DataTable.Pagination
-          page={page}
-          numberOfPages={Math.ceil(data.length / itemsPerPage)}
-          onPageChange={page => setPage(page)}
-          label={`${from + 1}-${to} de ${data.length}`}
-          numberOfItemsPerPageList={itemsPerPageList}
-          numberOfItemsPerPage={itemsPerPage}
-          onItemsPerPageChange={perPage => setItemsPerPage(perPage)}
-          showFastPaginationControls
-          selectPageDropdownLabel={'Linhas por página'}
+    <>
+      <ScrollView style={styles.container}>
+        <ConfirmDialog
+          onConfirm={confirmDialogDel}
+          onDismiss={hideDialog}
+          visible={visible}
         />
-      </DataTable>
-
-      <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Title>Confirmar exclusão</Dialog.Title>
-          <Dialog.Content>
-            Tem certeza de que deseja excluir este endereço?
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={() => hideDialog()}>Cancelar</Button>
-            <Button onPress={() => {}}>Confirmar</Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
-
-      <Portal>
-        <Dialog visible={editing} onDismiss={onCancelEdit}>
-          <Dialog.Title>Editar Endereço</Dialog.Title>
-          <Dialog.Content>
-            <TextInput
-              label="Morada"
-              value={editedItem?.morada || ''}
-              onChangeText={text => {
-                // Implement your change logic here.
-              }}
-              mode="outlined"
-              style={styles.input}
-            />
-            <TextInput
-              label="Designação"
-              value={editedItem?.designacao || ''}
-              onChangeText={text => {
-                // Implement your change logic here.
-              }}
-              mode="outlined"
-              style={styles.input}
-            />
-            <TextInput
-              label="Bairro"
-              value={editedItem?.bairro.toString() || ''}
-              onChangeText={text => {
-                // Implement your change logic here.
-              }}
-              mode="outlined"
-              style={styles.input}
-            />
-
-            <Menu
-              visible={menuVisible}
-              onDismiss={hideMenu}
-              anchor={
-                <TextInput
-                  label="Zona de Entrega"
-                  value={zonaEntrega}
-                  onPressIn={showMenu}
-                  mode="outlined"
-                  showSoftInputOnFocus={false}
-                  style={styles.input}
-                  //   style={{ width: 300 }} // Defina o estilo conforme necessário
-                />
-              }>
-              {zonaEntregaItems.map(item => (
-                <Menu.Item
-                  key={item}
-                  onPress={() => handleMenuItemPress(item)}
-                  title={item}
-                />
-              ))}
-            </Menu>
-
-            <TextInput
-              label="Ponto de referência"
-              value={editedItem?.ponto_ref || ''}
-              onChangeText={text => {
-                // Implement your change logic here.
-              }}
-              mode="outlined"
-              style={styles.input}
-            />
-            <TextInput
-              label="Telefone"
-              value={editedItem?.telefone || ''}
-              onChangeText={text => {
-                // Implement your change logic here.
-              }}
-              mode="outlined"
-              style={styles.input}
-            />
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={onSaveEdit}>Salvar</Button>
-            <Button onPress={onCancelEdit}>Cancelar</Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
-
+        <AdicionarEnderecoDialog
+          visible={criarVisible}
+          onSave={confirmCriarDialog}
+          onCancel={hideCriar}
+          onOpen={showCriar}
+        />
+        {loading ? (
+          <View>
+            {[1, 2, 3, 4, 5, 6].map((_, index) => (
+              <SkeletonPlaceholder key={index}>
+                <View style={styles.skeletonCardCover} />
+              </SkeletonPlaceholder>
+            ))}
+          </View>
+        ) : (
+          enderecos.map((item: Endereco) => (
+            <Card key={item.id_endereco} style={styles.card}>
+              <Card.Content>
+                <Text>Designação: {item.designacao}</Text>
+                <Text>Morada: {item.nome_morada}</Text>
+                <Text>Bairro: {item.bairro}</Text>
+                <Text>
+                  Taxa de entrega: {convertToCurrency(item.taxa_entrega || 0)}
+                </Text>
+                <Text>Ponto de referência: {item.ponto_ref}</Text>
+                <Text>Telefone: {item.telefone}</Text>
+              </Card.Content>
+              <Card.Actions>
+                <IconButton
+                  mode="contained-tonal"
+                  icon="pencil"
+                  onPress={() => navigateToEdit(item)}
+                  iconColor={'white'} 
+                  containerColor={theme.colors.secondary}
+                  />
+                <IconButton icon="delete" 
+                iconColor={'white'} 
+                containerColor={theme.colors.primary}
+                 onPress={() => showDialog(item)} />
+              </Card.Actions>
+            </Card>
+          ))
+        )}
+      </ScrollView>
       <FAB
-        style={styles.fab}
-        small
+        style={[styles.fab,{ backgroundColor:theme.colors.secondary }]}
+        color={'white'}
+        rippleColor={'white'}
+        loading={loading}
         icon="plus"
         label="Novo Endereço"
-        onPress={() => setEditing(true)}
+        onPress={() => setCriarVisible(true)}
       />
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0,
-  },
-  editContainer: {
     padding: 16,
-    backgroundColor: 'white',
-    elevation: 4,
-    margin: 16,
+  },
+  card: {
+    marginBottom: 16,
+    position: 'relative',
+    top: 0,
   },
   input: {
     marginBottom: 16,
   },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    left: 0,
+    bottom: 0,
+  },
   button: {
     marginTop: 16,
+  },
+  skeletonCardCover: {
+    width: '100%',
+    marginVertical: 5,
+    height: 200, // Adjust the height as needed
+    borderRadius: 8,
   },
 });
 

@@ -14,6 +14,7 @@ interface CustomButtonProps {
   onPress: () => void;
   buttonStyle?: ViewStyle;
   labelStyle?: TextStyle;
+  disabled?: boolean;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -21,13 +22,18 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   onPress,
   buttonStyle,
   labelStyle,
+  disabled = false,
 }) => {
   const theme = useTheme();
   return (
     <TouchableRipple
-      rippleColor={theme.colors.inversePrimary}
+      disabled={disabled}
+      rippleColor={'white'}
       onPress={onPress}
-      style={[styles.button, {backgroundColor: theme.colors.primary}]}>
+      style={[
+        styles.button,
+        {backgroundColor: !disabled ? theme.colors.secondary : 'gray'},
+      ]}>
       <Text style={[styles.label, labelStyle]}>{label}</Text>
     </TouchableRipple>
   );

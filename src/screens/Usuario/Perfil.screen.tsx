@@ -1,27 +1,32 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {Avatar, Button, Divider, List, Title} from 'react-native-paper';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Avatar, Button, Divider, List, Title,Text, useTheme} from 'react-native-paper';
 import {useAppSelector} from '../../store/hook/index.hook';
 
 const ProfileScreen = ({navigation}: any) => {
   const usuario = useAppSelector(state => state.usuario.utilizador);
+  const theme = useTheme();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Avatar.Image size={150} source={{uri: usuario?.foto}} />
         <Title style={styles.name}>{usuario?.nome}</Title>
+        <Text variant='bodyLarge'>{usuario?.telefone}</Text>
         <Button
           mode="contained"
+          textColor='white'
+          buttonColor={theme.colors.secondary}
           onPress={() => {
             navigation.navigate('EditarPerfil');
             // Adicione aqui a ação para editar o perfil
           }}
+          icon={'pencil'}
           style={styles.editButton}>
           Editar Perfil
         </Button>
       </View>
       <View style={styles.optionsContainer}>
-        <TouchableOpacity
+      {/*   <TouchableOpacity
           onPress={() => {
             // Adicione aqui a ação para os Termos e Condições
           }}
@@ -31,7 +36,7 @@ const ProfileScreen = ({navigation}: any) => {
             right={() => <List.Icon icon="chevron-right" />}
           />
         </TouchableOpacity>
-        <Divider />
+        <Divider />   
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('FAQ');
@@ -42,8 +47,8 @@ const ProfileScreen = ({navigation}: any) => {
             title="Perguntas Frequentes"
             right={() => <List.Icon icon="chevron-right" />}
           />
-        </TouchableOpacity>
-        <Divider />
+        </TouchableOpacity> 
+           <Divider />
         <TouchableOpacity
           onPress={() => {
             // Adicione aqui a ação para terminar a sessão
@@ -53,7 +58,7 @@ const ProfileScreen = ({navigation}: any) => {
             title="Terminar Sessão"
             right={() => <List.Icon icon="chevron-right" />}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );

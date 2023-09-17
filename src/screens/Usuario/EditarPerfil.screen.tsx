@@ -1,36 +1,89 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {
   Avatar,
   Button,
   TextInput,
   IconButton,
   useTheme,
+  Text,
 } from 'react-native-paper';
 import {useAppSelector} from '../../store/hook/index.hook';
+import {TouchableRipple} from 'react-native-paper';
+import {Usuario, Utilizador} from '../../model/usuario.model';
+import {showToast} from '../../service/toast.service';
+import {UsuarioController} from '../../controller/Usuario/usuario.controller';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const EditProfileScreen = ({navigation}: any) => {
   const theme = useTheme();
-  const usuario = useAppSelector(state => state.usuario.utilizador);
+  const controller = new UsuarioController();
+  const user = useAppSelector(state => state.usuario.utilizador);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [usuario, setUsuario] = useState<Omit<Utilizador, 'foto' | 'id'>>({
+    email: String(user?.email),
+    nome: String(user?.nome),
+    telefone: String(user?.telefone),
+  });
+  const [imageSource, setImageSource] = useState(null);
 
-  const [nome, setNome] = useState(usuario?.nome);
-  const [telefone, setTelefone] = useState(usuario?.telefone);
-  const [email, setEmail] = useState(usuario?.email);
-  const [senha, setSenha] = useState('');
-  const [morada, setMorada] = useState('');
+  const selectImage = () => {
+    const options = {
+      title: 'Select Image',
+
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+
+    launchImageLibrary({
+      mediaType:'photo'
+    }, (response) => {
+      console.log(response)
+     
+      
+    });
+  };
+
+  const saveChanges = async () => {
+    try {
+      setLoading(true);
+      await controller.atualizarUsuario(usuario);
+
+      showToast({
+        text1: 'Atualizado',
+        text2: `Usuário atualizado com sucesso!`,
+        position: 'bottom',
+        type: 'success',
+      });
+    } catch (error) {
+      showToast({
+        text1: 'Houve erro!',
+        text2: `${error}`,
+        position: 'bottom',
+        type: 'error',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
         <Avatar.Image
           size={150}
-          source={{uri: usuario?.foto}}
+          source={{uri: String(user?.foto)}}
           style={styles.avatar}
         />
         <View style={styles.editIconContainer}>
           <IconButton
-            icon="plus"
-            size={40}
+            disabled={loading}
+            icon="camera-plus-outline"
+            size={35}
+            onTouchStart={selectImage}
+            mode="contained-tonal"
             iconColor="white"
             // color="white"
             onPress={() => {
@@ -38,32 +91,35 @@ const EditProfileScreen = ({navigation}: any) => {
             }}
             containerColor={theme.colors.primary}
             rippleColor={'white'}
-            background={theme.colors.primary}
             style={styles.editIcon}
           />
         </View>
       </View>
       <TextInput
+        value={usuario.nome}
+        onChangeText={nome => setUsuario({...usuario, nome})}
         mode="outlined"
+        disabled={loading}
         placeholder="Nome"
-        value={nome}
-        onChangeText={text => setNome(text)}
         style={styles.input}
       />
       <TextInput
+        value={usuario.telefone}
+        onChangeText={telefone => setUsuario({...usuario, telefone})}
         placeholder="Telefone"
+        disabled={loading}
         mode="outlined"
-        value={telefone}
-        onChangeText={text => setTelefone(text)}
         style={styles.input}
       />
-      {/* <TextInput
-        placeholder='E-mail'
+      <TextInput
+        value={usuario.email}
+        onChangeText={email => setUsuario({...usuario, email})}
+        placeholder="E-mail"
+        disabled={loading}
         mode="outlined"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
         style={styles.input}
       />
+      {/* 
       <TextInput
         mode="outlined"
         value={senha}
@@ -81,10 +137,11 @@ const EditProfileScreen = ({navigation}: any) => {
         style={styles.input}
       /> */}
       <Button
+        disabled={loading}
+        loading={loading}
         mode="contained"
-        onPress={() => {
-          // Adicione aqui a ação para guardar as alterações no perfil
-        }}
+        textColor="white"
+        onPress={saveChanges}
         style={styles.saveButton}>
         Guardar
       </Button>

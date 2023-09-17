@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, useColorScheme} from 'react-native';
 import {
   Avatar,
   Card,
@@ -25,7 +25,7 @@ const CategoriaContainer1: React.FC<CategoriaProps> = item => {
   };
 
   return (
-    <Surface style={styles.touchableRippleContainer}>
+    <Surface mode="flat" style={[styles.touchableRippleContainer]}>
       <TouchableRipple
         onPress={pressedCategoria}
         style={styles.touchableRipple}>
@@ -47,8 +47,9 @@ const CategoriaContainer1: React.FC<CategoriaProps> = item => {
 
 const styles = StyleSheet.create({
   touchableRippleContainer: {
-    borderWidth: 1, // Add a border to the container
-    borderColor: 'rgba(0, 0, 0, 0)', // Border color
+    borderWidth: 0.4, // Add a border to the container
+    borderColor: 'gray', // Border color
+    backgroundColor: 'transparent',
     marginBottom: 26,
     borderRadius: 12,
     overflow: 'hidden', // Ensure the border doesn't overflow

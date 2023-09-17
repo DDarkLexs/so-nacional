@@ -1,18 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
-import {
-  Card,
-  Button,
-  Text,
-  useTheme,
-  TouchableRipple,
-} from 'react-native-paper';
+import {Card, Dialog, IconButton} from 'react-native-paper';
+import {Button, Text, useTheme, TouchableRipple} from 'react-native-paper';
+import { useAppDispatch } from '../../store/hook/index.hook';
 
 const PagamentoScreen = () => {
   const theme = useTheme();
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true); // Estado para controlar a desativação do botão
-
+  const dispatch = useAppDispatch();
   const handleMethodSelect = (index: any) => {
     setSelectedMethod(index);
     setIsButtonDisabled(false); // Ativar o botão quando um método é selecionado
@@ -25,19 +21,22 @@ const PagamentoScreen = () => {
   }, [selectedMethod]);
 
   const methods = [
-    {
-      name: 'TPA na entrega',
-      image: require('../../assets/image/fruits/banana.png'),
-    },
+    // {
+    //   name: 'TPA na entrega',
+    //   image: require('../../assets/image/fruits/banana.png'),
+    // },
     {
       name: 'Transferência Bancária',
-      image: require('../../assets/image/fruits/banana.png'),
+      value: 'Transferência Bancária',
+      icon: 'credit-card-wireless',
     },
   ];
 
   return (
     <View style={styles.container}>
-      <Text variant="titleLarge">Métodos de Pagamento</Text>
+      <Text style={{marginBottom: 16}} variant="titleLarge">
+        Selecione uma forma de pagamento
+      </Text>
 
       {methods.map((method, index) => (
         <TouchableRipple
@@ -52,7 +51,10 @@ const PagamentoScreen = () => {
           ]}>
           <Card.Content>
             <View style={styles.cardContent}>
-              <Image source={method.image} style={styles.cardImage} />
+              <IconButton
+                iconColor={selectedMethod === index ? 'white' : undefined}
+                icon={method.icon}
+              />
               <Text
                 style={[
                   styles.cardText,
@@ -64,18 +66,6 @@ const PagamentoScreen = () => {
           </Card.Content>
         </TouchableRipple>
       ))}
-
-      <View style={styles.confirmButtonContainer}>
-        <Button
-          mode="contained"
-          color={theme.colors.primary}
-          style={styles.confirmButton}
-          onPress={() => {}}
-          disabled={isButtonDisabled} // Desativar o botão quando nenhum método é selecionado
-        >
-          Pagar
-        </Button>
-      </View>
     </View>
   );
 };

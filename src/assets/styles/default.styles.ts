@@ -3,11 +3,11 @@ import {MD3DarkTheme, MD3LightTheme} from 'react-native-paper';
 export const dark: object = {
   ...MD3DarkTheme,
   colors: {
-    primary: 'rgb(248, 189, 73)',
+    primary: '#bd3a3a',
     onPrimary: 'rgb(66, 45, 0)',
     primaryContainer: 'rgb(94, 66, 0)',
     onPrimaryContainer: 'rgb(255, 222, 168)',
-    secondary: 'rgb(218, 195, 160)',
+    secondary: '#3a86ff',
     onSecondary: 'rgb(60, 46, 21)',
     secondaryContainer: 'rgb(84, 68, 42)',
     onSecondaryContainer: 'rgb(247, 223, 187)',
@@ -49,11 +49,11 @@ export const dark: object = {
 export const light: object = {
   ...MD3LightTheme,
   colors: {
-    primary: 'rgb(125, 88, 0)',
+    primary: '#bd3a3a',
     onPrimary: 'rgb(255, 255, 255)',
     primaryContainer: 'rgb(255, 222, 168)',
     onPrimaryContainer: 'rgb(39, 25, 0)',
-    secondary: 'rgb(109, 92, 63)',
+    secondary: '#3a86ff',
     onSecondary: 'rgb(255, 255, 255)',
     secondaryContainer: 'rgb(247, 223, 187)',
     onSecondaryContainer: 'rgb(37, 26, 4)',
