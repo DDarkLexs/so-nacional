@@ -46,31 +46,31 @@ const MenuList: React.FC<any> = ({navigation}): React.JSX.Element => {
         <List.Item
           title="Meu Perfil"
           onPress={() => navigation.navigate('Perfil')}
-          left={() => <List.Icon icon={'account-circle-outline'}></List.Icon>}
+          left={() => <List.Icon icon={'account-circle-outline'} />}
         />
         <List.Item
           title="Meus endereços"
           onPress={() => navigation.navigate('Endereco')}
-          left={() => <List.Icon icon={'home-city-outline'}></List.Icon>}
+          left={() => <List.Icon icon={'home-city-outline'} />}
         />
         <List.Item
           title="Sobre a loja"
-          left={() => <List.Icon icon={'storefront-outline'}></List.Icon>}
-          onPress={() => {}}
+          left={() => <List.Icon icon={'storefront-outline'} />}
+          onPress={() => navigation.navigate('SobreLoja')}
         />
         <List.Item
           title="Termos e condições"
-          left={() => <List.Icon icon={'text-box-outline'}></List.Icon>}
+          left={() => <List.Icon icon={'text-box-outline'} />}
           onPress={() => navigation.navigate('Termos')}
         />
         <List.Item
           title="Contactos"
-          left={() => <List.Icon icon={'phone-outline'}></List.Icon>}
+          left={() => <List.Icon icon={'phone-outline'} />}
           onPress={() => navigation.navigate('Contacto')}
         />
         <List.Item
           title="Assistência"
-          left={() => <List.Icon icon={'face-agent'}></List.Icon>}
+          left={() => <List.Icon icon={'face-agent'} />}
           onPress={() => navigation.navigate('FAQ')}
         />
       </List.Section>

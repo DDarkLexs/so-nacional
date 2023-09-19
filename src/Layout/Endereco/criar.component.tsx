@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View,Alert} from 'react-native';
+import {StyleSheet, View, Alert} from 'react-native';
 import {
   TextInput,
   Button,
@@ -56,45 +56,44 @@ const AdicionarEnderecoDialog: React.FC<AddEnderecoProps> = ({
   const [zonaEntregaItems, setZonaEntregaItems] = useState<zonaEntrega[]>([]);
   const getZonasAPI = async () => {
     try {
-        setLoading(true)
-        await controller.getZonas();
-        setZonaEntregaItems(controller.zonasDeEntrega);
+      setLoading(true);
+      await controller.getZonas();
+      setZonaEntregaItems(controller.zonasDeEntrega);
     } catch (error) {
-        showToast({
+      showToast({
         text1: `Houve um erro!`,
         text2: `${error}`,
         position: 'bottom',
         type: 'success',
       });
     } finally {
-        setLoading(false)
+      setLoading(false);
     }
   };
 
-  const save = async ()=> {
+  const save = async () => {
     try {
-        setLoading(true)
-        await controller.saveEndereco(endereco)
-        showToast({
+      setLoading(true);
+      await controller.saveEndereco(endereco);
+      showToast({
         text1: `Sucesso!`,
         text2: `O seu endereço foi guardado!`,
         position: 'bottom',
         type: 'success',
       });
-        onSave();
+      onSave();
     } catch (error) {
-        showToast({
+      showToast({
         text1: `Houve um erro!`,
         text2: `${error}`,
         position: 'bottom',
         type: 'error',
       });
     } finally {
-        onCancel();
-        setLoading(false)
-
+      onCancel();
+      setLoading(false);
     }
-}
+  };
 
   useEffect(() => {
     if (visible) {
@@ -113,7 +112,7 @@ const AdicionarEnderecoDialog: React.FC<AddEnderecoProps> = ({
             onChangeText={text => setEndereco({...endereco, morada: text})}
             mode="outlined"
             style={styles.input}
-            />
+          />
           <TextInput
             label="Designação"
             disabled={loading}
@@ -135,7 +134,7 @@ const AdicionarEnderecoDialog: React.FC<AddEnderecoProps> = ({
             visible={menuVisible}
             onDismiss={hideMenu}
             anchor={
-                <TextInput
+              <TextInput
                 label="Zona de Entrega"
                 disabled={loading}
                 value={endereco.nome_zona}
@@ -151,7 +150,7 @@ const AdicionarEnderecoDialog: React.FC<AddEnderecoProps> = ({
                 onPress={() => handleMenuItemPress(item)}
                 disabled={loading}
                 title={item.nome_zona}
-                />
+              />
             ))}
           </Menu>
 
@@ -162,12 +161,12 @@ const AdicionarEnderecoDialog: React.FC<AddEnderecoProps> = ({
             onChangeText={text => setEndereco({...endereco, ponto_ref: text})}
             mode="outlined"
             style={styles.input}
-            />
+          />
           <TextInput
             label="Telefone"
             disabled={loading}
             value={endereco.telefone}
-            keyboardType='number-pad'
+            keyboardType="number-pad"
             onChangeText={text => setEndereco({...endereco, telefone: text})}
             mode="outlined"
             style={styles.input}
@@ -176,9 +175,12 @@ const AdicionarEnderecoDialog: React.FC<AddEnderecoProps> = ({
         </Dialog.Content>
 
         <Dialog.Actions>
-          <Button disabled={loading} loading={loading} onPress={save}>Salvar</Button>
-          <Button disabled={loading} loading={loading} onPress={onCancel}>Cancelar</Button>
-          
+          <Button disabled={loading} loading={loading} onPress={save}>
+            Salvar
+          </Button>
+          <Button disabled={loading} loading={loading} onPress={onCancel}>
+            Cancelar
+          </Button>
         </Dialog.Actions>
       </Dialog>
     </Portal>

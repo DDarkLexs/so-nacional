@@ -1,6 +1,6 @@
 import React from 'react';
-import { DataTable, IconButton } from 'react-native-paper';
-import { Endereco } from '../../model/endereco.model';
+import {DataTable, IconButton} from 'react-native-paper';
+import {Endereco} from '../../model/endereco.model';
 
 interface EnderecoTableProps {
   data: Endereco[];

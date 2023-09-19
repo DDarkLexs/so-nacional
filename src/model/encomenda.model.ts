@@ -1,4 +1,4 @@
-import { MeuBaiao } from "./usuario.model";
+import {MeuBaiao} from './usuario.model';
 
 export interface ItensBaio extends Required<Omit<MeuBaiao, 'image'>> {}
 export interface Pedido {

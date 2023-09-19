@@ -44,7 +44,7 @@ const ValidacaoCodigoScreen: React.FC<any> = ({navigation, route}) => {
         position: 'bottom',
         type: 'success',
       });
-      navigation.navigate('CNSenha', {telemovel: validacao.telemovel });
+      navigation.navigate('CNSenha', {telemovel: validacao.telemovel});
       // Você pode adicionar a lógica real de validação aqui
       // Após a validação, você pode navegar para a próxima tela ou fazer o que for necessário
     } catch (error) {

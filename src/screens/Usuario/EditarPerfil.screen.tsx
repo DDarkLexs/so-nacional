@@ -60,7 +60,7 @@ const EditProfileScreen = ({navigation}: any) => {
 
       showToast({
         text1: 'Atualizado',
-        text2: `Usuário atualizado com sucesso!`,
+        text2: 'Usuário atualizado com sucesso!',
         position: 'bottom',
         type: 'success',
       });
@@ -126,7 +126,7 @@ const EditProfileScreen = ({navigation}: any) => {
         mode="outlined"
         style={styles.input}
       />
-      {/* 
+      {/*
       <TextInput
         mode="outlined"
         value={senha}

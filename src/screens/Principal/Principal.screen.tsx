@@ -48,8 +48,6 @@ const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
     },
   ];
 
-  
-
   const renderScene = BottomNavigation.SceneMap({
     Home: HomeScreen,
     produtos: ProdutosScreen,

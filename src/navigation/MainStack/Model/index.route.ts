@@ -13,6 +13,8 @@ export type MainStackStackParamList = {
   Endereco: undefined;
   Contacto: undefined;
   Termos: undefined;
+  SobreLoja: undefined;
+  MudarPass: undefined;
   //   'termos&condicoes': undefined;
   //   ForgotPassword: undefined;
 };

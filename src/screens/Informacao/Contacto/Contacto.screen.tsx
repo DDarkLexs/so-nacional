@@ -18,22 +18,20 @@ const ContactoScreen = () => {
   return (
     <View style={styles.container}>
       {loading ? (
- <SkeletonPlaceholder>
- <React.Fragment>
-   { [1, 2, 3].map((_, index) => (
-     <SkeletonPlaceholder.Item
-       key={index}
-       width="100%"
-       height={50}
-       marginTop={20}
-       marginBottom={20}
-       borderRadius={10}
-     />
-   ))}
- </React.Fragment>
-</SkeletonPlaceholder>
-
-  
+        <SkeletonPlaceholder>
+          <React.Fragment>
+            {[1, 2, 3].map((_, index) => (
+              <SkeletonPlaceholder.Item
+                key={index}
+                width="100%"
+                height={50}
+                marginTop={20}
+                marginBottom={20}
+                borderRadius={10}
+              />
+            ))}
+          </React.Fragment>
+        </SkeletonPlaceholder>
       ) : (
         <>
           <List.Item

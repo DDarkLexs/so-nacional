@@ -61,3 +61,13 @@ export class CreateNovaSenhaDto implements Pick<UsuarioDto, 'telemovel'> {
   @Length(6, 255, {message: 'A senha deve ser maior ou igual a 6 caracteres!'})
   senha: string = '';
 }
+
+// old_password,new_password,id_user
+export class AlterarSenhaDto {
+  @Length(6, 255, {message: 'A senha deve ser maior ou igual a 6 caracteres!'})
+  @IsNotEmpty({message: 'Informe a senha atual!'})
+  old_password: string = '';
+  @Length(6, 255, {message: 'A senha deve ser maior ou igual a 6 caracteres!'})
+  @IsNotEmpty({message: 'Informe a nova senha!'})
+  new_password: string = '';
+}

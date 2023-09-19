@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Image,
   StyleSheet,
@@ -6,19 +6,18 @@ import {
   View,
   useColorScheme,
 } from 'react-native';
-import { Button, Text, TextInput } from 'react-native-paper';
-import { showToast } from '../../../service/toast.service';
-import { UsuarioController } from '../../../controller/Usuario/usuario.controller';
-import { useAppDispatch } from '../../../store/hook/index.hook';
-import { actions } from '../../../store/reducer/usuario.reducer';
-
+import {Button, Text, TextInput} from 'react-native-paper';
+import {showToast} from '../../../service/toast.service';
+import {UsuarioController} from '../../../controller/Usuario/usuario.controller';
+import {useAppDispatch} from '../../../store/hook/index.hook';
+import {actions} from '../../../store/reducer/usuario.reducer';
 
 interface NovaSenhaProp {
   telemovel: string;
   senha: string;
 }
 
-const CriacaoNovaSenhaScreen: React.FC<any> = ({ navigation, route }) => {
+const CriacaoNovaSenhaScreen: React.FC<any> = ({navigation, route}) => {
   const [data, setData] = useState<NovaSenhaProp>({
     senha: '',
     telemovel: route.params.telemovel,
@@ -41,7 +40,7 @@ const CriacaoNovaSenhaScreen: React.FC<any> = ({ navigation, route }) => {
     // Restante do código
 
     try {
-      console.log(data.senha !== senha2)
+      console.log(data.senha !== senha2);
       if (data.senha !== senha2) {
         throw 'As senhas não coincidem. Por favor, verifique e tente novamente.';
       }
@@ -59,7 +58,6 @@ const CriacaoNovaSenhaScreen: React.FC<any> = ({ navigation, route }) => {
       });
       // Você pode adicionar a lógica real de criação de senha aqui
 
-
       // Após a criação da nova senha, você pode navegar para a próxima tela ou fazer o que for necessário
     } catch (error) {
       showToast({
@@ -68,7 +66,6 @@ const CriacaoNovaSenhaScreen: React.FC<any> = ({ navigation, route }) => {
         position: 'top',
         type: 'error',
       });
-
     } finally {
       setLoading(false);
     }
@@ -95,8 +92,8 @@ const CriacaoNovaSenhaScreen: React.FC<any> = ({ navigation, route }) => {
         disabled={loading}
         mode="outlined"
         secureTextEntry={senhaVisibility}
-        onChangeText={(senha) => setData({ ...data, senha })}
-        style={[styles.input, { marginTop: 30 }]}
+        onChangeText={senha => setData({...data, senha})}
+        style={[styles.input, {marginTop: 30}]}
         right={
           <TextInput.Icon
             icon={senhaVisibility ? 'eye' : 'eye-off'}
@@ -114,7 +111,7 @@ const CriacaoNovaSenhaScreen: React.FC<any> = ({ navigation, route }) => {
         style={styles.input}
         right={
           <TextInput.Icon
-          icon={senhaVisibility ? 'eye' : 'eye-off'}
+            icon={senhaVisibility ? 'eye' : 'eye-off'}
             onPress={toggleSenhaVisibility}
           />
         }
@@ -125,8 +122,7 @@ const CriacaoNovaSenhaScreen: React.FC<any> = ({ navigation, route }) => {
         mode="contained"
         textColor="white"
         onPress={handleCreateNewPassword}
-        style={styles.button}
-      >
+        style={styles.button}>
         Criar Nova Senha
       </Button>
       <TouchableOpacity disabled={loading} onPress={() => navigation.goBack()}>
@@ -147,7 +143,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 30,
   },
-  headLine: { textAlign: 'center', fontWeight: 'bold', marginVertical: 20 },
+  headLine: {textAlign: 'center', fontWeight: 'bold', marginVertical: 20},
   image: {
     justifyContent: 'center',
     width: 250,

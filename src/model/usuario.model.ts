@@ -37,5 +37,3 @@ interface Pedido {
   total: number;
   itens: ItensBaio[];
 }
-
-

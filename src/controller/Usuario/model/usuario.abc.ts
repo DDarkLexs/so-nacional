@@ -5,6 +5,7 @@ import {
   updateUtilizadorDto,
   CreateNovaSenhaDto,
   VerificarCodigoDto,
+  AlterarSenhaDto,
 } from '../../../guards/Dto/usuario.dto';
 
 export abstract class UsuarioControllerABC {
@@ -23,4 +24,5 @@ export abstract class UsuarioControllerABC {
   public abstract recuperarSenha(telemovel: string): Promise<void>;
   public abstract validarCodigo(validacao: VerificarCodigoDto): Promise<void>;
   public abstract criarNovaSenha(novaSenha: CreateNovaSenhaDto): Promise<void>;
+  public abstract alterarSenha(utilizadorSenha: AlterarSenhaDto): Promise<void>;
 }

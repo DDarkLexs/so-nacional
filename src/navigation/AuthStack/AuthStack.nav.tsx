@@ -27,7 +27,10 @@ const AuthStack: React.FC = (): React.JSX.Element => {
       <Stack.Screen name="Registro" component={RegistroScreen} />
       <Stack.Screen name="ConfirmarTelemovel" component={ReceavingCode} />
       <Stack.Screen name="ForgotPassword" component={ReceavingCode} />
-      <Stack.Screen name="NTelemovel" component={VerificacaoNumeroTelefoneScreen} />
+      <Stack.Screen
+        name="NTelemovel"
+        component={VerificacaoNumeroTelefoneScreen}
+      />
       <Stack.Screen name="VCodigo" component={ValidacaoCodigoScreen} />
       <Stack.Screen name="CNSenha" component={CriacaoNovaSenhaScreen} />
       <Stack.Screen

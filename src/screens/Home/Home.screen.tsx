@@ -1,31 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { Card, Text, useTheme } from 'react-native-paper';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {Card, Text, useTheme} from 'react-native-paper';
 import CategoriaContainer1 from '../../Layout/Categoria/categoriaContainer1.component';
-import { CategoriaController } from '../../controller/Categoria/categoria.controller';
-import { CategoriaPrincipal } from '../../model/categoria.model';
-import { showToast } from '../../service/toast.service';
-import { useAppDispatch, useAppSelector } from '../../store/hook/index.hook';
-import { setCategoriaPrincipal } from '../../store/reducer/categoria.store';
+import {CategoriaController} from '../../controller/Categoria/categoria.controller';
+import {CategoriaPrincipal} from '../../model/categoria.model';
+import {showToast} from '../../service/toast.service';
+import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
+import {setCategoriaPrincipal} from '../../store/reducer/categoria.store';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const HomeScreen = (navigation: any) => {
   const theme = useTheme();
   const [data, setData] = useState<any>();
   const [categorias, setCategorias] = useState<CategoriaPrincipal[]>([]);
-  const [loading, setLoading] = useState(true);  // Added loading state
+  const [loading, setLoading] = useState(true); // Added loading state
   const controller = new CategoriaController();
   const dispatch = useAppDispatch();
-  const categoriaPrincipal = useAppSelector(state => state.categoria.categoriaPrincipal);
-  const selectedCategoria = useAppSelector(state => state.categoria.categoria_selecionado);
-  const placeholder:number[] = [1, 2, 3];
+  const categoriaPrincipal = useAppSelector(
+    state => state.categoria.categoriaPrincipal,
+  );
+  const selectedCategoria = useAppSelector(
+    state => state.categoria.categoria_selecionado,
+  );
+  const placeholder: number[] = [1, 2, 3];
 
   const getData = async (): Promise<void> => {
     try {
       const response1 = await controller.fetchCategoriaApi();
       dispatch(setCategoriaPrincipal(response1.data[0].categorias));
       setData(response1.data[0]);
-      setLoading(false);  // Set loading to false after data is fetched
+      setLoading(false); // Set loading to false after data is fetched
     } catch (error) {
       showToast({
         text1: 'Houve um erro!',
@@ -71,7 +75,7 @@ const HomeScreen = (navigation: any) => {
           <Card.Cover
             source={
               data
-                ? { uri: data.banners[0].imagem }
+                ? {uri: data.banners[0].imagem}
                 : require('../../assets/image/fruits/istockphoto-1409236261-1024x1024.jpg')
             }
           />
@@ -87,17 +91,15 @@ const HomeScreen = (navigation: any) => {
         {loading ? (
           // Show skeleton placeholders for categories while loading
           <SkeletonPlaceholder>
-          <React.Fragment>
-            {placeholder.map((_: any, index: any, array) => (
-              <View key={index} style={styles.skeletonCategoryContainer}>
-                <View style={styles.skeletonCategoryImage} />
-                <View style={styles.skeletonCategoryText} />
-              </View>
-            ))}
-          </React.Fragment>
-        </SkeletonPlaceholder>
-        
-        
+            <React.Fragment>
+              {placeholder.map((_: any, index: any, array) => (
+                <View key={index} style={styles.skeletonCategoryContainer}>
+                  <View style={styles.skeletonCategoryImage} />
+                  <View style={styles.skeletonCategoryText} />
+                </View>
+              ))}
+            </React.Fragment>
+          </SkeletonPlaceholder>
         ) : (
           // Render actual categories when data is available
           categorias.map((item, index) => (

@@ -13,7 +13,6 @@ import {useAppDispatch} from '../../store/hook/index.hook';
 import {setItem} from '../../store/reducer/usuario.reducer';
 import {fazerSubtotal} from '../../utils/index.utils';
 import {ProdutoController} from '../../controller/Produto/produto.controller';
-import {resizeImage} from '../../utils/index.utils';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 interface ArtigoContainer1 {
@@ -47,7 +46,7 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
 
   async function resizeAndSetImage() {
     try {
-      const resizedImageUri = image//(await resizeImage(image, 125, 125, 3, true)).uri;
+      const resizedImageUri = image; //(await resizeImage(image, 125, 125, 3, true)).uri;
       setResizedImage(resizedImageUri);
       setLoading(false);
       // console.log(resizedImageUri.uri);
@@ -99,7 +98,7 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
           styles.card,
           {
             backgroundColor:
-              useColorScheme() === 'dark' ? 'transparent' : "gray",
+              useColorScheme() === 'dark' ? 'transparent' : 'gray',
           },
         ]}>
         {loading ? (

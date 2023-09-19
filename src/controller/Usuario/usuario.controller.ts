@@ -1,6 +1,7 @@
 import {plainToInstance} from 'class-transformer';
 import {validate} from 'class-validator';
 import {
+  AlterarSenhaDto,
   AuthUsuarioDto,
   CreateNovaSenhaDto,
   CreateUsuarioDto,
@@ -220,6 +221,31 @@ export class UsuarioController extends UsuarioControllerABC {
         resolve(response);
       } catch (error: any) {
         // console.error(JSON.stringify(error));
+        reject(error.message || error);
+      }
+    });
+  }
+  public alterarSenha(utilizadorSenha: AlterarSenhaDto): Promise<void> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const Dto = plainToInstance(AlterarSenhaDto, utilizadorSenha);
+        const errors = await validate(Dto);
+        if (errors.length > 0) {
+          const validationError = checkErrorContatrainsArrays(errors);
+          throw `${validationError}`;
+        }
+        // console.log(codigo, telemovel);
+        const {id} = await getUser();
+        const response = (
+          await axiosIns.post(
+            '/auth/altera-password',
+            {},
+            {params: {...utilizadorSenha, id_user: id}},
+          )
+        ).data;
+        console.log(response);
+        resolve(response);
+      } catch (error: any) {
         reject(error.message || error);
       }
     });

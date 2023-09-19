@@ -3,23 +3,20 @@ import {View, ScrollView, StyleSheet} from 'react-native';
 import {Button, Card, Text, useTheme, Paragraph} from 'react-native-paper';
 import {convertToCurrency} from '../../utils/moeda/moeda.utils';
 import {useEffect} from 'react';
-import { useAppSelector } from '../../store/hook/index.hook';
+import {useAppSelector} from '../../store/hook/index.hook';
 import TransferenciaBancariaScreen from '../TransferenciaBancaria/TransBancaria.screen';
 import PagamentoScreen from '../MetodoPagamento/MP.screen';
-
 
 const ResumoCompraScreen: React.FC<any> = ({navigation}) => {
   const theme = useTheme();
   const encomendaData = useAppSelector(state => state.encomenda.encomenda);
-  useEffect(() => {
-        
-  }, []);
+  useEffect(() => {}, []);
   return (
     <ScrollView style={styles.container}>
-      <PagamentoScreen/>
+      <PagamentoScreen />
       {/* Card de Resumo de Compra */}
       <TransferenciaBancariaScreen />
-      
+
       <Card style={styles.card}>
         <Card.Title title="Resumo de Compra" />
         <Card.Content>

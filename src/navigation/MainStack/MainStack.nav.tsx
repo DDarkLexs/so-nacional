@@ -16,6 +16,8 @@ import EditProfileScreen from '../../screens/Usuario/EditarPerfil.screen';
 import EnderecoList from '../../screens/Usuario/Endereco/endereco.screen';
 import ContactoScreen from '../../screens/Informacao/Contacto/Contacto.screen';
 import TermsAndConditionsPage from '../../screens/Informacao/Termos/termos.screen';
+import LojaScreen from '../../screens/Sobre/Loja.screen';
+import ChangePasswordScreen from '../../screens/Usuario/MudarSenha/MudarSenha.screen';
 
 const Stack = createStackNavigator<MainStackStackParamList>();
 
@@ -130,6 +132,22 @@ const MainStack: React.FC = (): React.JSX.Element => {
           contentStyle: {backgroundColor: theme.colors.background},
         }}
         component={ContactoScreen}
+      />
+      <Stack.Screen
+        name="SobreLoja"
+        options={{
+          title: 'Sobre a loja',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={LojaScreen}
+      />
+      <Stack.Screen
+        name="MudarPass"
+        options={{
+          title: 'Alterar senha',
+          contentStyle: {backgroundColor: theme.colors.background},
+        }}
+        component={ChangePasswordScreen}
       />
     </Stack.Navigator>
   );

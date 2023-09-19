@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import { Image, StyleSheet, TouchableOpacity, View, useColorScheme } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  useColorScheme,
+} from 'react-native';
 import {Button, Checkbox, Text, TextInput} from 'react-native-paper';
 
 import {UsuarioController} from '../../../controller/Usuario/usuario.controller';
@@ -86,7 +92,7 @@ const RegistroScreen: React.FC<any> = ({navigation}) => {
       <Button
         loading={loading}
         mode="contained"
-        textColor='white'
+        textColor="white"
         disabled={loading}
         onPress={registrar}
         style={styles.button}>

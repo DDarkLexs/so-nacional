@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { ScrollView, StyleSheet, View, Alert } from 'react-native';
+import {ScrollView, StyleSheet, View, Alert} from 'react-native';
 import ArtigoContainer1Screen from '../../Layout/Produto/ArtigoContainer1.component';
 import SlideGroupContainer from '../../Layout/Produto/SlideGroupContainer.component';
 import {ProdutoController} from '../../controller/Produto/produto.controller';
@@ -18,7 +18,8 @@ const ProdutosScreen: React.FC = (): React.JSX.Element => {
   const produtos: Produto[] = useAppSelector(state => state.produto.produtos);
   const [subCategoria, setSubCategoria] = useState<SubCategoria[]>([]);
   const getSubcategoria = (id: number) => {
-    return subCategoria.find(state => state.id_subcategoria === id)?.nome_subcategoria;
+    return subCategoria.find(state => state.id_subcategoria === id)
+      ?.nome_subcategoria;
   };
 
   const fetchAPI = async (): Promise<void> => {

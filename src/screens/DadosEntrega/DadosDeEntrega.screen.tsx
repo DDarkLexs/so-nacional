@@ -16,12 +16,6 @@ import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
 import {setEncomendaInfo} from '../../store/reducer/encomenda.store';
 import {setEndereco} from '../../store/reducer/endereco.store';
 
-interface MetodoEntrega {
-  id: number;
-  name: string;
-  icon: string;
-}
-
 const DadosDeEntrega: React.FC<any> = ({navigation}): JSX.Element => {
   const theme = useTheme();
   const [selectedMethod, setSelectedMethod] = useState<number | null>(null);
@@ -190,7 +184,7 @@ const styles = StyleSheet.create({
   card: {
     marginVertical: 10,
     borderRadius: 10,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     borderWidth: 3,
     borderColor: '#a2a0a08c',
     borderStyle: 'solid',
@@ -199,7 +193,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 10,
     paddingVertical: 10,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     borderWidth: 3,
     borderColor: '#a2a0a08c',
     borderStyle: 'solid',

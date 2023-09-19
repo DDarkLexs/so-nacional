@@ -44,5 +44,5 @@ const encomendaSlice = createSlice({
 });
 
 export const {actions} = encomendaSlice;
-export const {setEncomendaItens,setEncomendaInfo} = encomendaSlice.actions;
+export const {setEncomendaItens, setEncomendaInfo} = encomendaSlice.actions;
 export default encomendaSlice.reducer;

@@ -17,7 +17,7 @@ const VerificacaoNumeroTelefoneScreen: React.FC<any> = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const controller = new UsuarioController();
-    
+
   const handleVerifyPhoneNumber = async (): Promise<void> => {
     try {
       // Lógica de verificação do número de telefone
@@ -25,7 +25,7 @@ const VerificacaoNumeroTelefoneScreen: React.FC<any> = ({navigation}) => {
       // Simulando uma verificação
       // Vamos apenas mostrar uma mensagem de sucesso
       await controller.recuperarSenha(telemovel);
-      navigation.navigate('VCodigo', {telemovel})
+      navigation.navigate('VCodigo', {telemovel});
       // showToast({
       //   text1: 'Número de telefone verificado',
       //   // text2: 'Número de telefone verificado!',
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    marginTop:30,
+    marginTop: 30,
     marginBottom: 20,
   },
   button: {

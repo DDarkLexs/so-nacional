@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import { Image, StyleSheet, TouchableOpacity, View, useColorScheme } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  useColorScheme,
+} from 'react-native';
 import {Button, Checkbox, Text, TextInput} from 'react-native-paper';
 import {UsuarioController} from '../../../controller/Usuario/usuario.controller';
 import {showToast} from '../../../service/toast.service';
@@ -10,9 +16,10 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
   const [telemovel, setTelemovel] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // Estado para controlar a visibilidade da senha
   const dispatch = useAppDispatch();
   const controller = new UsuarioController();
+
   const handleLogin = async (): Promise<void> => {
     try {
       // Lógica de autenticação
@@ -20,14 +27,14 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
       const response = await controller.autenticar({password, telemovel});
       showToast({
         text1: 'Sucesso',
-        text2: 'Autenticação autorizado!',
+        text2: 'Autenticação autorizada!',
         position: 'bottom',
         type: 'success',
       });
       dispatch(actions.setUtilizador(response));
     } catch (error) {
       showToast({
-        text1: 'Houve erro!',
+        text1: 'Houve um erro!',
         text2: JSON.stringify(error),
         position: 'bottom',
         type: 'error',
@@ -42,19 +49,14 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
     navigation.navigate('Registro');
   };
 
-  const handleForgotPassword = () => {
-    // Lógica para recuperar a senha
-    // navigation.navigate('ForgotPassword');
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
           source={
             useColorScheme() === 'dark'
-            ? require('../../../assets/image/logo-dark.png')
-            : require('../../../assets/image/logo.png')
+              ? require('../../../assets/image/logo-dark.png')
+              : require('../../../assets/image/logo.png')
           }
           style={styles.image}
         />
@@ -80,12 +82,30 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
         disabled={loading}
         left={<TextInput.Icon icon={'lock'} />}
         onChangeText={setPassword}
-        secureTextEntry
+        right={
+          showPassword ? (
+            <TextInput.Icon
+              onPress={() => setShowPassword(!showPassword)}
+              icon="eye"
+              size={20}
+              color="black"
+            />
+          ) : (
+            <TextInput.Icon
+              onPress={() => setShowPassword(!showPassword)}
+              icon="eye-off"
+              size={20}
+              color="black"
+            />
+          )
+        }
+        secureTextEntry={!showPassword} // Use secureTextEntry based on password visibility
         style={styles.input}
       />
-      <TouchableOpacity 
-      onPress={()=>navigation.navigate('NTelemovel')}
-      disabled={loading}>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate('NTelemovel')}
+        disabled={loading}>
         <Text style={styles.forgotPasswordText}>Esqueci minha senha</Text>
       </TouchableOpacity>
 
@@ -93,7 +113,7 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
         disabled={loading}
         loading={loading}
         mode="contained"
-        textColor='white'
+        textColor="white"
         onPress={handleLogin}
         style={styles.button}>
         Entrar
@@ -128,7 +148,6 @@ const styles = StyleSheet.create({
   },
   checkboxContainer: {
     flexDirection: 'row',
-    // alignItems: 'center',
     marginVertical: 16,
   },
   checkboxLabel: {
@@ -143,13 +162,13 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   forgotPasswordText: {
-    // textAlign: 'center',
     marginBottom: 16,
     textDecorationLine: 'underline',
   },
-  termos: {
-    marginTop: 16,
-    textDecorationLine: 'underline',
+  passwordVisibilityIcon: {
+    position: 'absolute',
+    top: 50, // Adjust the position as needed
+    right: 15, // Adjust the position as needed
   },
 });
 

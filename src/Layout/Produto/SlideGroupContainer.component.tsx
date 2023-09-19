@@ -34,13 +34,12 @@ const SlideGroupContainer = () => {
         type: 'error',
       });
     } finally {
-      setActiveButtonIndex(0)
-
+      setActiveButtonIndex(0);
     }
   };
   // Array of button labels
   useEffect(() => {
-    if(activeButtonIndex === -1){
+    if (activeButtonIndex === -1) {
       getData();
     }
   }, [activeButtonIndex]);
