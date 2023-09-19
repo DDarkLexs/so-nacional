@@ -14,10 +14,6 @@ export class ProdutoController extends ProdutoControllerABC {
         resolve();
       } catch (error: any) {
         reject(error.message || error);
-      } finally {
-        console.log(this.subCategoria);
-
-
       }
     });
   }

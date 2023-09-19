@@ -40,16 +40,16 @@ const SlideGroupContainer = () => {
   };
   // Array of button labels
   useEffect(() => {
-
+    if(activeButtonIndex === -1){
+      getData();
+    }
   }, [activeButtonIndex]);
   useEffect(() => {
-    getData();
     return () => {
       // showToast({position: 'bottom', text1: 'saiu'});
     };
   }, []);
   useEffect(() => {
-    console.log(selected)
     setActiveButtonIndex(
       categoriaPrincipal.findIndex(item => item.id_categoria === selected),
     );

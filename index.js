@@ -12,7 +12,7 @@ import {Provider as StoreProvider} from 'react-redux';
 import {store} from './src/store/index.store';
 
 export default function Main() {
-  const theme = !(useColorScheme() === 'light') ? light : dark;
+  const theme = useColorScheme() === 'light' ? light : dark;
   return (
     <StoreProvider store={store}>
       <PaperProvider theme={theme}>

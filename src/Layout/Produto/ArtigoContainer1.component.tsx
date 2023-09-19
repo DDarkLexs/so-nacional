@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, View, useColorScheme } from 'react-native';
-import { Card, Text, TextInput, useTheme, TouchableRipple } from 'react-native-paper';
-import { convertToCurrency } from '../../utils/moeda/moeda.utils';
-import { showToast } from '../../service/toast.service';
-import { useAppDispatch } from '../../store/hook/index.hook';
-import { setItem } from '../../store/reducer/usuario.reducer';
-import { fazerSubtotal } from '../../utils/index.utils';
-import { ProdutoController } from '../../controller/Produto/produto.controller';
-import { resizeImage } from '../../utils/index.utils';
-import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import React, {useEffect, useState} from 'react';
+import {Image, StyleSheet, View, useColorScheme} from 'react-native';
+import {
+  Card,
+  Text,
+  TextInput,
+  useTheme,
+  TouchableRipple,
+} from 'react-native-paper';
+import {convertToCurrency} from '../../utils/moeda/moeda.utils';
+import {showToast} from '../../service/toast.service';
+import {useAppDispatch} from '../../store/hook/index.hook';
+import {setItem} from '../../store/reducer/usuario.reducer';
+import {fazerSubtotal} from '../../utils/index.utils';
+import {ProdutoController} from '../../controller/Produto/produto.controller';
+import {resizeImage} from '../../utils/index.utils';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 interface ArtigoContainer1 {
   nome: string;
@@ -41,8 +47,8 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
 
   async function resizeAndSetImage() {
     try {
-      const resizedImageUri = await resizeImage(image, 125, 125, 95, true);
-      setResizedImage(resizedImageUri.uri);
+      const resizedImageUri = image//(await resizeImage(image, 125, 125, 3, true)).uri;
+      setResizedImage(resizedImageUri);
       setLoading(false);
       // console.log(resizedImageUri.uri);
     } catch (error) {
@@ -91,19 +97,25 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
         mode="contained"
         style={[
           styles.card,
-          { backgroundColor: useColorScheme() === 'dark' ? 'transparent' : undefined },
-        ]}
-      >
+          {
+            backgroundColor:
+              useColorScheme() === 'dark' ? 'transparent' : "gray",
+          },
+        ]}>
         {loading ? (
           <SkeletonPlaceholder>
             <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
-              <SkeletonPlaceholder.Item width={'100%'} height={125} borderRadius={15} />
+              <SkeletonPlaceholder.Item
+                width={'100%'}
+                height={125}
+                borderRadius={15}
+              />
             </SkeletonPlaceholder.Item>
           </SkeletonPlaceholder>
         ) : (
           <View style={styles.imageContainer}>
             <Image
-              source={{ uri: resizedImage || image }}
+              source={{uri: resizedImage || image}}
               resizeMode="contain"
               style={styles.image}
             />
@@ -111,7 +123,7 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
         )}
 
         <View>
-          <Text style={[styles.itemInfo, { color: theme.colors.primary }]}>
+          <Text style={[styles.itemInfo, {color: theme.colors.primary}]}>
             {' '}
             {subCategoria}{' '}
           </Text>
@@ -151,7 +163,7 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
             rippleColor={'white'}
             style={[
               styles.addButton,
-              { backgroundColor: theme.colors.secondary },
+              {backgroundColor: theme.colors.secondary},
             ]}
             underlayColor={theme.colors.primary}>
             <Text style={styles.addButtonLabel}>Adicionar</Text>

@@ -1,4 +1,10 @@
-import {IsEmail, IsNotEmpty, IsPhoneNumber, Length} from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNumberString,
+  IsPhoneNumber,
+  Length,
+} from 'class-validator';
 import {Usuario, Utilizador} from '../../model/usuario.model';
 
 interface UsuarioDto extends Omit<Usuario, 'id_user'> {}
@@ -10,8 +16,8 @@ export class CreateUsuarioDto implements UsuarioDto {
   @IsNotEmpty()
   @IsPhoneNumber('AO', {message: 'O número de telefone é inválido!'})
   telemovel: string = '';
-  @IsNotEmpty({message: 'Informe a palavra-passe!'})
-  @Length(6, 255, {message: 'A sua senha deve ser maior ou igual a 6!'})
+  @IsNotEmpty({message: 'Informe a senha!'})
+  @Length(6, 255, {message: 'A senha deve ser maior ou igual a 6 caracteres!'})
   password: string = '';
 }
 
@@ -32,4 +38,26 @@ export class AuthUsuarioDto implements Omit<UsuarioDto, 'nome'> {
   @IsNotEmpty({message: 'Informe a palavra-passe!'})
   @Length(6, 255, {message: 'A sua senha deve ser maior ou igual a 6!'})
   password: string = '';
+}
+export class RecuperarSenhaDto implements Pick<UsuarioDto, 'telemovel'> {
+  @IsNotEmpty({message: 'Informe o número de telefone'})
+  @IsPhoneNumber('AO', {message: 'O número de telefone é inválido!'})
+  telemovel: string = '';
+}
+
+export class VerificarCodigoDto {
+  @IsNotEmpty({message: 'Informe o código'})
+  @IsNumberString({}, {message: 'O código informado não é numéro!'})
+  @Length(4, 20, {message: 'O código informado é inválido!'})
+  // @IsPhoneNumber('AO', {message: 'O número de telefone é inválido!'})
+  codigo: string = '';
+}
+
+export class CreateNovaSenhaDto implements Pick<UsuarioDto, 'telemovel'> {
+  @IsNotEmpty({message: 'Informe o número de telefone'})
+  @IsPhoneNumber('AO', {message: 'O número de telefone é inválido!'})
+  telemovel: string = '';
+  @IsNotEmpty({message: 'Informe a senha!'})
+  @Length(6, 255, {message: 'A senha deve ser maior ou igual a 6 caracteres!'})
+  senha: string = '';
 }

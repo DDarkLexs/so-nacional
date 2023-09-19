@@ -37,19 +37,26 @@ const EditProfileScreen = ({navigation}: any) => {
       },
     };
 
-    launchImageLibrary({
-      mediaType:'photo'
-    }, (response) => {
-      console.log(response)
-     
-      
-    });
+    launchImageLibrary(
+      {
+        mediaType: 'photo',
+      },
+      (response: any) => {
+        if (response.didCancel) {
+        } else if (response.errorCode) {
+          console.log(response.errorMessage);
+        } else {
+          setImageSource(response.assets[0].uri);
+          // console.log(response.assets[0].uri);
+        }
+      },
+    );
   };
 
   const saveChanges = async () => {
     try {
       setLoading(true);
-      await controller.atualizarUsuario(usuario);
+      await controller.atualizarUsuario(usuario, imageSource);
 
       showToast({
         text1: 'Atualizado',
@@ -74,7 +81,7 @@ const EditProfileScreen = ({navigation}: any) => {
       <View style={styles.avatarContainer}>
         <Avatar.Image
           size={150}
-          source={{uri: String(user?.foto)}}
+          source={{uri: imageSource || String(user?.foto)}}
           style={styles.avatar}
         />
         <View style={styles.editIconContainer}>

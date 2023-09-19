@@ -1,4 +1,6 @@
 import ImageResizer from '@bam.tech/react-native-image-resizer';
+import {useColorScheme} from 'react-native';
+
 export const checkErrorContatrainsArrays = (errors: any[]): any => {
   return errors.flatMap(error => Object.values(error.constraints ?? []))[0]; // Use flatMap and nullish coalescing operator
 };
@@ -7,6 +9,14 @@ export const fazerSubtotal = (preco: number, quantidade: number): number => {
   return preco * quantidade;
 };
 
+// export const getLogo = () => {
+//   const theme = useColorScheme();
+//   if (theme === 'light') {
+//     return require('../assets/image/logo.png');
+//   } else {
+//     return require('../assets/image/logo-dark.png');
+//   }
+// };
 
 interface ResizedImage {
   uri: string;
@@ -19,7 +29,7 @@ export const resizeImage = async (
   targetWidth: number,
   targetHeight: number,
   quality = 80,
-  resizeMode = true
+  resizeMode = true,
 ): Promise<ResizedImage> => {
   try {
     const resizedImage = await ImageResizer.createResizedImage(
@@ -30,21 +40,19 @@ export const resizeImage = async (
       quality,
       0, // No rotation
       undefined, // Output file path (null means it will generate a temp file)
-      resizeMode
+      resizeMode,
     );
 
     return {
       uri: resizedImage.uri,
       width: resizedImage.width,
-      height: resizedImage.height
+      height: resizedImage.height,
     };
   } catch (error) {
     console.error('Error resizing image:', error);
     throw new Error('Image resize failed');
   }
 };
-
-
 
 /* export const compressImage = async (uri: string) => {
   const manipImage = await ImageManipulator.default.manipulate(uri, [], {

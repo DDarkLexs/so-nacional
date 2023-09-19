@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View, useColorScheme } from 'react-native';
 import {Button, Checkbox, Text, TextInput} from 'react-native-paper';
 import {UsuarioController} from '../../../controller/Usuario/usuario.controller';
 import {showToast} from '../../../service/toast.service';
@@ -51,7 +51,11 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={require('../../../assets/image/logo.png')}
+          source={
+            useColorScheme() === 'dark'
+            ? require('../../../assets/image/logo-dark.png')
+            : require('../../../assets/image/logo.png')
+          }
           style={styles.image}
         />
       </View>
@@ -79,7 +83,9 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
         secureTextEntry
         style={styles.input}
       />
-      <TouchableOpacity disabled={loading}>
+      <TouchableOpacity 
+      onPress={()=>navigation.navigate('NTelemovel')}
+      disabled={loading}>
         <Text style={styles.forgotPasswordText}>Esqueci minha senha</Text>
       </TouchableOpacity>
 
@@ -87,6 +93,7 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
         disabled={loading}
         loading={loading}
         mode="contained"
+        textColor='white'
         onPress={handleLogin}
         style={styles.button}>
         Entrar

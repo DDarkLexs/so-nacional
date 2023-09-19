@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View, useColorScheme } from 'react-native';
 import {Button, Checkbox, Text, TextInput} from 'react-native-paper';
 
 import {UsuarioController} from '../../../controller/Usuario/usuario.controller';
@@ -43,7 +43,11 @@ const RegistroScreen: React.FC<any> = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={require('../../../assets/image/logo.png')}
+          source={
+            useColorScheme() === 'dark'
+              ? require('../../../assets/image/logo-dark.png')
+              : require('../../../assets/image/logo.png')
+          }
           style={styles.image}
         />
       </View>
@@ -82,6 +86,7 @@ const RegistroScreen: React.FC<any> = ({navigation}) => {
       <Button
         loading={loading}
         mode="contained"
+        textColor='white'
         disabled={loading}
         onPress={registrar}
         style={styles.button}>

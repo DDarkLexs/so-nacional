@@ -94,11 +94,10 @@ const EnderecoList: React.FC = ({navigation}: any) => {
   const showCriar = () => setCriarVisible(true);
   const hideCriar = () => setCriarVisible(false);
 
-  const confirmCriarDialog = ()=>{
-    getEndereco()
-    hideCriar()
-  }
-
+  const confirmCriarDialog = () => {
+    getEndereco();
+    hideCriar();
+  };
 
   const handleZonaEntregaChange = (text: string) => {
     setZonaEntrega(text);
@@ -169,23 +168,29 @@ const EnderecoList: React.FC = ({navigation}: any) => {
                   mode="contained-tonal"
                   icon="pencil"
                   onPress={() => navigateToEdit(item)}
-                  iconColor={'white'} 
+                  iconColor={'white'}
                   containerColor={theme.colors.secondary}
-                  />
-                <IconButton icon="delete" 
-                iconColor={'white'} 
-                containerColor={theme.colors.primary}
-                 onPress={() => showDialog(item)} />
+                />
+                <IconButton
+                  icon="delete"
+                  iconColor={'white'}
+                  containerColor={theme.colors.primary}
+                  onPress={() => showDialog(item)}
+                />
               </Card.Actions>
             </Card>
           ))
         )}
       </ScrollView>
       <FAB
-        style={[styles.fab,{ backgroundColor:theme.colors.secondary }]}
+        style={[
+          styles.fab,
+          {backgroundColor: !loading ? theme.colors.secondary : undefined},
+        ]}
         color={'white'}
         rippleColor={'white'}
         loading={loading}
+        disabled={loading}
         icon="plus"
         label="Novo Endereço"
         onPress={() => setCriarVisible(true)}

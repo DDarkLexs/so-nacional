@@ -8,6 +8,9 @@ import {AuthStackStackParamList} from './model/authType';
 import TermsAndConditionsPage from '../../screens/Informacao/Termos/termos.screen';
 import ReceavingCode from '../../screens/Authentication/verificationCode/code.screen';
 import {HeaderProps} from '../../Layout/Principal/Header.component';
+import VerificacaoNumeroTelefoneScreen from '../../screens/Authentication/RecuperacaoDeSenha/NTelefone.screen';
+import ValidacaoCodigoScreen from '../../screens/Authentication/RecuperacaoDeSenha/VCodigo.screen';
+import CriacaoNovaSenhaScreen from '../../screens/Authentication/RecuperacaoDeSenha/NovaSenha.screen';
 
 const Stack = createStackNavigator<AuthStackStackParamList>();
 
@@ -24,6 +27,9 @@ const AuthStack: React.FC = (): React.JSX.Element => {
       <Stack.Screen name="Registro" component={RegistroScreen} />
       <Stack.Screen name="ConfirmarTelemovel" component={ReceavingCode} />
       <Stack.Screen name="ForgotPassword" component={ReceavingCode} />
+      <Stack.Screen name="NTelemovel" component={VerificacaoNumeroTelefoneScreen} />
+      <Stack.Screen name="VCodigo" component={ValidacaoCodigoScreen} />
+      <Stack.Screen name="CNSenha" component={CriacaoNovaSenhaScreen} />
       <Stack.Screen
         name="termos&condicoes"
         options={{

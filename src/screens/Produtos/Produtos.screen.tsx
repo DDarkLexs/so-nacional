@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import { ScrollView, StyleSheet, View, Alert } from 'react-native';
 import ArtigoContainer1Screen from '../../Layout/Produto/ArtigoContainer1.component';
 import SlideGroupContainer from '../../Layout/Produto/SlideGroupContainer.component';
 import {ProdutoController} from '../../controller/Produto/produto.controller';

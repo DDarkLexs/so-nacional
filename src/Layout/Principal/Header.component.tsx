@@ -1,5 +1,5 @@
 import {Appbar, useTheme} from 'react-native-paper';
-import {Image} from 'react-native';
+import {Image, useColorScheme} from 'react-native';
 import React from 'react';
 import {NativeStackHeaderProps} from '@react-navigation/native-stack/lib/typescript/src/types';
 import {styles} from '../../assets/styles/index.styles';
@@ -8,7 +8,7 @@ const Header: React.FC<
   Pick<NativeStackHeaderProps, 'navigation' | 'options' | 'back'>
 > = ({navigation}): React.JSX.Element => {
   const theme = useTheme();
-
+  const colorScheme = useColorScheme();
   return (
     <Appbar.Header
       style={styles.appBar}
@@ -17,7 +17,11 @@ const Header: React.FC<
       <Appbar.Content
         title={
           <Image
-            source={require('../../assets/image/logo.png')}
+            source={
+              useColorScheme() === 'dark'
+                ? require('../../assets/image/logo-dark.png')
+                : require('../../assets/image/logo.png')
+            }
             style={{width: 110, height: 50}}
           />
         }

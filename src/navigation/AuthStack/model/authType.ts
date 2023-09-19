@@ -7,6 +7,9 @@ export type AuthStackStackParamList = {
   'termos&condicoes': undefined;
   ForgotPassword: undefined;
   ConfirmarTelemovel: undefined;
+  NTelemovel: undefined;
+  VCodigo: undefined;
+  CNSenha: undefined;
 };
 
 export type EntradaScreenRouteProp = RouteProp<
