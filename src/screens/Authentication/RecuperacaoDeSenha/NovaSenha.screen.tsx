@@ -14,16 +14,17 @@ import {actions} from '../../../store/reducer/usuario.reducer';
 
 interface NovaSenhaProp {
   telemovel: string;
-  senha: string;
+  password: string;
 }
 
 const CriacaoNovaSenhaScreen: React.FC<any> = ({navigation, route}) => {
   const [data, setData] = useState<NovaSenhaProp>({
-    senha: '',
+    password: '',
     telemovel: route.params.telemovel,
   });
   const [senha2, setSenha2] = useState<string>('');
   const [senhaVisibility, setSenhaVisibility] = useState<boolean>(true);
+  const [senhaVisibility2, setSenhaVisibility2] = useState<boolean>(true);
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const controller = new UsuarioController();
@@ -35,19 +36,21 @@ const CriacaoNovaSenhaScreen: React.FC<any> = ({navigation, route}) => {
   const toggleSenhaVisibility = () => {
     setSenhaVisibility(!senhaVisibility);
   };
+  const toggleSenhaVisibility2 = () => {
+    setSenhaVisibility2(!senhaVisibility2);
+  };
 
   const handleCreateNewPassword = async (): Promise<void> => {
     // Restante do código
 
     try {
-      console.log(data.senha !== senha2);
-      if (data.senha !== senha2) {
+      if (data.password !== senha2) {
         throw 'As senhas não coincidem. Por favor, verifique e tente novamente.';
       }
       // Lógica de criação de nova senha
       setLoading(true);
       // Simulando a criação de uma nova senha
-      // await controller.criarNovaSenha(data);
+      await controller.criarNovaSenha(data);
       // Vamos apenas mostrar uma mensagem de sucesso
       navigation.navigate('Entrada');
       showToast({
@@ -88,12 +91,12 @@ const CriacaoNovaSenhaScreen: React.FC<any> = ({navigation, route}) => {
       </Text>
       <TextInput
         label="Nova Senha"
-        value={data.senha}
+        value={data.password}
         disabled={loading}
         mode="outlined"
-        secureTextEntry={senhaVisibility}
-        onChangeText={senha => setData({...data, senha})}
+        onChangeText={password => setData({...data, password})}
         style={[styles.input, {marginTop: 30}]}
+        secureTextEntry={senhaVisibility}
         right={
           <TextInput.Icon
             icon={senhaVisibility ? 'eye' : 'eye-off'}
@@ -107,12 +110,12 @@ const CriacaoNovaSenhaScreen: React.FC<any> = ({navigation, route}) => {
         mode="outlined"
         value={senha2}
         onChangeText={setSenha2}
-        secureTextEntry={senhaVisibility}
+        secureTextEntry={senhaVisibility2}
         style={styles.input}
         right={
           <TextInput.Icon
-            icon={senhaVisibility ? 'eye' : 'eye-off'}
-            onPress={toggleSenhaVisibility}
+            icon={senhaVisibility2 ? 'eye' : 'eye-off'}
+            onPress={toggleSenhaVisibility2}
           />
         }
       />

@@ -25,6 +25,7 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
       // Lógica de autenticação
       setLoading(true);
       const response = await controller.autenticar({password, telemovel});
+      console.log(response);
       showToast({
         text1: 'Sucesso',
         text2: 'Autenticação autorizada!',
@@ -88,14 +89,12 @@ const EntradaScreen: React.FC<any> = ({navigation}) => {
               onPress={() => setShowPassword(!showPassword)}
               icon="eye"
               size={20}
-              color="black"
             />
           ) : (
             <TextInput.Icon
               onPress={() => setShowPassword(!showPassword)}
               icon="eye-off"
               size={20}
-              color="black"
             />
           )
         }

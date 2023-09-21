@@ -18,9 +18,15 @@ const RegistroScreen: React.FC<any> = ({navigation}) => {
   const [telemovel, setTelemovel] = useState<Usuario['telemovel']>('');
   const [password, setPassword] = useState<Usuario['password']>('');
   const controller = new UsuarioController();
+  const [senhaVisibility, setSenhaVisibility] = useState<boolean>(true);
+
   // nome,telemovel, password
   const handleEntrada = () => {
     navigation.navigate('Entrada', {});
+  };
+
+  const toggleSenhaVisibility = () => {
+    setSenhaVisibility(!senhaVisibility);
   };
 
   const registrar = async (): Promise<void> => {
@@ -79,6 +85,13 @@ const RegistroScreen: React.FC<any> = ({navigation}) => {
         keyboardType="phone-pad"
         onChangeText={setTelemovel}
         style={styles.input}
+        secureTextEntry={senhaVisibility}
+        right={
+          <TextInput.Icon
+            icon={senhaVisibility ? 'eye' : 'eye-off'}
+            onPress={toggleSenhaVisibility}
+          />
+        }
       />
       <TextInput
         disabled={loading}

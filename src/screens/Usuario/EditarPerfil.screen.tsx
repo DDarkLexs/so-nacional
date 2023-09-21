@@ -8,35 +8,42 @@ import {
   useTheme,
   Text,
 } from 'react-native-paper';
-import {useAppSelector} from '../../store/hook/index.hook';
+import { useAppSelector, useAppDispatch } from '../../store/hook/index.hook';
 import {TouchableRipple} from 'react-native-paper';
 import {Usuario, Utilizador} from '../../model/usuario.model';
 import {showToast} from '../../service/toast.service';
 import {UsuarioController} from '../../controller/Usuario/usuario.controller';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {
+  ImagePickerResponse,
+  launchCamera,
+  launchImageLibrary,
+  Asset,
+  ImageLibraryOptions
+} from 'react-native-image-picker';
+import {pickSingle} from 'react-native-document-picker';
+import { setUtilizador } from '../../store/reducer/usuario.reducer';
 
 const EditProfileScreen = ({navigation}: any) => {
   const theme = useTheme();
   const controller = new UsuarioController();
   const user = useAppSelector(state => state.usuario.utilizador);
   const [loading, setLoading] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
   const [usuario, setUsuario] = useState<Omit<Utilizador, 'foto' | 'id'>>({
     email: String(user?.email),
     nome: String(user?.nome),
     telefone: String(user?.telefone),
   });
-  const [imageSource, setImageSource] = useState(null);
+  const [imageSource, setImageSource] = useState<Asset>({uri: ''});
 
   const selectImage = () => {
     const options = {
-      title: 'Select Image',
-
+      title: 'Selecione uma foto de perfil',
       storageOptions: {
         skipBackup: true,
         path: 'images',
       },
     };
-
     launchImageLibrary(
       {
         mediaType: 'photo',
@@ -46,8 +53,9 @@ const EditProfileScreen = ({navigation}: any) => {
         } else if (response.errorCode) {
           console.log(response.errorMessage);
         } else {
-          setImageSource(response.assets[0].uri);
-          // console.log(response.assets[0].uri);
+          setImageSource(response.assets[0]);
+
+          console.log(imageSource);
         }
       },
     );
@@ -57,10 +65,11 @@ const EditProfileScreen = ({navigation}: any) => {
     try {
       setLoading(true);
       await controller.atualizarUsuario(usuario, imageSource);
-
+      await controller.terminarSessao();
+      dispatch(setUtilizador(null));
       showToast({
-        text1: 'Atualizado',
-        text2: 'Usuário atualizado com sucesso!',
+        text1: 'Usuário atualizado!',
+        text2: 'terminamos a sua sessão para podermos atualizar os seus dados!',
         position: 'bottom',
         type: 'success',
       });
@@ -81,7 +90,7 @@ const EditProfileScreen = ({navigation}: any) => {
       <View style={styles.avatarContainer}>
         <Avatar.Image
           size={150}
-          source={{uri: imageSource || String(user?.foto)}}
+          source={{uri: imageSource.uri || String(user?.foto)}}
           style={styles.avatar}
         />
         <View style={styles.editIconContainer}>
@@ -116,6 +125,7 @@ const EditProfileScreen = ({navigation}: any) => {
         placeholder="Telefone"
         disabled={loading}
         mode="outlined"
+        keyboardType='phone-pad'
         style={styles.input}
       />
       <TextInput
@@ -123,6 +133,7 @@ const EditProfileScreen = ({navigation}: any) => {
         onChangeText={email => setUsuario({...usuario, email})}
         placeholder="E-mail"
         disabled={loading}
+        keyboardType="email-address"
         mode="outlined"
         style={styles.input}
       />

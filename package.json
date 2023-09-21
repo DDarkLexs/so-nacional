@@ -8,9 +8,10 @@
     "lint": "eslint . --fix",
     "start": "react-native start",
     "test": "jest",
-    "clear": "npx react-native clean",
+     "clear": "npx react-native clean",
     "clean": "cd android && gradlew clean",
-    "apk": "cd android && gradlew assembleRelease --stacktrace",
+    "stop-android": "cd android && gradlew --stop",
+    "build-apk": "cd android && gradlew assembleRelease --stacktrace",
     "android-ts": "concurrently \"yarn check-types:watch\"  \"react-native run-android\"",
     "check-types": "tsc",
     "watch": "tsc --watch"

@@ -18,3 +18,14 @@ export interface zonaEntrega {
   nome_zona: string;
   id_zona: number;
 }
+
+export interface EnderecoEdit {
+  bairro: string;
+  designacao: string;
+  id_endereco: number;
+  id_usuario: number;
+  nome_morada: string;
+  ponto_ref: string;
+  taxa_entrega: string;
+  telefone: number;
+}

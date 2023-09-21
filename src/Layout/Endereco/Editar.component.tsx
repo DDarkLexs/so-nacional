@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View,Alert} from 'react-native';
+import {StyleSheet, View, Alert} from 'react-native';
 import {
   TextInput,
   Button,
@@ -13,20 +13,18 @@ import {showToast} from '../../service/toast.service';
 import {useEffect} from 'react';
 import {EnderecoController} from '../../controller/endereco/endereco.controller';
 
-interface EditarEnderecoProps {
+interface AddEnderecoProps {
   visible: boolean;
   onSave: () => void;
   onCancel: () => void;
-  onOpen: () => void;
-  enderecoProp:Endereco
+  onOpen: (item: any) => void;
 }
-
-const EditarEnderecoDialog: React.FC<EditarEnderecoProps> = ({
+ 
+const EditarEnderecoDialog: React.FC<AddEnderecoProps> = ({
   onCancel,
   visible,
   onSave,
   onOpen,
-  enderecoProp
 }) => {
   const controller = new EnderecoController();
 
@@ -40,7 +38,7 @@ const EditarEnderecoDialog: React.FC<EditarEnderecoProps> = ({
     ponto_ref: '',
     telefone: '',
   });
-
+  
   const [menuVisible, setMenuVisible] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -59,51 +57,47 @@ const EditarEnderecoDialog: React.FC<EditarEnderecoProps> = ({
   const [zonaEntregaItems, setZonaEntregaItems] = useState<zonaEntrega[]>([]);
   const getZonasAPI = async () => {
     try {
-        setLoading(true)
-        await controller.getZonas();
-        setZonaEntregaItems(controller.zonasDeEntrega);
+      setLoading(true);
+      await controller.getZonas();
+      setZonaEntregaItems(controller.zonasDeEntrega);
     } catch (error) {
-        showToast({
-        text1: `Houve um erro!`,
-        text2: `${error}`,
-        position: 'bottom',
-        type: 'success',
-      });
-    } finally {
-        setLoading(false)
-    }
-  };
-
-  const save = async ()=> {
-    try {
-        setLoading(true)
-        await controller.saveEndereco(endereco)
-        showToast({
-        text1: `Sucesso!`,
-        text2: `O seu endereço foi guardado!`,
-        position: 'bottom',
-        type: 'success',
-      });
-        onSave();
-    } catch (error) {
-        showToast({
+      showToast({
         text1: `Houve um erro!`,
         text2: `${error}`,
         position: 'bottom',
         type: 'error',
       });
     } finally {
-        onCancel();
-        setLoading(false)
-
+      setLoading(false);
     }
-}
+  };
+
+  const save = async () => {
+    try {
+      setLoading(true);
+      await controller.saveEndereco(endereco);
+      showToast({
+        text1: `Sucesso!`,
+        text2: `O seu endereço foi guardado!`,
+        position: 'bottom',
+        type: 'success',
+      });
+      onSave();
+    } catch (error) {
+      showToast({
+        text1: `Houve um erro!`,
+        text2: `${error}`,
+        position: 'bottom',
+        type: 'error',
+      });
+    } finally {
+      onCancel();
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (visible) {
-      setEndereco({
-        ...enderecoProp,
-      })
       getZonasAPI();
     }
   }, [visible]);
@@ -119,7 +113,7 @@ const EditarEnderecoDialog: React.FC<EditarEnderecoProps> = ({
             onChangeText={text => setEndereco({...endereco, morada: text})}
             mode="outlined"
             style={styles.input}
-            />
+          />
           <TextInput
             label="Designação"
             disabled={loading}
@@ -141,7 +135,7 @@ const EditarEnderecoDialog: React.FC<EditarEnderecoProps> = ({
             visible={menuVisible}
             onDismiss={hideMenu}
             anchor={
-                <TextInput
+              <TextInput
                 label="Zona de Entrega"
                 disabled={loading}
                 value={endereco.nome_zona}
@@ -157,7 +151,7 @@ const EditarEnderecoDialog: React.FC<EditarEnderecoProps> = ({
                 onPress={() => handleMenuItemPress(item)}
                 disabled={loading}
                 title={item.nome_zona}
-                />
+              />
             ))}
           </Menu>
 
@@ -168,12 +162,12 @@ const EditarEnderecoDialog: React.FC<EditarEnderecoProps> = ({
             onChangeText={text => setEndereco({...endereco, ponto_ref: text})}
             mode="outlined"
             style={styles.input}
-            />
+          />
           <TextInput
             label="Telefone"
             disabled={loading}
             value={endereco.telefone}
-            keyboardType='number-pad'
+            keyboardType="number-pad"
             onChangeText={text => setEndereco({...endereco, telefone: text})}
             mode="outlined"
             style={styles.input}
@@ -182,9 +176,12 @@ const EditarEnderecoDialog: React.FC<EditarEnderecoProps> = ({
         </Dialog.Content>
 
         <Dialog.Actions>
-          <Button disabled={loading} loading={loading} onPress={save}>Salvar</Button>
-          <Button disabled={loading} loading={loading} onPress={onCancel}>Cancelar</Button>
-          
+          <Button disabled={loading} loading={loading} onPress={save}>
+            Salvar
+          </Button>
+          <Button disabled={loading} loading={loading} onPress={onCancel}>
+            Cancelar
+          </Button>
         </Dialog.Actions>
       </Dialog>
     </Portal>

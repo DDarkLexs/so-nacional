@@ -14,6 +14,7 @@ import {checkErrorContatrainsArrays} from '../../utils/index.utils';
 import axiosIns from '../../api/axiosIns.api';
 import {Usuario, Utilizador} from '../../model/usuario.model';
 import {getUser, removeUser, setUser} from '../../service/storage.service';
+import {Asset} from 'react-native-image-picker';
 
 export class UsuarioController extends UsuarioControllerABC {
   public autenticar(usuario: AuthUsuarioDto): Promise<Utilizador> {
@@ -93,7 +94,7 @@ export class UsuarioController extends UsuarioControllerABC {
   }
   public atualizarUsuario(
     usuario: updateUtilizadorDto,
-    foto_perfil: any,
+    foto_perfil: Asset,
   ): Promise<void> {
     return new Promise(async (resolve, reject) => {
       try {
@@ -103,41 +104,53 @@ export class UsuarioController extends UsuarioControllerABC {
           const validationError = checkErrorContatrainsArrays(errors);
           throw `${validationError}`;
         }
-        const {id} = await getUser();
+        const {id, foto} = await getUser();
 
-        const formData = new FormData();
+        var formData = new FormData();
+
         const form = {
           id_user: id,
           nome: usuario.nome,
           telemovel: usuario.telefone,
-          Email: usuario.email,
+          email: usuario.email,
         };
 
-        if (foto_perfil) {
+        if (foto_perfil.fileSize) {
           formData.append('foto_perfil', {
-            uri: foto_perfil,
-            type: 'image/jpeg', // Adjust the type as per your image type
-            name: 'photo.jpg', // Adjust the name as per your image name
+            uri: foto_perfil.uri,
+            type: foto_perfil.type, // Adjust the type as per your image type
+            name: foto_perfil.fileName, // Adjust the name as per your image name
           });
-        }
-        const response = (
-          await axiosIns.post(
-            '/auth/editar-perfil',
-            {formData},
-            {
+          const response = (
+            await axiosIns.post('/auth/editar-perfil', formData, {
               params: {...form},
-            },
-          )
-        ).data;
-        if (response.message === 'Não foi possível alterar o dados!') {
-          throw response.message;
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
+          ).data;
+          if (response.message === 'Não foi possível alterar o dados!') {
+            throw response.message;
+          }
+        } else {
+          const response = (
+            await axiosIns.post('/auth/editar-perfil', null, {
+              params: {...form},
+              headers: {
+                'content-type':
+                  'multipart/form-data; boundary=---011000010111000001101001',
+              },
+            })
+          ).data;
+          if (response.message === 'Não foi possível alterar o dados!') {
+            throw response.message;
+          }
         }
         // await setUser(response.data[0]);
         // await this.verifyIsAuthenticated();
-        console.log(formData);
         resolve();
       } catch (error: any) {
-        console.log(error);
+        console.log(JSON.stringify(error));
         reject(error.message || error);
       }
     });
@@ -216,8 +229,13 @@ export class UsuarioController extends UsuarioControllerABC {
         }
         // console.log(codigo, telemovel);
         const response = (
-          await axiosIns.post('/auth/nova-password', {}, {params: novaSenha})
+          await axiosIns.post(
+            '/auth/nova-password',
+            {},
+            {params: {...novaSenha}},
+          )
         ).data;
+        console.log(response);
         resolve(response);
       } catch (error: any) {
         // console.error(JSON.stringify(error));
@@ -243,7 +261,10 @@ export class UsuarioController extends UsuarioControllerABC {
             {params: {...utilizadorSenha, id_user: id}},
           )
         ).data;
-        console.log(response);
+        console.log(id);
+        if (response.message === 'Falha ao verificar a password') {
+          throw response.message;
+        }
         resolve(response);
       } catch (error: any) {
         reject(error.message || error);

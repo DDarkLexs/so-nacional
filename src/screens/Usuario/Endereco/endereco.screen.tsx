@@ -25,6 +25,7 @@ import {setEndereco} from '../../../store/reducer/endereco.store';
 import {convertToCurrency} from '../../../utils/moeda/moeda.utils';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import ConfirmDialog from '../../../components/Dialog/Confirmar.component';
+import EditarEnderecoDialog from '../../../Layout/Endereco/Editar.component';
 
 interface EnderecoListProps {
   data: Endereco[];
@@ -45,11 +46,23 @@ const EnderecoList: React.FC = ({navigation}: any) => {
   const [editing, setEditing] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [editedItem, setEditedItem] = useState<Endereco | null>(null);
+  const [editDialog, setEditDialog] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const showDialog = (item: Endereco) => {
     setSelectedItem(item);
     setVisible(true);
+  };
+  const setEditItem = (item: any) => {
+    console.log(item);
+    setEditDialog(true);
+  }
+
+  const showEditDialog = (item: any) => {
+    console.log(item);
+  };
+  const closeEditDialog = () => {
+    setEditDialog(false);
   };
 
   const confirmDialogDel = async () => {
@@ -130,6 +143,12 @@ const EnderecoList: React.FC = ({navigation}: any) => {
 
   return (
     <>
+      <EditarEnderecoDialog
+        onSave={closeEditDialog}
+        onOpen={showEditDialog}
+        onCancel={closeEditDialog}
+        visible={editDialog}
+      />
       <ScrollView style={styles.container}>
         <ConfirmDialog
           onConfirm={confirmDialogDel}
@@ -167,7 +186,7 @@ const EnderecoList: React.FC = ({navigation}: any) => {
                 <IconButton
                   mode="contained-tonal"
                   icon="pencil"
-                  onPress={() => navigateToEdit(item)}
+                  onPress={() => setEditItem(item)}
                   iconColor={'white'}
                   containerColor={theme.colors.secondary}
                 />
