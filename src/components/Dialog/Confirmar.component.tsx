@@ -1,6 +1,6 @@
 import React from 'react';
 import {Dialog, Button, Text, Portal} from 'react-native-paper';
-import {Endereco} from '../../model/endereco.model';
+import {Endereco} from '../../@types/model/endereco.model';
 
 interface ConfirmDialogProps {
   visible: boolean;

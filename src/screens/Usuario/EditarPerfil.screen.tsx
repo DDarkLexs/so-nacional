@@ -8,9 +8,9 @@ import {
   useTheme,
   Text,
 } from 'react-native-paper';
-import { useAppSelector, useAppDispatch } from '../../store/hook/index.hook';
+import { useAppSelector, useAppDispatch } from '../../@types/redux/hook/index.hook';
 import {TouchableRipple} from 'react-native-paper';
-import {Usuario, Utilizador} from '../../model/usuario.model';
+import {Usuario, Utilizador} from '../../@types/model/usuario.model';
 import {showToast} from '../../service/toast.service';
 import {UsuarioController} from '../../controller/Usuario/usuario.controller';
 import {

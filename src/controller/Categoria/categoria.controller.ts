@@ -1,6 +1,6 @@
 import axiosIns from '../../api/axiosIns.api';
-import {CategoriaPrincipal} from '../../model/categoria.model';
-import {CategoriaControllerABC} from './model/categoria.abc';
+import {CategoriaPrincipal} from '../../@types/model/categoria.model';
+import {CategoriaControllerABC} from '../../@types/controller/categoria.abc.d';
 
 export class CategoriaController extends CategoriaControllerABC {
   public fetchCategoriaApi(): Promise<any> {

@@ -1,5 +1,5 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import type {CategoriaPrincipal} from '../../model/categoria.model';
+import type {CategoriaPrincipal} from '../../@types/model/categoria.model';
 
 interface Categoria {
   categoriaPrincipal: CategoriaPrincipal[];

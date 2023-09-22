@@ -1,6 +1,6 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import type {MeuBaiao, Utilizador} from '../../model/usuario.model';
-import type {Produto} from '../../model/produto.model';
+import type {MeuBaiao, Utilizador} from '../../@types/model/usuario.model';
+import type {Produto} from '../../@types/model/produto.model';
 import {fazerSubtotal} from '../../utils/index.utils';
 
 interface initialStateType {

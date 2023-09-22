@@ -12,7 +12,7 @@ import {
 import {UsuarioControllerABC} from './model/usuario.abc';
 import {checkErrorContatrainsArrays} from '../../utils/index.utils';
 import axiosIns from '../../api/axiosIns.api';
-import {Usuario, Utilizador} from '../../model/usuario.model';
+import {Usuario, Utilizador} from '../../@types/model/usuario.model';
 import {getUser, removeUser, setUser} from '../../service/storage.service';
 import {Asset} from 'react-native-image-picker';
 

@@ -1,5 +1,5 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {Endereco} from '../../model/endereco.model';
+import {Endereco} from '../../@types/model/endereco.model';
 
 interface EnderecoState {
   endereco: Endereco[];

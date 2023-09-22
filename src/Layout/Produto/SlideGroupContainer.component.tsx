@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Alert, ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
 import {Text, TouchableRipple} from 'react-native-paper';
 import {CategoriaController} from '../../controller/Categoria/categoria.controller';
-import {CategoriaPrincipal} from '../../model/categoria.model';
-import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
+import {CategoriaPrincipal} from '../../@types/model/categoria.model';
+import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
 import {
   setCategoriaPrincipal,
   setSelectedCategoria,

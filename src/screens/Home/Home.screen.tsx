@@ -3,9 +3,9 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import {Card, Text, useTheme} from 'react-native-paper';
 import CategoriaContainer1 from '../../Layout/Categoria/categoriaContainer1.component';
 import {CategoriaController} from '../../controller/Categoria/categoria.controller';
-import {CategoriaPrincipal} from '../../model/categoria.model';
+import {CategoriaPrincipal} from '../../@types/model/categoria.model';
 import {showToast} from '../../service/toast.service';
-import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
+import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
 import {setCategoriaPrincipal} from '../../store/reducer/categoria.store';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 

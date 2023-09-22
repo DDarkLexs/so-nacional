@@ -16,11 +16,11 @@ import {
 } from 'react-native-paper';
 import {NavigationContainerRef} from '@react-navigation/native';
 import ZonaDeEntregaInputComponent from '../../../components/Menu/ZonaDeEntrega.component';
-import {Endereco} from '../../../model/endereco.model';
+import {Endereco} from '../../../@types/model/endereco.model';
 import AdicionarEnderecoDialog from '../../../Layout/Endereco/criar.component';
 import {EnderecoController} from '../../../controller/endereco/endereco.controller';
 import {showToast} from '../../../service/toast.service';
-import {useAppDispatch, useAppSelector} from '../../../store/hook/index.hook';
+import {useAppDispatch, useAppSelector} from '../../../@types/redux/hook/index.hook';
 import {setEndereco} from '../../../store/reducer/endereco.store';
 import {convertToCurrency} from '../../../utils/moeda/moeda.utils';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';

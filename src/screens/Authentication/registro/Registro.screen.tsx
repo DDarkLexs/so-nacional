@@ -9,7 +9,7 @@ import {
 import {Button, Checkbox, Text, TextInput} from 'react-native-paper';
 
 import {UsuarioController} from '../../../controller/Usuario/usuario.controller';
-import {Usuario} from '../../../model/usuario.model';
+import {Usuario} from '../../../@types/model/usuario.model';
 import {showToast} from '../../../service/toast.service';
 const RegistroScreen: React.FC<any> = ({navigation}) => {
   const [agreedToTerms, setAgreedToTerms] = useState<boolean>(false);

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Avatar, Button, Text, useTheme} from 'react-native-paper';
-import {useAppSelector} from '../../store/hook/index.hook';
+import {useAppSelector} from '../../@types/redux/hook/index.hook';
 
 const ProfileScreen = ({navigation}: any) => {
   const usuario = useAppSelector(state => state.usuario.utilizador);

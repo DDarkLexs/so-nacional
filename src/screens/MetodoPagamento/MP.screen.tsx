@@ -7,29 +7,30 @@ import {
   TouchableRipple,
   useTheme,
 } from 'react-native-paper';
-import {useAppDispatch} from '../../store/hook/index.hook';
+import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
+import {setEncomendaProps} from '../../store/reducer/encomenda.store';
 
 const PagamentoScreen = () => {
   const theme = useTheme();
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true); // Estado para controlar a desativação do botão
   const dispatch = useAppDispatch();
+  const loading = useAppSelector(state => state.encomenda.loading);
+
   const handleMethodSelect = (index: any) => {
     setSelectedMethod(index);
     setIsButtonDisabled(false); // Ativar o botão quando um método é selecionado
   };
 
   useEffect(() => {
-    if (selectedMethod) {
-      console.log(methods[selectedMethod]);
+    if (selectedMethod !== null) {
+      dispatch(
+        setEncomendaProps({tipo_pagamento: methods[selectedMethod].name}),
+      );
     }
   }, [selectedMethod]);
 
   const methods = [
-    // {
-    //   name: 'TPA na entrega',
-    //   image: require('../../assets/image/fruits/banana.png'),
-    // },
     {
       id: 1,
       name: 'Transferência Bancária',
@@ -47,6 +48,7 @@ const PagamentoScreen = () => {
       {methods.map((method, index) => (
         <TouchableRipple
           key={index}
+          disabled={loading}
           onPress={() => handleMethodSelect(index)}
           rippleColor={theme.colors.primary}
           style={[

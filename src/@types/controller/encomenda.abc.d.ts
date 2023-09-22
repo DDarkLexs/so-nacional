@@ -1,4 +1,4 @@
-import {Pedido} from '../../../model/encomenda.model';
+import {Pedido} from '../model/encomenda.model';
 
 export abstract class EncomendaControllerABC<T extends Pedido> {
   private _encomenda: T[] = [];

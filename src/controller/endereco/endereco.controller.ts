@@ -1,4 +1,4 @@
-import {Endereco, EnderecoDto, zonaEntrega} from '../../model/endereco.model';
+import {Endereco, EnderecoDto, zonaEntrega} from '../../@types/model/endereco.model';
 import {EnderecoControllerABC} from './model/endereco.abc';
 import axiosIns from '../../api/axiosIns.api';
 import {AxiosError} from 'axios';

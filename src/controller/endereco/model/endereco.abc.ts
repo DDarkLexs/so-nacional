@@ -2,8 +2,8 @@ import {
   Endereco,
   EnderecoDto,
   zonaEntrega,
-} from '../../../model/endereco.model';
-import {Usuario} from '../../../model/usuario.model';
+} from '../../../@types/model/endereco.model';
+import {Usuario} from '../../../@types/model/usuario.model';
 
 export abstract class EnderecoControllerABC {
   private _zonasDeEntrega: zonaEntrega[] = [];

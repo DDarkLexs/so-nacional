@@ -3,11 +3,14 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import {Surface, Text, useTheme} from 'react-native-paper';
 import ArtigoContainer2 from '../../Layout/Produto/ArtigoContainer2.component';
 import CustomButton from '../../components/Button/Button1.component';
-import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
+import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
 import {fazerSubtotal} from '../../utils/index.utils';
 import {convertToCurrency} from '../../utils/moeda/moeda.utils';
-import {setEncomendaItens} from '../../store/reducer/encomenda.store';
-import {ItensBaio} from '../../model/encomenda.model';
+import {
+  setEncomendaItens,
+  setEncomendaProps,
+} from '../../store/reducer/encomenda.store';
+import {ItensBaio} from '../../@types/model/encomenda.model.d';
 
 const CarrinhoScreen: React.FC<any> = ({navigation}) => {
   const dispatch = useAppDispatch();
@@ -23,6 +26,7 @@ const CarrinhoScreen: React.FC<any> = ({navigation}) => {
       }),
     );
     dispatch(setEncomendaItens(encomendas));
+    dispatch(setEncomendaProps({subtotal: total}));
     navigation.navigate('DadosDeEntrega');
   };
   const carrinho = useAppSelector(state => state.usuario.itens);

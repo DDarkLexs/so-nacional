@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect} from 'react';
-import {useAppSelector} from '../store/hook/index.hook';
+import {useAppSelector} from '../@types/redux/hook/index.hook';
 import AuthStack from './AuthStack/AuthStack.nav';
 import MainStack from './MainStack/MainStack.nav';
 

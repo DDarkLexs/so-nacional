@@ -16,7 +16,7 @@ import EditProfileScreen from '../../screens/Usuario/EditarPerfil.screen';
 import EnderecoList from '../../screens/Usuario/Endereco/endereco.screen';
 import ContactoScreen from '../../screens/Informacao/Contacto/Contacto.screen';
 import TermsAndConditionsPage from '../../screens/Informacao/Termos/termos.screen';
-import LojaScreen from '../../screens/Sobre/Loja.screen';
+import LojaScreen from '../../screens/Informacao/Sobre/Loja.screen';
 import ChangePasswordScreen from '../../screens/Usuario/MudarSenha/MudarSenha.screen';
 
 const Stack = createStackNavigator<MainStackStackParamList>();

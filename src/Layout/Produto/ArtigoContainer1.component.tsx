@@ -9,11 +9,12 @@ import {
 } from 'react-native-paper';
 import {convertToCurrency} from '../../utils/moeda/moeda.utils';
 import {showToast} from '../../service/toast.service';
-import {useAppDispatch} from '../../store/hook/index.hook';
+import {useAppDispatch} from '../../@types/redux/hook/index.hook';
 import {setItem} from '../../store/reducer/usuario.reducer';
-import {fazerSubtotal} from '../../utils/index.utils';
+import {fazerSubtotal, resizeImage} from '../../utils/index.utils';
 import {ProdutoController} from '../../controller/Produto/produto.controller';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import {getImageUri, saveImageUri} from '../../service/storage.service';
 
 interface ArtigoContainer1 {
   nome: string;
@@ -46,12 +47,21 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
 
   async function resizeAndSetImage() {
     try {
-      const resizedImageUri = image; //(await resizeImage(image, 125, 125, 3, true)).uri;
-      setResizedImage(resizedImageUri);
-      setLoading(false);
-      // console.log(resizedImageUri.uri);
+      const imageObject: any = await getImageUri(image);
+      if (imageObject) {
+        // console.log(imageObject.uri);
+        setResizedImage(imageObject.uri);
+      } else {
+        const resizedImageUri = await resizeImage(image, 125, 125, 3, true);
+        await saveImageUri(image, resizedImageUri);
+        setResizedImage(resizedImageUri.uri);
+      }
+      // console.log(uri);
+      // console.log(resizedImageUri);
     } catch (error) {
       console.error('Error resizing image:', error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -98,7 +108,7 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
           styles.card,
           {
             backgroundColor:
-              useColorScheme() === 'dark' ? 'transparent' : 'gray',
+              useColorScheme() === 'dark' ? 'transparent' : undefined,
           },
         ]}>
         {loading ? (

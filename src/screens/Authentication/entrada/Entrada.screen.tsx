@@ -9,7 +9,7 @@ import {
 import {Button, Checkbox, Text, TextInput} from 'react-native-paper';
 import {UsuarioController} from '../../../controller/Usuario/usuario.controller';
 import {showToast} from '../../../service/toast.service';
-import {useAppDispatch} from '../../../store/hook/index.hook';
+import {useAppDispatch} from '../../../@types/redux/hook/index.hook';
 import {actions} from '../../../store/reducer/usuario.reducer';
 
 const EntradaScreen: React.FC<any> = ({navigation}) => {

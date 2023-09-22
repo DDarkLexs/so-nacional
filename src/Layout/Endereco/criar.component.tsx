@@ -8,7 +8,7 @@ import {
   Menu,
   Text,
 } from 'react-native-paper';
-import {Endereco, EnderecoDto, zonaEntrega} from '../../model/endereco.model';
+import {Endereco, EnderecoDto, zonaEntrega} from '../../@types/model/endereco.model';
 import {showToast} from '../../service/toast.service';
 import {useEffect} from 'react';
 import {EnderecoController} from '../../controller/endereco/endereco.controller';

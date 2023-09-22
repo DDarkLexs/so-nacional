@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, ToastAndroid, View} from 'react-native';
 import {Avatar, Button, List} from 'react-native-paper';
 import {UsuarioController} from '../../controller/Usuario/usuario.controller';
-import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
+import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
 import {setUtilizador} from '../../store/reducer/usuario.reducer';
 import {showToast} from '../../service/toast.service';
 

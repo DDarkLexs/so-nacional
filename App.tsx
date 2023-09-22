@@ -10,7 +10,7 @@ import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {UsuarioController} from './src/controller/Usuario/usuario.controller';
 import AppNavigator from './src/navigation/AppNavigator.nav';
-import {useAppDispatch} from './src/store/hook/index.hook';
+import {useAppDispatch} from './src/@types/redux/hook/index.hook';
 import {setUtilizador} from './src/store/reducer/usuario.reducer';
 import Toast from 'react-native-toast-message';
 import {showToast} from './src/service/toast.service';

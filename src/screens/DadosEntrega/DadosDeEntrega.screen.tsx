@@ -10,11 +10,15 @@ import {
 } from 'react-native-paper';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'; // Import SkeletonPlaceholder
 import {EnderecoController} from '../../controller/endereco/endereco.controller';
-import {Endereco} from '../../model/endereco.model';
+import {Endereco} from '../../@types/model/endereco.model';
 import {showToast} from '../../service/toast.service';
-import {useAppDispatch, useAppSelector} from '../../store/hook/index.hook';
-import {setEncomendaInfo} from '../../store/reducer/encomenda.store';
+import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
+import {
+  setEncomendaInfo,
+  setEncomendaProps,
+} from '../../store/reducer/encomenda.store';
 import {setEndereco} from '../../store/reducer/endereco.store';
+import axiosIns from '../../api/axiosIns.api';
 
 const DadosDeEntrega: React.FC<any> = ({navigation}): JSX.Element => {
   const theme = useTheme();
@@ -24,6 +28,7 @@ const DadosDeEntrega: React.FC<any> = ({navigation}): JSX.Element => {
   const controller = new EnderecoController();
   const dispatch = useAppDispatch();
   const enderecos = useAppSelector(state => state.endereco.endereco);
+  const itens = useAppSelector(state => state.endereco.endereco);
 
   const handleMethodSelect = (index: number) => {
     setSelectedMethod(index);
@@ -63,10 +68,12 @@ const DadosDeEntrega: React.FC<any> = ({navigation}): JSX.Element => {
     }
   };
 
-  const prosseguir = () => {
+  const prosseguir = async () => {
     if (selectedEndereco) {
-      const {id_endereco, id_user} = selectedEndereco;
+      const {taxa_servico} = (await axiosIns.get('/dadosloja')).data.data[0];
+      const {id_endereco, id_user, taxa_entrega} = selectedEndereco;
       dispatch(setEncomendaInfo({id_endereco, id_user}));
+      dispatch(setEncomendaProps({taxa_entrega, taxa_servico}));
       navigation.navigate('ResumoCompra');
     }
   };

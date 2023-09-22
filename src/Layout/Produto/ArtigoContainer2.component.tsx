@@ -1,9 +1,9 @@
 import React, {useCallback, useState} from 'react';
 import {Image, StyleSheet, View, useColorScheme} from 'react-native';
 import {Card, IconButton, Text, TextInput, useTheme} from 'react-native-paper';
-import {MeuBaiao} from '../../model/usuario.model';
+import {MeuBaiao} from '../../@types/model/usuario.model';
 import {showToast} from '../../service/toast.service';
-import {useAppDispatch} from '../../store/hook/index.hook';
+import {useAppDispatch} from '../../@types/redux/hook/index.hook';
 import {removeItem, updateItem} from '../../store/reducer/usuario.reducer';
 import {convertToCurrency} from '../../utils/moeda/moeda.utils';
 

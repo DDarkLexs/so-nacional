@@ -3,48 +3,70 @@ import {View, ScrollView, StyleSheet} from 'react-native';
 import {Button, Card, Text, useTheme, Paragraph} from 'react-native-paper';
 import {convertToCurrency} from '../../utils/moeda/moeda.utils';
 import {useEffect} from 'react';
-import {useAppSelector} from '../../store/hook/index.hook';
+import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
 import TransferenciaBancariaScreen from '../TransferenciaBancaria/TransBancaria.screen';
 import PagamentoScreen from '../MetodoPagamento/MP.screen';
+import {EnderecoController} from '../../controller/endereco/endereco.controller';
+import {showToast} from '../../service/toast.service';
+import {useState} from 'react';
+import {Endereco} from '../../@types/model/endereco.model';
+import {
+  setEncomendaInfo,
+  setEncomendaProps,
+} from '../../store/reducer/encomenda.store';
+import axiosIns from '../../api/axiosIns.api';
+import {Loja} from '../../@types/model/loja';
+import ResumoDeCompra from '../../Layout/Pagamento/ResumoDeCompra.component';
 
 const ResumoCompraScreen: React.FC<any> = ({navigation}) => {
   const theme = useTheme();
+  const [endereco, setEndereco] = useState<Partial<Endereco> | undefined>();
   const encomendaData = useAppSelector(state => state.encomenda.encomenda);
-  useEffect(() => {}, []);
+  const loading = useAppSelector(state => state.encomenda.loading);
+
+  const dispatch = useAppDispatch();
+  const enderecoController = new EnderecoController();
+  const prepareAlldata = async (): Promise<void> => {
+    try {
+      await enderecoController.getEnderecoAllByUser();
+      const enderecoSelecionado = enderecoController.enderecos.find(
+        state => state.id_endereco === encomendaData.id_endereco,
+      );
+      setEndereco(enderecoSelecionado);
+
+      // console.log(enderecoController.enderecos);
+    } catch (error) {
+      showToast({
+        text1: 'Houve um erro!',
+        text2: `${JSON.stringify(error)}`,
+        position: 'bottom',
+        type: 'success',
+      });
+    }
+  };
+  useEffect(() => {
+    prepareAlldata();
+  }, []);
   return (
     <ScrollView style={styles.container}>
+      {/* layout de tipo de pagamento */}
       <PagamentoScreen />
-      {/* Card de Resumo de Compra */}
+      {/*  */}
       <TransferenciaBancariaScreen />
-
-      <Card style={styles.card}>
-        <Card.Title title="Resumo de Compra" />
-        <Card.Content>
-          <View style={styles.row}>
-            <Text style={styles.label}>Subtotal:</Text>
-            <Text style={styles.value}>{convertToCurrency(1000)}</Text>
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.label}>Taxa de Entrega:</Text>
-            <Text style={styles.value}>{convertToCurrency(230)}</Text>
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.label}>IVA:</Text>
-            <Text style={styles.value}>{convertToCurrency(45)}</Text>
-          </View>
-        </Card.Content>
-      </Card>
-
+      {/* Card de Resumo de Compra */}
+      <ResumoDeCompra />
       {/* Card de Endereço de Entrega */}
-      <Card style={styles.card}>
+      <Card disabled={loading} mode="outlined" style={styles.card}>
         <Card.Title title="Endereço de Entrega" />
         <Card.Content>
-          <Paragraph>Fake Street, 1234</Paragraph>
+          <Paragraph>{`${endereco?.nome_morada}, ${endereco?.designacao}, ${endereco?.bairro}, ${endereco?.ponto_ref}`}</Paragraph>
         </Card.Content>
       </Card>
 
       <View style={styles.confirmButtonContainer}>
         <Button
+          disabled={loading}
+          loading={loading}
           mode="contained"
           textColor="white"
           buttonColor={theme.colors.secondary}

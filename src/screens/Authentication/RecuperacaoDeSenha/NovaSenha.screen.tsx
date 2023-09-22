@@ -9,7 +9,7 @@ import {
 import {Button, Text, TextInput} from 'react-native-paper';
 import {showToast} from '../../../service/toast.service';
 import {UsuarioController} from '../../../controller/Usuario/usuario.controller';
-import {useAppDispatch} from '../../../store/hook/index.hook';
+import {useAppDispatch} from '../../../@types/redux/hook/index.hook';
 import {actions} from '../../../store/reducer/usuario.reducer';
 
 interface NovaSenhaProp {

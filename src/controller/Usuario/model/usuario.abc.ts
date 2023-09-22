@@ -1,4 +1,4 @@
-import {Usuario, Utilizador} from '../../../model/usuario.model';
+import {Usuario, Utilizador} from '../../../@types/model/usuario.model';
 import {
   CreateUsuarioDto,
   AuthUsuarioDto,

@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text} from 'react-native-paper';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import axiosIns from '../../api/axiosIns.api';
+import axiosIns from '../../../api/axiosIns.api';
 
 interface LojaInfo {
   taxa_servico: string;
@@ -19,7 +19,7 @@ const LojaScreen: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = (await axiosIns.get('/dadosloja')).data;
+        const response = (await axiosIns.get('/dadosloja')).data.data[0];
         setLojaInfo(response.data[0]);
         // console.log(response.data)
         setLoading(false);

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {BottomNavigation} from 'react-native-paper';
-import {useAppSelector} from '../../store/hook/index.hook';
+import {useAppSelector} from '../../@types/redux/hook/index.hook';
 import HomeScreen from '../Home/Home.screen';
 import MenuList from '../MenuList/MenuList.screen';
 import ProdutosScreen from '../Produtos/Produtos.screen';

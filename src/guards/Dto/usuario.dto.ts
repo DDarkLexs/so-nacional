@@ -5,7 +5,7 @@ import {
   IsPhoneNumber,
   Length,
 } from 'class-validator';
-import {Usuario, Utilizador} from '../../model/usuario.model';
+import {Usuario, Utilizador} from '../../@types/model/usuario.model';
 
 interface UsuarioDto extends Omit<Usuario, 'id_user'> {}
 interface UtilizadorDto extends Omit<Utilizador, 'id' | 'foto'> {}

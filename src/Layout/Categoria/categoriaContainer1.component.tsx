@@ -8,8 +8,8 @@ import {
   TouchableRipple,
   useTheme,
 } from 'react-native-paper';
-import {CategoriaPrincipal} from '../../model/categoria.model';
-import {useAppDispatch} from '../../store/hook/index.hook';
+import {CategoriaPrincipal} from '../../@types/model/categoria.model';
+import {useAppDispatch} from '../../@types/redux/hook/index.hook';
 import {setSelectedCategoria} from '../../store/reducer/categoria.store';
 
 interface CategoriaProps extends CategoriaPrincipal {

@@ -1,4 +1,5 @@
-import {Utilizador} from '../model/usuario.model';
+import {ReduceImageData} from '../@types/utils/utils';
+import {Utilizador} from '../@types/model/usuario.model';
 import asyncStorage from '@react-native-async-storage/async-storage';
 
 type LocalStorageUserInfo = Required<Utilizador>;
@@ -25,4 +26,54 @@ export const getUser = (): Promise<LocalStorageUserInfo> => {
 export const removeUser = async (): Promise<boolean> => {
   await asyncStorage.removeItem('Utilizador');
   return true;
+};
+
+export const saveImageUri = async (label: string, data: ReduceImageData) => {
+  return new Promise(async (resolve, reject):Promise<void> => {
+    try {
+      await asyncStorage.setItem(label, JSON.stringify(data));
+      // console.log('saved');
+      resolve(null);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const getImageUri = (label: string) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const storedImageUris = await asyncStorage.getItem(label);
+      // await asyncStorage.removeItem(label);
+
+      resolve(JSON.parse(String(storedImageUris)));
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const saveImageUriString = async (label: string, data: string) => {
+  return new Promise(async (resolve, reject):Promise<void> => {
+    try {
+      await asyncStorage.setItem(label, data);
+      // console.log('saved');
+      resolve(null);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const getImageUriString = (label: string) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const storedImageUris = await asyncStorage.getItem(label);
+      // await asyncStorage.removeItem(label);
+
+      resolve(JSON.parse(String(storedImageUris)));
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
