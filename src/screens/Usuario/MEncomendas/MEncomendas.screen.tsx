@@ -1,13 +1,22 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
-import {Card, List, Divider, useTheme, Text} from 'react-native-paper';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {Searchbar} from 'react-native-paper';
+import MinhaEncomendaDataTable from '../../../Layout/Encomendas/DataTable.component';
 
 const MEncomendaScreen = ({navigation}: any) => {
+  const [searchQuery, setSearchQuery] = React.useState('');
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
-        <Text>Minhas Encomendas</Text>
+        <Searchbar
+          placeholder="procurar"
+          mode="view"
+          onChangeText={setSearchQuery}
+          value={searchQuery}
+        />
       </View>
+      <MinhaEncomendaDataTable procurar={searchQuery} navigation={navigation} />
     </ScrollView>
   );
 };

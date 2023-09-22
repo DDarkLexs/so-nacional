@@ -1,27 +1,23 @@
-import React from 'react';
-import {View, ScrollView, StyleSheet} from 'react-native';
-import {Button, Card, Text, useTheme, Paragraph} from 'react-native-paper';
-import {convertToCurrency} from '../../utils/moeda/moeda.utils';
-import {useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
-import TransferenciaBancariaScreen from '../TransferenciaBancaria/TransBancaria.screen';
-import PagamentoScreen from '../MetodoPagamento/MP.screen';
-import {EnderecoController} from '../../controller/endereco/endereco.controller';
-import {showToast} from '../../service/toast.service';
-import {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, StyleSheet} from 'react-native';
+import {Card, Paragraph, useTheme} from 'react-native-paper';
 import {Endereco} from '../../@types/model/endereco.model';
 import {
-  setEncomendaInfo,
-  setEncomendaProps,
-} from '../../store/reducer/encomenda.store';
-import axiosIns from '../../api/axiosIns.api';
-import {Loja} from '../../@types/model/loja';
+  useAppDispatch,
+  useAppSelector,
+} from '../../@types/redux/hook/index.hook';
+import ConfirmarComponent from '../../Layout/Pagamento/ConfirmarPagamento.component';
 import ResumoDeCompra from '../../Layout/Pagamento/ResumoDeCompra.component';
+import {EnderecoController} from '../../controller/Endereco/endereco.controller';
+import {showToast} from '../../service/toast.service';
+import PagamentoScreen from '../MetodoPagamento/MP.screen';
+import TransferenciaBancariaScreen from '../TransferenciaBancaria/TransBancaria.screen';
 
 const ResumoCompraScreen: React.FC<any> = ({navigation}) => {
   const theme = useTheme();
   const [endereco, setEndereco] = useState<Partial<Endereco> | undefined>();
   const encomendaData = useAppSelector(state => state.encomenda.encomenda);
+  const comprovativo = useAppSelector(state => state.encomenda.comprovativo);
   const loading = useAppSelector(state => state.encomenda.loading);
 
   const dispatch = useAppDispatch();
@@ -52,6 +48,9 @@ const ResumoCompraScreen: React.FC<any> = ({navigation}) => {
       {/* layout de tipo de pagamento */}
       <PagamentoScreen />
       {/*  */}
+      {/* <Text>
+      {JSON.stringify(encomendaData)}
+      </Text> */}
       <TransferenciaBancariaScreen />
       {/* Card de Resumo de Compra */}
       <ResumoDeCompra />
@@ -63,18 +62,7 @@ const ResumoCompraScreen: React.FC<any> = ({navigation}) => {
         </Card.Content>
       </Card>
 
-      <View style={styles.confirmButtonContainer}>
-        <Button
-          disabled={loading}
-          loading={loading}
-          mode="contained"
-          textColor="white"
-          buttonColor={theme.colors.secondary}
-          style={styles.confirmButton}
-          onPress={() => navigation.navigate('MPagamento')}>
-          Pagar
-        </Button>
-      </View>
+      <ConfirmarComponent navigation={navigation} />
     </ScrollView>
   );
 };

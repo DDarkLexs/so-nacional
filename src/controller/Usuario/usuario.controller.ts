@@ -9,7 +9,7 @@ import {
   VerificarCodigoDto,
   updateUtilizadorDto,
 } from '../../guards/Dto/usuario.dto';
-import {UsuarioControllerABC} from './model/usuario.abc';
+import {UsuarioControllerABC} from '../../@types/controller/usuario.abc.d';
 import {checkErrorContatrainsArrays} from '../../utils/index.utils';
 import axiosIns from '../../api/axiosIns.api';
 import {Usuario, Utilizador} from '../../@types/model/usuario.model';
@@ -104,7 +104,7 @@ export class UsuarioController extends UsuarioControllerABC {
           const validationError = checkErrorContatrainsArrays(errors);
           throw `${validationError}`;
         }
-        const {id, foto} = await getUser();
+        const {id} = await getUser();
 
         var formData = new FormData();
 

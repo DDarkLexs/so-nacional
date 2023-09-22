@@ -1,22 +1,24 @@
-import {Pedido} from '../model/encomenda.model';
+import {EncomendaState, Encomendas, MinhasCompra, Pedido} from '../model/encomenda.model';
 
-export abstract class EncomendaControllerABC<T extends Pedido> {
-  private _encomenda: T[] = [];
-  private _encomendaSingular?: T;
+export abstract class EncomendaControllerABC {
+  private _encomenda: Encomendas[] = [];
+  private _compra: MinhasCompra;
   public abstract getAllByIdUser(): Promise<void>;
   public abstract getOne(id_encomenda: number): Promise<void>;
-  public abstract postOne(encomenda: T): Promise<void>;
-  protected set encomendaSingular(encomenda: T) {
-    this._encomendaSingular = encomenda;
-  }
-  public get encomendaIndividual(): T {
-    return Object(this._encomendaSingular);
-  }
-
-  protected set encomenda(encomendas: T[]) {
+  public abstract postOne(
+    encomenda: Pedido,
+    comprovativo: EncomendaState['comprovativo'],
+  ): Promise<string>;
+  protected set encomenda(encomendas: Encomendas) {
     this._encomenda = encomendas;
   }
-  public get encomenda(): T[] {
+  public get encomenda(): Encomendas[] {
     return this._encomenda;
+  }
+  protected set compra(item: MinhasCompra) {
+    this._compra = item;
+  }
+  public get compra(): MinhasCompra {
+    return this._compra;
   }
 }

@@ -6,7 +6,7 @@ import {CategoriaController} from '../../controller/Categoria/categoria.controll
 import {CategoriaPrincipal} from '../../@types/model/categoria.model';
 import {showToast} from '../../service/toast.service';
 import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
-import {setCategoriaPrincipal} from '../../store/reducer/categoria.store';
+import {setCategoriaPrincipal} from '../../store/reducer/categoria.reducer';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const HomeScreen = (navigation: any) => {

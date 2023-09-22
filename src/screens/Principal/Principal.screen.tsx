@@ -37,8 +37,8 @@ const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
     {
       key: 'MEncomendas',
       title: 'Encomenda',
-      focusedIcon: 'note-text',
-      unfocusedIcon: 'note-text-outline',
+      focusedIcon: 'shopping',
+      unfocusedIcon: 'shopping-outline',
     },
     {
       key: 'menu',

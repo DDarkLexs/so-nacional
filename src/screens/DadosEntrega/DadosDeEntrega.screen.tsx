@@ -9,15 +9,15 @@ import {
   useTheme,
 } from 'react-native-paper';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'; // Import SkeletonPlaceholder
-import {EnderecoController} from '../../controller/endereco/endereco.controller';
+import {EnderecoController} from '../../controller/Endereco/endereco.controller';
 import {Endereco} from '../../@types/model/endereco.model';
 import {showToast} from '../../service/toast.service';
 import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
 import {
   setEncomendaInfo,
   setEncomendaProps,
-} from '../../store/reducer/encomenda.store';
-import {setEndereco} from '../../store/reducer/endereco.store';
+} from '../../store/reducer/encomenda.reducer';
+import {setEndereco} from '../../store/reducer/endereco.store.reducer';
 import axiosIns from '../../api/axiosIns.api';
 
 const DadosDeEntrega: React.FC<any> = ({navigation}): JSX.Element => {

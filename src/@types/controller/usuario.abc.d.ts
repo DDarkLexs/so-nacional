@@ -1,4 +1,4 @@
-import {Usuario, Utilizador} from '../../../@types/model/usuario.model';
+import {Usuario, Utilizador} from '../model/usuario.model';
 import {
   CreateUsuarioDto,
   AuthUsuarioDto,
@@ -6,7 +6,7 @@ import {
   CreateNovaSenhaDto,
   VerificarCodigoDto,
   AlterarSenhaDto,
-} from '../../../guards/Dto/usuario.dto';
+} from '../../guards/Dto/usuario.dto';
 
 export abstract class UsuarioControllerABC {
   public abstract autenticar(usuario: AuthUsuarioDto): Promise<Utilizador>;

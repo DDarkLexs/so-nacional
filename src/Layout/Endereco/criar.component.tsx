@@ -11,7 +11,7 @@ import {
 import {Endereco, EnderecoDto, zonaEntrega} from '../../@types/model/endereco.model';
 import {showToast} from '../../service/toast.service';
 import {useEffect} from 'react';
-import {EnderecoController} from '../../controller/endereco/endereco.controller';
+import {EnderecoController} from '../../controller/Endereco/endereco.controller';
 
 interface AddEnderecoProps {
   visible: boolean;

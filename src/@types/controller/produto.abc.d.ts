@@ -1,5 +1,5 @@
-import {Categoria} from '../../../@types/model/categoria.model';
-import {Produto, SubCategoria} from '../../../@types/model/produto.model';
+import {Categoria} from '../model/categoria.model';
+import {Produto, SubCategoria} from '../model/produto.model';
 
 export abstract class ProdutoControllerABC {
   private _subCategoria: SubCategoria[] = [];

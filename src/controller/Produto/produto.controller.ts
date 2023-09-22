@@ -1,6 +1,6 @@
 import axiosIns from '../../api/axiosIns.api';
 import {getUser} from '../../service/storage.service';
-import {ProdutoControllerABC} from './model/produto.abc';
+import {ProdutoControllerABC} from '../../@types/controller/produto.abc.d';
 
 export class ProdutoController extends ProdutoControllerABC {
   public getProdutosByCategoria(id: number): Promise<void> {

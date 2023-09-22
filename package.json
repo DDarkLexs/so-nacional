@@ -8,7 +8,7 @@
     "lint": "eslint . --fix",
     "start": "react-native start",
     "test": "jest",
-     "clear": "npx react-native clean",
+    "clear": "npx react-native clean",
     "clean": "cd android && gradlew clean",
     "stop-android": "cd android && gradlew --stop",
     "build-apk": "cd android && gradlew assembleRelease --stacktrace",

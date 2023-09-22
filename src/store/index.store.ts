@@ -1,9 +1,9 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import usuarioReducer from './reducer/usuario.reducer';
-import categoriaReducer from './reducer/categoria.store';
-import produtoReducer from './reducer/produto.store';
-import enderecoSlice from './reducer/endereco.store';
-import encomendaSlice from './reducer/encomenda.store';
+import categoriaReducer from './reducer/categoria.reducer';
+import produtoReducer from './reducer/produto.reducer';
+import enderecoSlice from './reducer/endereco.store.reducer';
+import encomendaSlice from './reducer/encomenda.reducer';
 
 const reducer = combineReducers({
   usuario: usuarioReducer,

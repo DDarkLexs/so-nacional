@@ -5,7 +5,7 @@ import SlideGroupContainer from '../../Layout/Produto/SlideGroupContainer.compon
 import {ProdutoController} from '../../controller/Produto/produto.controller';
 import {Produto, SubCategoria} from '../../@types/model/produto.model';
 import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
-import {setProdutos} from '../../store/reducer/produto.store';
+import {setProdutos} from '../../store/reducer/produto.reducer';
 import {showToast} from '../../service/toast.service';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
@@ -82,9 +82,9 @@ const ProdutosScreen: React.FC = (): React.JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
   },
   productGrid: {
+    padding: 16,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   skeletonProductRow: {
-    width: '98%',
+    width: '97%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 16,

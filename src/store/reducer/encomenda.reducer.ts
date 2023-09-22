@@ -1,14 +1,12 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import type {CategoriaPrincipal} from '../../@types/model/categoria.model.d';
-import {ItensBaio, Pedido} from '../../@types/model/encomenda.model.d';
-import {Endereco} from '../../@types/model/endereco.model';
 import {DocumentPickerResponse} from 'react-native-document-picker';
-
-interface EncomendaState {
-  comprovativo: Partial<DocumentPickerResponse>;
-  loading: boolean;
-  encomenda: Pedido;
-}
+import {
+  EncomendaState,
+  Encomendas,
+  ItensBaio,
+  MinhasCompra,
+} from '../../@types/model/encomenda.model';
+import {Endereco} from '../../@types/model/endereco.model';
 
 const initialState: EncomendaState = {
   comprovativo: {},
@@ -27,6 +25,8 @@ const initialState: EncomendaState = {
     total: 0,
     itens: [],
   },
+  encomendas: [],
+  compra: {},
 };
 
 const encomendaSlice = createSlice({
@@ -47,8 +47,18 @@ const encomendaSlice = createSlice({
     ) => {
       Object.assign(state.encomenda, {...action.payload});
     },
+    setEncomendas: (state, action: PayloadAction<Encomendas[]>) => {
+      state.encomendas = action.payload;
+    },
     setEncomendaItens: (state, action: PayloadAction<ItensBaio[]>) => {
       state.encomenda.itens = action.payload;
+    },
+    setCompra: (state, action: PayloadAction<MinhasCompra>) => {
+      Object.assign(state.compra, {...action.payload});
+      // state.compra = action.payload;
+    },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
     },
     setComprovativo: (
       state,
@@ -68,5 +78,8 @@ export const {
   setEncomendaInfo,
   setComprovativo,
   setEncomendaProps,
+  setLoading,
+  setEncomendas,
+  setCompra,
 } = encomendaSlice.actions;
 export default encomendaSlice.reducer;

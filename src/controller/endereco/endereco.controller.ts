@@ -1,7 +1,6 @@
-import {Endereco, EnderecoDto, zonaEntrega} from '../../@types/model/endereco.model';
-import {EnderecoControllerABC} from './model/endereco.abc';
+import {EnderecoControllerABC} from '../../@types/controller/endereco.abc.d';
+import {EnderecoDto} from '../../@types/model/endereco.model';
 import axiosIns from '../../api/axiosIns.api';
-import {AxiosError} from 'axios';
 import {getUser} from '../../service/storage.service';
 
 export class EnderecoController extends EnderecoControllerABC {

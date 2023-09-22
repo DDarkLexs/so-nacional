@@ -8,15 +8,16 @@ import {useState, useEffect} from 'react';
 import {convertToCurrency} from '../../utils/moeda/moeda.utils';
 import {extrairTipoDeImagem} from '../../utils/index.utils';
 import {showToast} from '../../service/toast.service';
-import {Loja} from '../../@types/model/loja';
+import {Loja} from '../../@types/model/loja.model';
 import axiosIns from '../../api/axiosIns.api';
 import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
-import {setComprovativo} from '../../store/reducer/encomenda.store';
+import {setComprovativo} from '../../store/reducer/encomenda.reducer';
 
 const TransferenciaBancariaScreen = () => {
   const [fadeAnimation] = useState(new Animated.Value(0));
   const [loja, setLoja] = useState<Partial<Loja>>({});
   const dispatch = useAppDispatch();
+  const encomenda = useAppSelector(state => state.encomenda.encomenda);
   const file = useAppSelector(state => state.encomenda.comprovativo);
   const loading = useAppSelector(state => state.encomenda.loading);
 
@@ -85,7 +86,7 @@ const TransferenciaBancariaScreen = () => {
           <Text disabled={loading} style={styles.value}>{loja.titular}</Text>
 
           <Text disabled={loading} style={styles.label}> Valor </Text>
-          <Text disabled={loading} style={styles.value}>{convertToCurrency(1000)}</Text>
+          <Text disabled={loading} style={styles.value}>{convertToCurrency(encomenda.total)}</Text>
         </Card.Content>
       </Card>
 

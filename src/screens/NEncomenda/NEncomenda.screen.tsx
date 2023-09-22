@@ -1,7 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {Card, List, Divider, useTheme} from 'react-native-paper';
+import {Card, List, Divider, useTheme, Text} from 'react-native-paper';
 import ArtigoContainer2 from '../../Layout/Produto/ArtigoContainer2.component';
+import {Encomendas} from '../../@types/model/encomenda.model';
+import {showToast} from '../../service/toast.service';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../@types/redux/hook/index.hook';
+import {EncomendaController} from '../../controller/encomenda/encomenda.controller';
+import {setCompra} from '../../store/reducer/encomenda.reducer';
+import {fazerSubtotal} from '../../utils/index.utils';
+import ArtigoContainer3Component from '../../Layout/Produto/ArtigoContainer3.component';
 
 interface Product {
   id: number;
@@ -11,46 +21,39 @@ interface Product {
   quantity: number;
 }
 
-const NEncomendaScreen = () => {
-  const timelineData = [
-    {status: 'Confirmado', time: '10:00 AM'},
-    {status: 'Em preparação', time: '11:30 AM'},
-    {status: 'A caminho', time: '1:00 PM'},
-    {status: 'Encomenda Entregue', time: '2:30 PM'},
-  ];
-
+const NEncomendaScreen: React.FC<any> = ({
+  navigation,
+  route,
+}): React.JSX.Element => {
+  const {id_compra}: Pick<Encomendas, 'id_compra'> = route.params;
   const theme = useTheme();
-  const [products, setProducts] = React.useState<Product[]>([
-    {
-      id: 1,
-      name: 'Produto 1',
-      price: 19.99,
-      imageUrl: require('../../assets/image/fruits/banana.png'),
-      quantity: 99,
-    },
-    {
-      id: 2,
-      name: 'Produto 2',
-      price: 29.99,
-      imageUrl: require('../../assets/image/fruits/banana.png'),
-      quantity: 2,
-    },
-    {
-      id: 3,
-      name: 'Produto 3',
-      price: 23.99,
-      imageUrl: require('../../assets/image/fruits/banana.png'),
-      quantity: 5,
-    },
-    {
-      id: 4,
-      name: 'Produto 4',
-      price: 29.99,
-      imageUrl: require('../../assets/image/fruits/banana.png'),
-      quantity: 1,
-    },
-    // Adicione mais produtos conforme necessário
-  ]);
+  const timelineData = [
+    {status: 'Confirmado', value: 'Confirmado'},
+    {status: 'Em preparação', value: 'Em preparação'},
+    {status: 'A caminho', value: 'A caminho'},
+    {status: 'Encomenda Entregue', value: 'Encomenda Entregue'},
+  ];
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(state => state.encomenda.compra);
+  const controller = new EncomendaController();
+  const fetchData = async () => {
+    try {
+      await controller.getOne(id_compra);
+      dispatch(setCompra(controller.compra));
+    } catch (error) {
+      showToast({
+        text1: 'Houve erro!',
+        text2: `${JSON.stringify(error)}`,
+        position: 'bottom',
+        type: 'error',
+      });
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [id_compra]);
+
+  
 
   return (
     <ScrollView style={styles.container}>
@@ -68,7 +71,8 @@ const NEncomendaScreen = () => {
                           width: 20,
                           height: 20,
                           borderRadius: 10,
-                          backgroundColor: index === 0 ? 'green' : '#808080', // You can customize the color
+                          backgroundColor:
+                            data.estado == item.status ? 'green' : '#808080', // You can customize the color
                         }}
                       />
                     )}
@@ -81,17 +85,21 @@ const NEncomendaScreen = () => {
         </Card>
       </View>
       <View>
-        {products.map((product, i) => (
-          <ArtigoContainer2
-            key={i}
-            id_produto={1}
-            nome_produto="teste"
-            preco={0}
-            index={i}
-            image={product.imageUrl}
-            quantidade={0}
-            subtotal={0}
-          />
+        {/* <Text>
+          {JSON.stringify(data.itens)}
+        </Text> */}
+        {data.itens?.map((item, i) => (
+          <View key={i}>
+            <ArtigoContainer3Component
+              id_produto={i}
+              index={i}
+              nome_produto={item.nome_produto}
+              preco={item.preco}
+              quantidade={item.quantidade}
+              image={item.imagem}
+              subtotal={fazerSubtotal(item.preco, item.quantidade)}
+            />
+          </View>
         ))}
       </View>
     </ScrollView>

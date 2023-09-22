@@ -7,7 +7,7 @@ import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook
 import {
   setCategoriaPrincipal,
   setSelectedCategoria,
-} from '../../store/reducer/categoria.store';
+} from '../../store/reducer/categoria.reducer';
 import {showToast} from '../../service/toast.service';
 
 const SlideGroupContainer = () => {
@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 16,
+    marginVertical: 8,
+    marginTop: 18,
   },
   button: {
     width: 'auto', // Set the width and height to make it square

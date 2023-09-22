@@ -80,7 +80,7 @@ const MainStack: React.FC = (): React.JSX.Element => {
       <Stack.Screen
         name="NEncomenda"
         options={{
-          title: 'Encomenda #79044',
+          title: 'Estado da compra',
           contentStyle: {backgroundColor: theme.colors.background},
         }}
         component={NEncomendaScreen}
@@ -88,7 +88,7 @@ const MainStack: React.FC = (): React.JSX.Element => {
       <Stack.Screen
         name="FAQ"
         options={{
-          title: 'Perguntas Frequentes',
+          title: 'Assistência',
           contentStyle: {backgroundColor: theme.colors.background},
         }}
         component={FAQPage}

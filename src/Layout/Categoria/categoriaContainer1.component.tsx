@@ -10,7 +10,7 @@ import {
 } from 'react-native-paper';
 import {CategoriaPrincipal} from '../../@types/model/categoria.model';
 import {useAppDispatch} from '../../@types/redux/hook/index.hook';
-import {setSelectedCategoria} from '../../store/reducer/categoria.store';
+import {setSelectedCategoria} from '../../store/reducer/categoria.reducer';
 
 interface CategoriaProps extends CategoriaPrincipal {
   navigateTo: () => void;

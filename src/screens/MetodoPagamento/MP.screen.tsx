@@ -7,15 +7,20 @@ import {
   TouchableRipple,
   useTheme,
 } from 'react-native-paper';
-import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
-import {setEncomendaProps} from '../../store/reducer/encomenda.store';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../@types/redux/hook/index.hook';
+import {setEncomendaProps} from '../../store/reducer/encomenda.reducer';
+import {IVA} from '../../service/constant.service';
 
 const PagamentoScreen = () => {
   const theme = useTheme();
-  const [selectedMethod, setSelectedMethod] = useState(null);
+  const [selectedMethod, setSelectedMethod] = useState<number | null>(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true); // Estado para controlar a desativação do botão
   const dispatch = useAppDispatch();
   const loading = useAppSelector(state => state.encomenda.loading);
+  const encomenda = useAppSelector(state => state.encomenda.encomenda);
 
   const handleMethodSelect = (index: any) => {
     setSelectedMethod(index);
@@ -23,9 +28,19 @@ const PagamentoScreen = () => {
   };
 
   useEffect(() => {
+    dispatch(
+      setEncomendaProps({
+        tipo_pagamento: null,
+      }),
+    );
+  }, []);
+  useEffect(() => {
     if (selectedMethod !== null) {
       dispatch(
-        setEncomendaProps({tipo_pagamento: methods[selectedMethod].name}),
+        setEncomendaProps({
+          tipo_pagamento: methods[selectedMethod].value,
+          imposto: IVA,
+        }),
       );
     }
   }, [selectedMethod]);
@@ -34,7 +49,7 @@ const PagamentoScreen = () => {
     {
       id: 1,
       name: 'Transferência Bancária',
-      value: 'Transferência Bancária',
+      value: 'Referência',
       icon: 'credit-card-wireless',
     },
   ];
