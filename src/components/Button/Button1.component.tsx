@@ -7,7 +7,7 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-import {useTheme, TouchableRipple} from 'react-native-paper';
+import {useTheme, TouchableRipple, Surface} from 'react-native-paper';
 
 interface CustomButtonProps {
   label: string;
@@ -26,26 +26,32 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 }) => {
   const theme = useTheme();
   return (
-    <TouchableRipple
-      disabled={disabled}
-      rippleColor={'white'}
-      onPress={onPress}
-      style={[
-        styles.button,
-        {backgroundColor: !disabled ? theme.colors.secondary : 'gray'},
-      ]}>
-      <Text style={[styles.label, labelStyle]}>{label}</Text>
-    </TouchableRipple>
+    <Surface style={styles.ButtonContainer}>
+      <TouchableRipple
+        disabled={disabled}
+        rippleColor={'white'}
+        onPress={onPress}
+        style={[
+          styles.button,
+          {backgroundColor: !disabled ? theme.colors.secondary : 'gray'},
+        ]}>
+        <Text style={[styles.label, labelStyle]}>{label}</Text>
+      </TouchableRipple>
+    </Surface>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
     // backgroundColor: 'blue',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    marginBottom: 26,
+    borderRadius: 4,
+    overflow: 'hidden',
+    marginHorizontal: 6,
+    padding: 12,
+  },
+  ButtonContainer: {
     borderRadius: 5,
-    padding: 40,
   },
   label: {
     color: 'white',

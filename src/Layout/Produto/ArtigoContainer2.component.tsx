@@ -87,10 +87,10 @@ const ArtigoContainer2: React.FC<ArtigoContainer2Props> = (
               mode="outlined"
               value={itemQuantity.toString()}
               onChangeText={text => setItemQuantity(parseInt(text) || 0)}
-              left={
+              right={
                 <TextInput.Icon icon={'plus'} onPress={handleAddQuantity} />
               }
-              right={
+              left={
                 <TextInput.Icon icon={'minus'} onPress={handleRemoveQuantity} />
               }
             />

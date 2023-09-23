@@ -74,20 +74,3 @@ export const resizeImage = async (
     throw new Error('Image resize failed');
   }
 };
-
-export const limparObjeto = (obj: any): void => {
-  if (obj === null || typeof obj !== 'object') {
-    return;
-  }
-
-  if (Array.isArray(obj)) {
-    obj.length = 0; // Limpa o array
-  } else {
-    for (const prop in obj) {
-      if (obj.hasOwnProperty(prop)) {
-        limparObjeto(obj[prop]); // Chama a função recursivamente para as propriedades do objeto
-        obj[prop] = Array.isArray(obj[prop]) ? [] : null; // Define a propriedade como [] se for array, caso contrário, nulo
-      }
-    }
-  }
-};

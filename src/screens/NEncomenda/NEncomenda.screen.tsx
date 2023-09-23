@@ -1,25 +1,17 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
-import {Card, List, Divider, useTheme, Text} from 'react-native-paper';
-import ArtigoContainer2 from '../../Layout/Produto/ArtigoContainer2.component';
-import {Encomendas} from '../../@types/model/encomenda.model';
-import {showToast} from '../../service/toast.service';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {Card, Divider, List, useTheme} from 'react-native-paper';
+import {Encomendas} from '../../@types/model/encomenda.model.d';
 import {
   useAppDispatch,
   useAppSelector,
 } from '../../@types/redux/hook/index.hook';
-import {EncomendaController} from '../../controller/encomenda/encomenda.controller';
+import ArtigoContainer3Component from '../../Layout/Produto/ArtigoContainer3.component';
+import {EncomendaController} from '../../controller/Encomenda/encomenda.controller';
+import {showToast} from '../../service/toast.service';
 import {setCompra} from '../../store/reducer/encomenda.reducer';
 import {fazerSubtotal} from '../../utils/index.utils';
-import ArtigoContainer3Component from '../../Layout/Produto/ArtigoContainer3.component';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-  quantity: number;
-}
+import DadosResumoDeCompra from '../../Layout/Encomendas/Resumo.component';
 
 const NEncomendaScreen: React.FC<any> = ({
   navigation,
@@ -35,6 +27,7 @@ const NEncomendaScreen: React.FC<any> = ({
   ];
   const dispatch = useAppDispatch();
   const data = useAppSelector(state => state.encomenda.compra);
+  const compra: any = useAppSelector(state => state.encomenda.compra);
   const controller = new EncomendaController();
   const fetchData = async () => {
     try {
@@ -52,8 +45,6 @@ const NEncomendaScreen: React.FC<any> = ({
   useEffect(() => {
     fetchData();
   }, [id_compra]);
-
-  
 
   return (
     <ScrollView style={styles.container}>
@@ -84,10 +75,8 @@ const NEncomendaScreen: React.FC<any> = ({
           <Divider />
         </Card>
       </View>
+      <DadosResumoDeCompra compra={compra} />
       <View>
-        {/* <Text>
-          {JSON.stringify(data.itens)}
-        </Text> */}
         {data.itens?.map((item, i) => (
           <View key={i}>
             <ArtigoContainer3Component

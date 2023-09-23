@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {BottomNavigation} from 'react-native-paper';
+import {BottomNavigation, useTheme} from 'react-native-paper';
 import {useAppSelector} from '../../@types/redux/hook/index.hook';
 import HomeScreen from '../Home/Home.screen';
 import MenuList from '../MenuList/MenuList.screen';
@@ -10,6 +10,7 @@ import MEncomendaScreen from '../Usuario/MEncomendas/MEncomendas.screen';
 const PrincipalScreen: React.FC = ({navigation}: any): React.JSX.Element => {
   const [index, setIndex] = React.useState(0);
   const meuBaiao = useAppSelector(state => state.usuario.itens);
+  const theme = useTheme();
 
   useEffect(() => {
     routes[2].badge = meuBaiao.length;

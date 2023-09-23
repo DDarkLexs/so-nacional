@@ -12,7 +12,7 @@ import {
   setEncomendaProps,
   setLoading,
 } from '../../store/reducer/encomenda.reducer';
-import {EncomendaController} from '../../controller/encomenda/encomenda.controller';
+import {EncomendaController} from '../../controller/Encomenda/encomenda.controller';
 
 const ConfirmarComponent: React.FC<any> = ({navigation}) => {
   const theme = useTheme();

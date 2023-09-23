@@ -8,23 +8,35 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import Toast from 'react-native-toast-message';
+import {useAppDispatch} from './src/@types/redux/hook/index.hook';
 import {UsuarioController} from './src/controller/Usuario/usuario.controller';
 import AppNavigator from './src/navigation/AppNavigator.nav';
-import {useAppDispatch} from './src/@types/redux/hook/index.hook';
 import {setUtilizador} from './src/store/reducer/usuario.reducer';
-import Toast from 'react-native-toast-message';
 import {showToast} from './src/service/toast.service';
+import SplashScreen from './src/screens/Informacao/Welcome/SplashScreen.screen';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const controller = new UsuarioController();
 
   const verifyAuth = async (): Promise<void> => {
     try {
+      setLoading(true);
       const response = await controller.verifyIsAuthenticated();
       dispatch(setUtilizador(response));
-    } catch (error) {}
+    } catch (error) {
+      showToast({
+        text1: 'Houve erro!',
+        text2: `${JSON.stringify(error)}`,
+        position: 'bottom',
+        type: 'error',
+      });
+    } finally {
+      setLoading(false);
+    }
   };
   useEffect(() => {
     // showToasts()
@@ -33,11 +45,17 @@ function App(): JSX.Element {
   const theme = useTheme();
   return (
     <>
-      <StatusBar backgroundColor={theme.colors.primary} />
-      <SafeAreaView style={styles.container}>
-        <AppNavigator />
-        <Toast />
-      </SafeAreaView>
+      <StatusBar  backgroundColor={theme.colors.outlineVariant} />
+      {loading ? (
+        <>
+          <SplashScreen />
+        </>
+      ) : (
+        <SafeAreaView style={styles.container}>
+          <AppNavigator />
+          <Toast />
+        </SafeAreaView>
+      )}
     </>
   );
 }

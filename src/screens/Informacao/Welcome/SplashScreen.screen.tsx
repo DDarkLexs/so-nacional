@@ -3,23 +3,23 @@ import {View, Image, StyleSheet} from 'react-native';
 import {useTheme, ActivityIndicator} from 'react-native-paper';
 
 const SplashScreen = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const theme = useTheme();
   useEffect(() => {
     // Simulate loading process
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000); // 3 segundos de simulação de carregamento
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 3000); // 3 segundos de simulação de carregamento
   }, []);
 
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/image/logo_1.png')} // Substitua pelo caminho da sua imagem
+        source={require('../../../assets/image/logo_1.png')} // Substitua pelo caminho da sua imagem
         style={styles.image}
       />
       {isLoading ? (
-        <ActivityIndicator size="large" color={theme.colors.primary} />
+        <ActivityIndicator  size="large" color={theme.colors.primary} />
       ) : null}
     </View>
   );
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: 200,
-    height: 200,
+    width: 250,
+    height: 250,
     resizeMode: 'contain',
   },
 });

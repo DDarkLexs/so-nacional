@@ -6,6 +6,7 @@ import {
   TextInput,
   useTheme,
   TouchableRipple,
+  Surface,
 } from 'react-native-paper';
 import {convertToCurrency} from '../../utils/moeda/moeda.utils';
 import {showToast} from '../../service/toast.service';
@@ -151,22 +152,24 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
             mode="outlined"
             left={
               <TextInput.Icon
-                size={20}
+                size={16}
                 icon={'minus'}
+                onLongPress={handleRemoveQuantity}
                 onPress={handleRemoveQuantity}
               />
             }
             right={
               <TextInput.Icon
-                size={20}
+                size={16}
                 icon={'plus'}
+                onLongPress={handleAddQuantity}
                 onPress={handleAddQuantity}
               />
             }
           />
         </View>
 
-        <View style={styles.addButtonContainer}>
+        <Surface style={styles.addButtonContainer}>
           <TouchableRipple
             onPress={addToMeuBaio}
             rippleColor={'white'}
@@ -177,7 +180,7 @@ const ArtigoContainer1Screen: React.FC<ArtigoContainer1> = ({
             underlayColor={theme.colors.primary}>
             <Text style={styles.addButtonLabel}>Adicionar</Text>
           </TouchableRipple>
-        </View>
+        </Surface>
       </Card>
     </>
   );
@@ -233,18 +236,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   addButtonContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-    textAlign: 'center',
+    marginBottom: 12,
+    overflow: 'hidden',
+    marginHorizontal: 6,
+    marginTop: 16,
+    borderRadius: 10,
   },
   addButton: {
     justifyContent: 'center',
     textAlign: 'center',
     alignItems: 'center',
+    // overflow: 'hidden',
     padding: 8,
-    marginBottom: 10,
-    width: '100%',
-    borderRadius: 10,
   },
   addButtonLabel: {
     color: 'white',

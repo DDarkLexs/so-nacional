@@ -5,7 +5,10 @@ import CategoriaContainer1 from '../../Layout/Categoria/categoriaContainer1.comp
 import {CategoriaController} from '../../controller/Categoria/categoria.controller';
 import {CategoriaPrincipal} from '../../@types/model/categoria.model';
 import {showToast} from '../../service/toast.service';
-import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../@types/redux/hook/index.hook';
 import {setCategoriaPrincipal} from '../../store/reducer/categoria.reducer';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
@@ -92,7 +95,7 @@ const HomeScreen = (navigation: any) => {
           // Show skeleton placeholders for categories while loading
           <SkeletonPlaceholder>
             <React.Fragment>
-              {placeholder.map((_: any, index: any, array) => (
+              {placeholder.map((_: any, index: number) => (
                 <View key={index} style={styles.skeletonCategoryContainer}>
                   <View style={styles.skeletonCategoryImage} />
                   <View style={styles.skeletonCategoryText} />

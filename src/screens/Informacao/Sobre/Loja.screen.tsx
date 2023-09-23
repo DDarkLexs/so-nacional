@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image, useColorScheme} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text} from 'react-native-paper';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
@@ -15,19 +15,19 @@ interface LojaInfo {
 const LojaScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [lojaInfo, setLojaInfo] = useState<LojaInfo | null>(null);
+  const theme = useColorScheme();
+  const fetchData = async () => {
+    try {
+      const response = (await axiosIns.get('/dadosloja')).data;
+      setLojaInfo(response.data[0]);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = (await axiosIns.get('/dadosloja')).data.data[0];
-        setLojaInfo(response.data[0]);
-        // console.log(response.data)
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -63,7 +63,15 @@ const LojaScreen: React.FC = () => {
           </SkeletonPlaceholder>
         ) : (
           <>
-            <Text style={styles.title}>{lojaInfo?.nome_loja}</Text>
+            <Image
+              source={
+                theme === 'dark'
+                  ? require('../../../assets/image/logo-dark.png')
+                  : require('../../../assets/image/logo.png')
+              } // Substitua pelo caminho da sua imagem
+              style={styles.image}
+            />
+            {/* <Text style={styles.title}>{lojaInfo?.nome_loja}</Text> */}
             <Text style={styles.info}>
               Taxa de Serviço: {lojaInfo?.taxa_servico}%{' '}
             </Text>
@@ -86,6 +94,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  image: {
+    width: 250,
+    height: 250,
+    resizeMode: 'contain',
+    // filter: 'invert(100%)',
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -93,6 +107,7 @@ const styles = StyleSheet.create({
   },
   info: {
     fontSize: 18,
+    // fontWeight: '700',
     marginBottom: 5,
   },
 });

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {DataTable, Text} from 'react-native-paper';
+import {DataTable, Text, useTheme} from 'react-native-paper';
 import MinhaEncomendaDT from '../../components/Menu/MinhaEncomendaDT.component';
-import {EncomendaController} from '../../controller/encomenda/encomenda.controller';
+import {EncomendaController} from '../../controller/Encomenda/encomenda.controller';
 import {showToast} from '../../service/toast.service';
 import {
   useAppDispatch,
@@ -19,6 +19,7 @@ const MinhaEncomendaDataTable: React.FC<any> = ({
   const [data, setData] = React.useState<Encomendas[]>([]);
   const [numberOfItemsPerPageList] = React.useState([2, 5, 10]);
   const encomendas = useAppSelector(state => state.encomenda.encomendas);
+  const theme = useTheme();
   const dispatch = useAppDispatch();
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
     numberOfItemsPerPageList[1],
@@ -42,15 +43,14 @@ const MinhaEncomendaDataTable: React.FC<any> = ({
 
   const getData = async () => {
     try {
-        
       if (!!procurar) {
-          const filtered = data.filter(item => {
+        const filtered = data.filter(item => {
           const objectValues = Object.values(item).join('').toLowerCase();
           return objectValues.includes(procurar.toLowerCase());
         });
         dispatch(setEncomendas(filtered));
-    } else {
-          dispatch(setEncomendas(data));
+      } else {
+        dispatch(setEncomendas(data));
         fetchData();
       }
       //   dispatch(setEncomendas(ctrl.encomenda));
@@ -80,7 +80,7 @@ const MinhaEncomendaDataTable: React.FC<any> = ({
   }, [itemsPerPage]);
 
   return (
-    <DataTable>
+    <DataTable >
       <DataTable.Header>
         <DataTable.Title>#</DataTable.Title>
         <DataTable.Title>Total</DataTable.Title>
@@ -112,6 +112,7 @@ const MinhaEncomendaDataTable: React.FC<any> = ({
         label={`${from + 1}-${to} de ${encomendas.length}`}
         numberOfItemsPerPageList={numberOfItemsPerPageList}
         numberOfItemsPerPage={itemsPerPage}
+        dropdownItemRippleColor={'white'}
         onItemsPerPageChange={onItemsPerPageChange}
         showFastPaginationControls
         selectPageDropdownLabel={'Coluna por página'}

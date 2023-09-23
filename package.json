@@ -11,8 +11,9 @@
     "clear": "npx react-native clean",
     "clean": "cd android && gradlew clean",
     "stop-android": "cd android && gradlew --stop",
+    "android-reset": "react-native start --reset-cache",
     "build-apk": "cd android && gradlew assembleRelease --stacktrace",
-    "android-ts": "concurrently \"yarn check-types:watch\"  \"react-native run-android\"",
+    "android-ts": "yarn  \"check-types:watch\"  \"android\"",
     "check-types": "tsc",
     "watch": "tsc --watch"
   },

@@ -1,14 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
-import {Text, TouchableRipple} from 'react-native-paper';
-import {CategoriaController} from '../../controller/Categoria/categoria.controller';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {Surface, Text, TouchableRipple} from 'react-native-paper';
 import {CategoriaPrincipal} from '../../@types/model/categoria.model';
-import {useAppDispatch, useAppSelector} from '../../@types/redux/hook/index.hook';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../@types/redux/hook/index.hook';
+import {CategoriaController} from '../../controller/Categoria/categoria.controller';
+import {showToast} from '../../service/toast.service';
 import {
   setCategoriaPrincipal,
   setSelectedCategoria,
 } from '../../store/reducer/categoria.reducer';
-import {showToast} from '../../service/toast.service';
 
 const SlideGroupContainer = () => {
   const [activeButtonIndex, setActiveButtonIndex] = useState(0);
@@ -61,19 +64,22 @@ const SlideGroupContainer = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView horizontal  showsHorizontalScrollIndicator={false}>
         {categoriaPrincipal.map(({nome_categoria, id_categoria}, index) => (
-          <TouchableRipple
-            key={index}
-            onPress={() => handleButtonPress(index, id_categoria)}
-            style={[
-              styles.button,
-              index === activeButtonIndex ? {backgroundColor: '#f2eee8'} : null,
-            ]}>
-            <View>
-              <Text style={styles.buttonContentText}>{nome_categoria}</Text>
-            </View>
-          </TouchableRipple>
+          <Surface key={index} mode='flat' style={styles.ButtonContainer}>
+            <TouchableRipple
+              onPress={() => handleButtonPress(index, id_categoria)}
+              style={[
+                styles.button,
+                index === activeButtonIndex
+                  ? {backgroundColor: '#f2eee8'}
+                  : null,
+              ]}>
+              <View>
+                <Text style={styles.buttonContentText}>{nome_categoria}</Text>
+              </View>
+            </TouchableRipple>
+          </Surface>
         ))}
       </ScrollView>
     </View>
@@ -87,14 +93,18 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginTop: 18,
   },
+  ButtonContainer:{
+    // borderWidth: 0.4, // Add a border to the container
+    // borderColor: 'gray', // Border color
+    // backgroundColor: 'transparent',
+    marginBottom: 6,
+    borderRadius: 4,
+    overflow: 'hidden',
+    marginHorizontal: 6
+  },
   button: {
-    width: 'auto', // Set the width and height to make it square
-    height: 50,
-    padding: 10,
-    borderRadius: 8, // Adjust the border radius as needed
-    marginHorizontal: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderRadius: 8,
+    padding: 12,
   },
   buttonContent: {
     fontWeight: 'bold',

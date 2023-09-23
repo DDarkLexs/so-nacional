@@ -26,7 +26,9 @@ const initialState: EncomendaState = {
     itens: [],
   },
   encomendas: [],
-  compra: {},
+  compra: {
+    taxa_entrega: ''
+  },
 };
 
 const encomendaSlice = createSlice({

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Card, Divider,Text} from 'react-native-paper';
+import {Card, Divider, Text} from 'react-native-paper';
 import {convertToCurrency} from '../../utils/moeda/moeda.utils';
 import {
   useAppDispatch,
@@ -44,9 +44,7 @@ const ResumoDeCompra: React.FC<any> = (): React.JSX.Element => {
           <Text style={styles.value}>{convertToCurrency(taxaDeServico)}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>
-            Imposto (IVA {IVA}%):
-          </Text>
+          <Text style={styles.label}>Imposto (IVA {IVA}%):</Text>
           <Text style={styles.value}>{convertToCurrency(iva)}</Text>
         </View>
         <View style={styles.row}>
@@ -58,20 +56,18 @@ const ResumoDeCompra: React.FC<any> = (): React.JSX.Element => {
         <Divider style={styles.divider} />
         <View style={styles.row}>
           <Text style={styles.label}>Entrega:</Text>
-          <Text style={styles.value}>
-            {'Domicílio'}
-          </Text>
+          <Text style={styles.value}>{'Domicílio'}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Pagamento:</Text>
-          <Text style={styles.value}>
-            {encomenda.tipo_pagamento}
-          </Text>
+          <Text style={styles.value}>{encomenda.tipo_pagamento}</Text>
         </View>
         <Divider style={styles.divider} />
         <View style={styles.row1}>
-          <Text style={styles.label1} variant='titleLarge'>Total a pagar</Text>
-          <Text style={styles.value1} variant='titleLarge'>
+          <Text style={styles.label1} variant="titleLarge">
+            Total a pagar
+          </Text>
+          <Text style={styles.value1} variant="titleLarge">
             {convertToCurrency(encomenda.total)}
           </Text>
         </View>
@@ -108,7 +104,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: 5,
-
   },
   label1: {
     flex: 1,
